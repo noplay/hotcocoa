@@ -1,4 +1,7 @@
-AppConfig = HotCocoa::ApplicationBuilder::Configuration.new( 'config/build.yml' )
+unless defined?(AppConfigFile)
+  AppConfigFile = 'config/build.yml'
+end
+AppConfig = HotCocoa::ApplicationBuilder::Configuration.new(AppConfigFile)
 
 if MACRUBY_REVISION.match(/^git commit/)
   require 'rake/compiletask'
