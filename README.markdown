@@ -3,6 +3,15 @@
 * [http://github.com/ferrous26/hotcocoa](http://github.com/ferrous26/hotcocoa)
 * [Documentation](http://rdoc.info/github/ferrous26/hotcocoa/master/frames) WIP
 
+## Description
+
+HotCocoa is a thin, idiomatic Ruby layer that sits above Cocoa and
+other frameworks. HotCocoa used to be included in MacRuby but is now
+managed as a separate gem.  This will allow HotCocoa to accept
+contributions and evolve more quickly. To see more information on
+HotCocoa (including tutorial) see
+[http://macruby.org](http://macruby.org).
+
 ## Note
 
 This is a fork of HotCocoa that is being kept alive by myself and
@@ -14,6 +23,12 @@ the goals of this project.
 If you find issues with HotCocoa you can open issues and I (or
 another contributor) will try to fix them.
 
+## Install
+
+* sudo macrake install
+
+This fork is only available from source right now.
+
 ## Documentation
 
 Documentation is a work in progress; some of the documentation is
@@ -21,21 +36,6 @@ being ported from the MacRuby website where it is still available.
 
 The documentation does not include the mappings right now due to the
 way that mappings are implemented; a YARD plug-in is needed for that.
-
-## Description
-
-HotCocoa is a thin, idiomatic Ruby layer that sits above Cocoa and
-other frameworks. HotCocoa used to be included in MacRuby but is now
-managed as a separate gem.  This will allow HotCocoa to accept
-contributions and evolve more quickly. To see more information on
-HotCocoa (including tutorial) see
-[http://macruby.org](http://macruby.org).
-
-## Install
-
-* sudo macrake install
-
-This fork is only available from source right now.
 
 ## License
 
