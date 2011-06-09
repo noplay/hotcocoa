@@ -217,16 +217,14 @@ class HotCocoa::Mappings::Mapper
 
     bindings_module = Module.new
     instance.exposedBindings.each do |exposed_binding|
-      bindings_module.module_eval <<-EOM
-        def #{HotCocoa::Mappings::Mapper.underscore(exposed_binding)}= value
-          if value.kind_of?(Hash)
-            options = value.delete(:options)
-            bind "#{exposed_binding}", toObject:value.keys.first, withKeyPath:value.values.first, options:options
-          else
-            set#{exposed_binding.capitalize}(value)
-          end
+      bindings_module.send(:define_method, "#{underscore(exposed_binding)}=") do |value|
+        if value.kind_of?(Hash)
+          options = value.delete(:options)
+          bind "#{exposed_binding}", toObject:value.keys.first, withKeyPath:value.values.first, options:options
+        else
+          self.send("set#{exposed_binding.capitalize}", value)
         end
-      EOM
+      end
     end
 
     HotCocoa::Mappings::Mapper.bindings_modules[control_class] = bindings_module
