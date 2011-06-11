@@ -29,6 +29,11 @@ another contributor) will try to fix them.
 
 This fork is only available from source right now.
 
+Note: If you are on Snow Leopard, you will also need the
+[Bridge Support Preview](http://www.macruby.org/files/BridgeSupport%20Preview%203.zip)
+in order to run this fork of HotCocoa. Read about it on the
+[MacRuby Blog](http://www.macruby.org/blog/2010/10/08/bridgesupport-preview.html).
+
 ## Documentation
 
 Documentation is a work in progress; some of the documentation is
