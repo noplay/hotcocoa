@@ -37,6 +37,21 @@ module HotCocoa::Mappings
   end
 
 
+  class << self
+    ##
+    # Returns the Hash of mappings.
+    attr_reader :mappings
+
+    ##
+    # Returns the Hash of mapped frameworks.
+    attr_reader :frameworks
+  end
+
+  # they need to be initialized
+  @mappings = {}
+  @frameworks = {}
+
+
   ##
   # Load __EVERYTHING__ in `lib/hotcocoa/mappings`, recursively
   def self.reload
@@ -100,12 +115,6 @@ module HotCocoa::Mappings
     add_mapping(mapped_name, Object.full_const_get(constant), &block)
   end
 
-  ##
-  # Returns the Hash of mappings.
-  def self.mappings
-    @mappings ||= {}
-  end
-
   # @group Lazy framework loading
 
   ##
@@ -113,12 +122,6 @@ module HotCocoa::Mappings
   # loaded.
   def self.on_framework name, &block
     (frameworks[name.to_s] ||= []) << block
-  end
-
-  ##
-  # Returns the Hash of mapped frameworks.
-  def self.frameworks
-    @frameworks ||= {}
   end
 
   ##
