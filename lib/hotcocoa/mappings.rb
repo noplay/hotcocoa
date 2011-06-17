@@ -1,13 +1,6 @@
 module HotCocoa::Mappings
 
   ##
-  # Load __EVERYTHING__ in `lib/hotcocoa/mappings`, recursively
-  def self.reload
-    mappings = File.join(File.dirname(__FILE__), 'mappings', '**', '*.rb')
-    Dir.glob(mappings).each { |mapping| require mapping.chomp!('.rb') }
-  end
-
-  ##
   # This module should be mixed into mappings that want to support
   # target actions.
   module TargetActionConvenience
@@ -41,6 +34,14 @@ module HotCocoa::Mappings
       self.on_action = behavior
       self
     end
+  end
+
+
+  ##
+  # Load __EVERYTHING__ in `lib/hotcocoa/mappings`, recursively
+  def self.reload
+    pattern = File.join(File.dirname(__FILE__), 'mappings', '**', '*.rb')
+    Dir.glob(pattern).each { |mapping| require mapping.chomp!('.rb') }
   end
 
   # @group Creating a new mapping
