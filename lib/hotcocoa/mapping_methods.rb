@@ -56,16 +56,9 @@ module HotCocoa::MappingMethods
     constants_map[name] = constants
   end
 
-  ##
-  # @todo Can we use attr_accessor :constants_map instead?
-  #
-  # A mapping of constant mappings that were created with calls to
-  # {#constant}.
-  #
-  # @return [Hash{Symbol=>Hash{Symbol=>Constant}}]
-  def constants_map
-    @constants_map ||= {}
-  end
+  # @return [Hash{Symbol=>Hash{Symbol=>Constant}}] A mapping of constant
+  #   mappings that were created with calls to {#constant}
+  attr_reader :constants_map
 
   ##
   # @method custom_methods do ... end
@@ -200,15 +193,16 @@ module HotCocoa::MappingMethods
     delegate_map[name] = options
   end
 
+  # @return [Hash{Symbol=>Hash{Symbol=>SEL}}] A mapping of delegate
+  #   mappings that were created with calls to {#delegating}
+  attr_reader :delegate_map
+
   ##
-  # @todo Can we use attr_accessor :delegate_map instead?
-  #
-  # A mapping of constant mappings that were created with calls to
-  # {#delegating}.
-  #
-  # @return [Hash{Symbol=>Hash{Symbol=>SEL}}]
-  def delegate_map
-    @delegate_map ||= {}
+  # A small hack so that we can have {#delegate_map} and {#constants} as
+  # attributes instead of methods that memoized to instance variables.
+  def self.extended klass
+    klass.instance_variable_set(:@constants_map, {})
+    klass.instance_variable_set(:@delegate_map, {})
   end
 
 end
