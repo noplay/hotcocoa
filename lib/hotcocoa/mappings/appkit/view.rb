@@ -37,9 +37,7 @@ HotCocoa::Mappings.map :view => :NSView do
       @layout.update_layout_views!
     end
 
-    def layout
-      @layout
-    end
+    attr_reader :layout
 
     def on_notification(options={}, &block)
       options[:sent_by] = self
