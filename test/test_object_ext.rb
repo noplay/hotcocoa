@@ -11,12 +11,15 @@ module TestNamespaceForConstLookup
 end
 
 class TestObjectExt < MiniTest::Unit::TestCase
-  def test_returns_a_constant_by_FQ_name__in__receiver_namespace
+  def test_returns_a_constant_by_FQ_name_in_receiver_namespace
     assert_equal HotCocoa,           Object.full_const_get('HotCocoa')
     assert_equal HotCocoa::Mappings, Object.full_const_get('HotCocoa::Mappings')
+    assert_equal HotCocoa,           HotCocoa.full_const_get('HotCocoa')
+    assert_equal HotCocoa::Mappings, HotCocoa.full_const_get('HotCocoa::Mappings')
+    assert_equal HotCocoa::Mappings, HotCocoa.full_const_get('Mappings')
   end
 
-  def test_calls_const_missing_on_the_namespace_which__does__exist
+  def test_calls_const_missing_on_namespaces_which_do_not_exist
     Object.full_const_get('TestNamespaceForConstLookup::DoesNotExist')
     assert_equal 'DoesNotExist', TestNamespaceForConstLookup.missing_const
   end
