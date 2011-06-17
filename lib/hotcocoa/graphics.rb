@@ -23,13 +23,6 @@ module HotCocoa; end
 #
 # More information about Quartz 2D is available on the Apple's website:
 # http://developer.apple.com/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/dq_overview/dq_overview.html#//apple_ref/doc/uid/TP30001066-CH202-TPXREF101
-
-
-
-module HotCocoa;end # needed in case this is required without hotcocoa
-
-framework 'Cocoa'
-
 module HotCocoa::Graphics
 
   # UTILITY FUNCTIONS (math/geometry)

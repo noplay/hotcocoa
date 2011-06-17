@@ -165,7 +165,7 @@ class HotCocoa::Mappings::Mapper
 
   def delegate_module_for_control_class
     unless HotCocoa::Mappings::Mapper.delegate_modules.has_key?(control_class)
-      delegate_module = Module.new
+      delegate_module  = Module.new
       required_methods = []
       delegate_methods = inherited_delegate_methods
 

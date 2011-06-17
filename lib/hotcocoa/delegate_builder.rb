@@ -54,7 +54,7 @@ class HotCocoa::DelegateBuilder
   # @todo GET RID OF EVAL
   def create_delegate_method selector_name, parameters
     required_methods.delete(selector_name)
-    eval %{
+     eval %{
         def delegate.#{parameterize_selector_name(selector_name)}
           #{block_instance_variable}.call(#{parameter_values_for_mapping(selector_name, parameters)})
       end
