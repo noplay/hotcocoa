@@ -23,6 +23,10 @@ the goals of this project.
 If you find issues with HotCocoa you can open issues and I (or
 another contributor) will try to fix them.
 
+There are a list of
+[gotchas](https://github.com/ferrous26/hotcocoa/wiki/Gotchas) in the
+wiki.
+
 ## Install
 
 * sudo macrake install
