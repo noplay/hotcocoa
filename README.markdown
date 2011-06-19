@@ -3,8 +3,6 @@
 * [http://github.com/ferrous26/hotcocoa](http://github.com/ferrous26/hotcocoa)
 * [Documentation](http://rdoc.info/github/ferrous26/hotcocoa/master/frames) WIP
 
-[![Build Status](http://travis-ci.org/ferrous26/hotcocoa.png)](http://travis-ci.org/ferrous26/hotcocoa])
-
 ## Description
 
 HotCocoa is a thin, idiomatic Ruby layer that sits above Cocoa and
