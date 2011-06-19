@@ -163,41 +163,52 @@ class HotCocoa::Mappings::Mapper
     control.send(@extension_method, delegate_module_for_control_class)
   end
 
+  ##
+  # Create a module to hold the delegate object. The module can then be
+  # mixed in so that a control instance can use HotCocoa style delegation.
+  #
+  # The style of delegation that HotCocoa supports works by creating an
+  # Object instance and then defining delegate methods as singleton
+  # methods on that object. Then the object is set to be the delegate
+  # of the control.
+  #
+  # The generated module is cached for later (re-)use.
+  #
+  # @return [Module] the generated delegate module
   def delegate_module_for_control_class
-    unless HotCocoa::Mappings::Mapper.delegate_modules.has_key?(control_class)
-      delegate_module  = Module.new
-      required_methods = []
-      delegate_methods = inherited_delegate_methods
+    delegate_module = HotCocoa::Mappings::Mapper.delegate_modules[control_class]
+    return delegate_module if delegate_module
 
-      if delegate_methods.size > 0
-        delegate_methods.each do |delegate_method, mapping|
-          required_methods << delegate_method if mapping[:required]
-        end
+    delegate_module  = Module.new
+    required_methods = []
+    delegate_methods = inherited_delegate_methods
 
-        delegate_methods.each do |delegate_method, mapping|
-          parameters = mapping[:parameters] ? (', ' + mapping[:parameters].map {|param| %{"#{param}"} }.join(',')) : ''
-          delegate_module.module_eval <<-EOM
-            def #{mapping[:to]} &block
-              raise "Must pass in a block to use this delegate method" unless block_given?
+    if delegate_methods.size > 0
+      delegate_methods.each do |delegate_method, mapping|
+        required_methods << delegate_method if mapping[:required]
+      end
 
-              @_delegate_builder ||= HotCocoa::DelegateBuilder.new(self, #{required_methods.inspect})
-              @_delegate_builder.add_delegated_method(block, "#{delegate_method}" #{parameters})
-            end
-          EOM
-        end
-
+      delegate_methods.each do |delegate_method, mapping|
+        parameters = mapping[:parameters] ? (', ' + mapping[:parameters].map {|param| %{"#{param}"} }.join(',')) : ''
         delegate_module.module_eval <<-EOM
-          def delegate_to(object)
+          def #{mapping[:to]} &block
+            raise "Must pass in a block to use this delegate method" unless block_given?
+
             @_delegate_builder ||= HotCocoa::DelegateBuilder.new(self, #{required_methods.inspect})
-            @_delegate_builder.delegate_to(object, #{delegate_methods.values.map {|method| ":#{method[:to]}"}.join(', ')})
+            @_delegate_builder.add_delegated_method(block, "#{delegate_method}" #{parameters})
           end
         EOM
       end
 
-      HotCocoa::Mappings::Mapper.delegate_modules[control_class] = delegate_module
+      delegate_module.module_eval <<-EOM
+        def delegate_to(object)
+          @_delegate_builder ||= HotCocoa::DelegateBuilder.new(self, #{required_methods.inspect})
+          @_delegate_builder.delegate_to(object, #{delegate_methods.values.map {|method| ":#{method[:to]}"}.join(', ')})
+        end
+      EOM
     end
 
-    HotCocoa::Mappings::Mapper.delegate_modules[control_class]
+    HotCocoa::Mappings::Mapper.delegate_modules[control_class] = delegate_module
   end
 
 
