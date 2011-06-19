@@ -25,7 +25,7 @@ module HotCocoa::Behaviors
   #   end
   #
   def self.included klass
-    Mappings::Mapper.map_class(klass)
+    HotCocoa::Mappings::Mapper.map_class(klass)
   end
 
 end
