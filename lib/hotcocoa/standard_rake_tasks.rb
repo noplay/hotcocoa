@@ -23,7 +23,7 @@ end
 
 desc 'Build and execute the application'
 task :run => [:build] do
-  sh "open '#{AppConfig.name}.app'"
+  `"./#{AppConfig.name}.app/Contents/MacOS/#{AppConfig.name.gsub(/ /, '')}"`
 end
 
 desc 'Cleanup build files'
