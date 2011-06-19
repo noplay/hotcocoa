@@ -206,8 +206,22 @@ class HotCocoa::Mappings::Mapper
     control.send(@extension_method, bindings_module_for_control(control)) if @map_bindings
   end
 
-  def bindings_module_for_control(control)
-    return HotCocoa::Mappings::Mapper.bindings_modules[control_class] if HotCocoa::Mappings::Mapper.bindings_modules.has_key?(control_class)
+  ##
+  # Create a module to hold all bindings setters. The bindings module is
+  # meant to assist with setting up Cocoa Bindings by providing a simplified
+  # and more Ruby-ish interface.
+  #
+  # Read more about [Key-Value Binding](http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Protocols/NSKeyValueBindingCreation_Protocol/Reference/Reference.html).
+  #
+  # If the control has no exposed bindings, then an empty module will
+  # be generated.
+  #
+  # In either case, once a module is generated, it is cached for later use.
+  #
+  # @return [Module] the generated bindings module
+  def bindings_module_for_control control
+    bindings_module = HotCocoa::Mappings::Mapper.bindings_modules[control_class]
+    return bindings_module if bindings_module
 
     instance = if control == control_class
                  control_class.alloc.init
