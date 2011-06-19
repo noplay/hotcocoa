@@ -2,27 +2,26 @@ require 'rubygems'
 require 'hotcocoa'
 
 class MyView < NSView
-  
   include HotCocoa::Behaviors
 
   DefaultSize = [30, 30]
 
-  def self.create 
+  def self.create
     alloc.initWithFrame([0, 0, *DefaultSize])
   end
-  
+
   def initWithFrame(frame)
     super
     self.layout = {}
     self
   end
-  
+
   def reset_size
     setFrameSize(DefaultSize)
   end
-  
+
   attr_accessor :number
- 
+
   def drawRect(rect)
     (color :red => 0.29, :green => 0.26, :blue => 0.55).set
     NSFrameRect(rect)
@@ -38,7 +37,7 @@ class MyView < NSView
     ]
     @number.to_s.drawAtPoint point, withAttributes:@attributes
   end
-  
+
 end
 
 def create_slider_layout(label, &block)
@@ -64,19 +63,19 @@ application :name => "Layout View" do |app|
       pane.view << create_slider_layout('Margin') { |x| win.view.margin = x.to_i }
 
       pane.view << button(:title => "Vertical", :type => :switch, :state => :on) do |b|
-        b.on_action do |b| 
+        b.on_action do |b|
           views.each { |v| v.reset_size }
           win.view.mode = b.on? ? :vertical : :horizontal
         end
       end
-      
+
       selected_view = nil
       expand_b = nil
       expand_h = nil
       left_padding_s = right_padding_s = top_padding_s = bottom_padding_s = nil
       other_p = nil
       views_p = popup :items => ['No View'], :layout => {:expand => :width}
-      views_p.on_action do |p| 
+      views_p.on_action do |p|
         selected_view = views[p.items.selected_index]
         options = selected_view.layout
         expand_b.state = options.expand_width?
@@ -91,7 +90,7 @@ application :name => "Layout View" do |app|
           when :right then 2
         end
       end
- 
+
       add_b = button :title => "Add view"
       add_b.on_action do
         view = MyView.create
@@ -105,7 +104,7 @@ application :name => "Layout View" do |app|
       pane.view << views_p
       expand_b = button :title => "Expand width", :type => :switch, :state => :off
       expand_h = button :title => "Expand height", :type => :switch, :state => :off
-      expand_b.on_action do |b| 
+      expand_b.on_action do |b|
         selected_view.reset_size
         selected_view.layout.expand = if expand_b.on?
           if expand_h.on?
@@ -139,19 +138,19 @@ application :name => "Layout View" do |app|
       v = create_slider_layout('Left') { |x| selected_view.layout.left_padding = x.to_i }
       left_padding_s = v.subviews[1]
       pane.view << v
- 
+
       v = create_slider_layout('Right') { |x| selected_view.layout.right_padding = x.to_i }
       right_padding_s = v.subviews[1]
       pane.view << v
- 
+
       v = create_slider_layout('Top') { |x| selected_view.layout.top_padding = x.to_i }
       top_padding_s = v.subviews[1]
       pane.view << v
- 
+
       v = create_slider_layout('Bottom') { |x| selected_view.layout.bottom_padding = x.to_i }
       bottom_padding_s = v.subviews[1]
       pane.view << v
-  
+
       pane.view << layout_view(:mode => :horizontal, :frame => [0, 0, 0, 24], :layout => {:expand => :width}) do |view|
         view << label(:text => 'Align', :layout => {:align => :center})
         view << popup(:items => ['Left/Bottom', 'Center', 'Right/Top'], :layout => {:expand => :width, :align => :center}) do |p|
