@@ -14,7 +14,7 @@ class HotCocoa::Mappings::Mapper
     ##
     # Borrowed from Active Support.
     def underscore string
-      new_string = string.gsub(/::/, '/')
+      new_string = string.gsub(/::/, '/') # do we need this substitution?
       new_string.gsub!(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
       new_string.gsub!(/([a-z\d])([A-Z])/, '\1_\2')
       new_string.tr!("-", "_")
