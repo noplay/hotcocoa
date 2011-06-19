@@ -5,42 +5,47 @@ module HotCocoa
     attr_accessor :defaults_view
     attr_reader   :view
 
-    # options can be
+    # @param [NSView] view
+    # @param [Hash] options
     #
-    #  :start -> bool
-    #    Whether the view is packed at the start or the end of the packing view.
-    #    Default value is true.
+    # @option options [Boolean] :start (true) Whether the view is packed
+    #   at the start or the end of the packing view
     #
-    #  :expand ->  :height, :width, [:height, :width]
-    #    Whether the view's first dimension (width for horizontal and height for vertical)
-    #    should be expanded to the maximum possible size, and should be variable according
-    #    to the packing view frame.
-    #    Default value is nil.
+    # @option options [Symbol] :expand (nil) Whether the view's first
+    #   dimension (width for horizontal and height for vertical) should
+    #   be expanded to the maximum possible size, and should be variable
+    #   according to the packing view frame. Values can be `:height`,
+    #   `:width`, or `[:height, :width]`
     #
-    #  :padding         -> float
-    #  :left_padding    -> float
-    #  :right_padding   -> float
-    #  :top_padding     -> float
-    #  :bottom_padding  -> float
-    #    Controls the padding area around the view. :padding controls all areas, while
-    #    :left_padding for example only controls the left side. If :padding is set, other
-    #    padding flags are ignored.
-    #    Default value is 0.0 for all flags.
+    # @option options [Float] :padding (0.0) Controls the padding area
+    #   around the view. `:padding` controls all the areas, while options
+    #   like `:left_padding` only control the left side--if `:padding`
+    #   is set, other padding flags are ignored
+    # @option options [Fload] :left_padding (0.0)
+    # @option options [Float] :right_padding (0.0)
+    # @option options [Float] :top_padding (0.0)
+    # @option options [Float] :bottom_padding (0.0)
     #
-    #  :align -> mode
-    #    Controls the view's alignment if its not expanded in the other dimension
-    #    Modes can be:
-    #      :left
-    #        For horizontal layouts, align left
-    #      :center
-    #        Align center for horizontal or vertical layouts
-    #      :right
-    #        For horizontal layouts, align right
-    #      :top
-    #        For vertical layouts, align top
-    #      :bottom
-    #        For vertical layouts, align bottom
-    def initialize(view, options={})
+    # @option options [Symbol] :align Controls the view's alignment if
+    #   its not expanded in the other dimension; modes can be:
+    #
+    #   * `:left`
+    #   For horizontal layouts, align left
+    #
+    #   * `:center`
+    #   Align center for horizontal or vertical layouts
+    #
+    #   * `:right`
+    #   For horizontal layouts, align right
+    #
+    #   * `:top`
+    #   For vertical layouts, align top
+    #
+    #   * `:bottom`
+    #   For vertical layouts, align bottom
+    #
+    # @option options [NSView] :defaults_view not sure yet...
+    def initialize view, options = {}
       @view           = view
       @start          = options[:start]
       @expand         = options[:expand]
