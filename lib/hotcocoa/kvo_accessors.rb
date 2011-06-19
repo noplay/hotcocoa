@@ -14,7 +14,7 @@ class Object
     key = key.to_s
     capitalized_key = key[0].capitalize + key[1..-1]
     signatures = { :add       => { selector: :"add#{capitalized_key}Object:",    type_signature: "v@:@", flip: false },
-                   :delete    => { selector: :"remove#{capitalized_key}Object:", type_signature: "v@:@", flip: false},
+                   :delete    => { selector: :"remove#{capitalized_key}Object:", type_signature: "v@:@", flip: false },
                    :merge     => { selector: :"add#{capitalized_key}:",          type_signature: "v@:@", flip: false },
                    :subtract  => { selector: :"remove#{capitalized_key}:",       type_signature: "v@:@", flip: false },
                    :set       => { selector: :"#{key}",                          type_signature: "@@:",  flip: false }

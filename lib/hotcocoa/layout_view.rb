@@ -3,6 +3,8 @@ module HotCocoa
     VALID_EXPANSIONS = [nil, :height, :width, [:height, :width], [:width, :height]]
 
     attr_accessor :defaults_view
+
+    # @return [NSView]
     attr_reader   :view
 
     # @param [NSView] view
@@ -58,7 +60,7 @@ module HotCocoa
       @defaults_view  = options[:defaults_view]
     end
 
-    def start=(value)
+    def start= value
       return if value == @start
       @start = value
       update_layout_views!
@@ -73,7 +75,7 @@ module HotCocoa
       end
     end
 
-    def expand=(value)
+    def expand= value
       return if value == @expand
       unless VALID_EXPANSIONS.include?(value)
         raise ArgumentError, "Expand must be nil, :height, :width or [:width, :height] not #{value.inspect}"
@@ -101,7 +103,7 @@ module HotCocoa
       e == :height || (e.respond_to?(:include?) && e.include?(:height))
     end
 
-    def left_padding=(value)
+    def left_padding= value
       return if value == @left_padding
       @left_padding = value
       @padding = nil
@@ -117,7 +119,7 @@ module HotCocoa
       end
     end
 
-    def right_padding=(value)
+    def right_padding= value
       return if value == @right_padding
       @right_padding = value
       @padding = nil
@@ -133,7 +135,7 @@ module HotCocoa
       end
     end
 
-    def top_padding=(value)
+    def top_padding= value
       return if value == @top_padding
       @top_padding = value
       @padding = nil
@@ -149,7 +151,7 @@ module HotCocoa
       end
     end
 
-    def bottom_padding=(value)
+    def bottom_padding= value
       return if value == @bottom_padding
       @bottom_padding = value
       @padding = nil
@@ -174,13 +176,13 @@ module HotCocoa
       end
     end
 
-    def align=(value)
+    def align= value
       return if value == @align
       @align = value
       update_layout_views!
     end
 
-    def padding=(value)
+    def padding= value
       return if value == @padding
       @right_padding = @left_padding = @top_padding = @bottom_padding = value
       @padding = value
@@ -215,7 +217,7 @@ module HotCocoa
   class LayoutView < NSView
     attr_accessor :frame_color
 
-    def initWithFrame(frame)
+    def initWithFrame frame
       super
       @mode = :vertical
       @spacing = 10.0
@@ -231,7 +233,7 @@ module HotCocoa
       @mode == :horizonal
     end
 
-    def mode=(mode)
+    def mode= mode
       unless [:horizontal, :vertical].include?(mode)
         raise ArgumentError, "invalid mode value #{mode}"
       end
@@ -242,7 +244,7 @@ module HotCocoa
       end
     end
 
-    def default_layout=(options)
+    def default_layout= options
       options[:defaults_view] = self
       @default_layout = LayoutOptions.new(nil, options)
       relayout!
@@ -256,18 +258,18 @@ module HotCocoa
       @spacing
     end
 
-    def spacing=(spacing)
+    def spacing= spacing
       if spacing != @spacing
         @spacing = spacing.to_i
         relayout!
       end
     end
 
-    def frame=(frame)
+    def frame= frame
       setFrame(frame)
     end
 
-    def size=(size)
+    def size= size
       setFrameSize(size)
     end
 
@@ -275,18 +277,18 @@ module HotCocoa
       @margin
     end
 
-    def margin=(margin)
+    def margin= margin
       if margin != @margin
         @margin = margin.to_i
         relayout!
       end
     end
 
-    def <<(view)
+    def << view
       addSubview(view)
     end
 
-    def remove(subview, options = {})
+    def remove subview, options = {}
       raise ArgumentError, "#{subview} is not a subview of #{self} and cannot be removed." unless subview.superview == self
       options[:needs_display] == false ? subview.removeFromSuperviewWithoutNeedingDisplay : subview.removeFromSuperview
     end
@@ -304,7 +306,7 @@ module HotCocoa
       relayout!
     end
 
-    def remove_view(view)
+    def remove_view view
       unless subviews.include?(view)
         raise ArgumentError, "view #{view} not a subview of this LayoutView"
       end
@@ -317,26 +319,26 @@ module HotCocoa
       relayout!
     end
 
-    def drawRect(frame)
+    def drawRect frame
       if frame_color
         frame_color.set
         NSFrameRect(frame)
       end
     end
 
-    def setFrame(frame)
+    def setFrame frame
       super
       relayout!
     end
 
-    def setFrameSize(size)
+    def setFrameSize size
       super
       relayout!
     end
 
     private
 
-    def calc_expandable_size(end_dimension)
+    def calc_expandable_size end_dimension
       expandable_size = end_dimension
       expandable_views = 0
 
@@ -454,7 +456,7 @@ module HotCocoa
       end
     end
 
-    def can_layout?(view)
+    def can_layout? view
       view.respond_to?(:layout) && !view.layout.nil?
     end
   end

@@ -188,6 +188,7 @@ class HotCocoa::Mappings::Mapper
         required_methods << delegate_method if mapping[:required]
       end
 
+      # I have to remove both #module_eval calls at once
       delegate_methods.each do |delegate_method, mapping|
         parameters = mapping[:parameters] ? (', ' + mapping[:parameters].map {|param| %{"#{param}"} }.join(',')) : ''
         delegate_module.module_eval <<-EOM
