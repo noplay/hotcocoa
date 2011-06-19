@@ -212,7 +212,8 @@ class HotCocoa::Mappings::Mapper
   end
 
 
-  def decorate_with_bindings_methods(control)
+  # @return [nil] do not count on a return value
+  def decorate_with_bindings_methods control
     return if control_class == NSApplication
     control.send(@extension_method, bindings_module_for_control(control)) if @map_bindings
   end
