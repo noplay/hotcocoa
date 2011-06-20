@@ -1,23 +1,22 @@
 module HotCocoa::Mappings
-
-  class << self
-    ##
-    # Returns the Hash of mappings.
-    attr_reader :mappings
-
-    ##
-    # Returns the Hash of mapped frameworks.
-    attr_reader :frameworks
-  end
-
   # they need to be initialized
-  @mappings = {}
+  @mappings   = {}
   @frameworks = {}
+end
 
+class << HotCocoa::Mappings
 
   ##
-  # Load __EVERYTHING__ in `lib/hotcocoa/mappings`, recursively
-  def self.reload
+  # Returns the Hash of mappings.
+  attr_reader :mappings
+
+  ##
+  # Returns the Hash of mapped frameworks.
+  attr_reader :frameworks
+
+  ##
+  # Load _EVERYTHING_ in `lib/hotcocoa/mappings`, recursively
+  def reload
     pattern = File.join(File.dirname(__FILE__), 'mappings', '**', '*.rb')
     Dir.glob(pattern).each { |mapping| require mapping.chomp!('.rb') }
   end
@@ -37,7 +36,7 @@ module HotCocoa::Mappings
   # @overload map( window: NSWindow )
   # @overload map( window: 'NSWindow', framework: 'AppKit' )
   #   In order to define a mapping without loading the dependant framework
-  def self.map options, &block
+  def map options, &block
     framework    = options.delete(:framework)
     mapped_name  = options.keys.first
     mapped_value = options.values.first
@@ -63,8 +62,8 @@ module HotCocoa::Mappings
   # Registers `mapped_name` as a {Mapper#builder_method} for the given
   # `mapped_value`. The `block` is used as the {Mapper#builder_method}'s
   # body.
-  def self.add_mapping mapped_name, mapped_value, &block
-    m = Mapper.map_instances_of(mapped_value, mapped_name, &block)
+  def add_mapping mapped_name, mapped_value, &block
+    m = HotCocoa::Mappings::Mapper.map_instances_of(mapped_value, mapped_name, &block)
     mappings[m.builder_method] = m
   end
 
@@ -74,7 +73,7 @@ module HotCocoa::Mappings
   # Registers `mapped_name` as a {Mapper#builder_method} for the given
   # `constant` string which will be looked up. The `block` is used as
   # the {Mapper#builder_method}'s body.
-  def self.add_constant_mapping mapped_name, constant, &block
+  def add_constant_mapping mapped_name, constant, &block
     add_mapping(mapped_name, Object.full_const_get(constant), &block)
   end
 
@@ -83,13 +82,13 @@ module HotCocoa::Mappings
   ##
   # Registers a callback for after the specified framework has been
   # loaded.
-  def self.on_framework name, &block
+  def on_framework name, &block
     (frameworks[name.to_s] ||= []) << block
   end
 
   ##
   # Registers a given framework as being loaded.
-  def self.framework_loaded
+  def framework_loaded
     frameworks.keys.each do |key|
       if loaded_framework?(key)
         frameworks[key].each { |mapper| mapper.call }
@@ -100,7 +99,7 @@ module HotCocoa::Mappings
 
   ##
   # Returns whether or not the framework has been loaded.
-  def self.loaded_framework? name
+  def loaded_framework? name
     NSBundle.allFrameworks.map { |bundle|
       bundle.bundlePath.split('/').last
     }.select { |framework|
@@ -109,4 +108,5 @@ module HotCocoa::Mappings
       framework.split('.')[0]
     }.include?(name.to_s)
   end
+
 end
