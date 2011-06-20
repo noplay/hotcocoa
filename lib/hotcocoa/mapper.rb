@@ -53,7 +53,7 @@ class HotCocoa::Mappings::Mapper
     @extension_method = :extend
     @builder_method   = builder_method
 
-    # the first two lines here seem silly, can we get rid of them?
+    # @todo use self.singleton_class instead (not implemented in MacRuby yet)
     mod = (class << self; self; end)
     mod.extend HotCocoa::MappingMethods
     mod.module_eval(&block)
