@@ -269,12 +269,11 @@ class HotCocoa::Mappings::Mapper
     result = {}
     tags.each do |tag, value|
       if constants[tag]
-        result[tag] = value.kind_of?(Array) ? value.inject(0) { |a, i| a | constants[tag][i] } : constants[tag][value]
+        result[tag] = value.kind_of?(Array) ? value.inject(0) {|a, i| a|constants[tag][i]} : constants[tag][value]
       else
         result[tag] = value
       end
     end
     result
   end
-
 end
