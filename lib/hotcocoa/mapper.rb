@@ -85,7 +85,7 @@ class HotCocoa::Mappings::Mapper
 
           end
         elsif control.respond_to?("set#{HotCocoa::Mappings::Mapper.camel_case(key)}")
-          control.send("set#{HotCocoa::Mappings::Mapper..camel_case(key)}", value)
+          control.send("set#{HotCocoa::Mappings::Mapper.camel_case(key)}", value)
 
         else
           NSLog("Unable to map #{key} as a method")
