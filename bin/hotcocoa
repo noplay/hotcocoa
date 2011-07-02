@@ -7,6 +7,15 @@ if project_name.nil? or project_name == "--help" or project_name =="-h"
   exit
 end
 
+require 'rubygems'
+require 'hotcocoa/version'
+require 'hotcocoa/template'
+
+if project_name == '-v' or project_name == '--version'
+  puts "HotCocoa #{HotCocoa::VERSION} (#{RUBY_DESCRIPTION})"
+  exit
+end
+
 if File.exist?(project_name)
   if File.extname(project_name) == ".rb"
     file_to_copy = project_name
@@ -19,8 +28,6 @@ else
   file_to_copy = nil
 end
 
-require 'rubygems'
-require 'hotcocoa/template'
 HotCocoa::Template.copy_to(project_name, project_name.split("_").collect(&:capitalize).join(" "))
 
 if file_to_copy
