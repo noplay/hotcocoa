@@ -19,3 +19,5 @@ class SampleClass
     false
   end
 end
+
+SOURCE_ROOT = `git rev-parse --show-toplevel`.chomp

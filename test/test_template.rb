@@ -17,7 +17,7 @@ class TestHotCocoaTemplate < MiniTest::Unit::TestCase
   end
 
   def test_source_directory_is_correct
-    what_git_thinks      = `git rev-parse --show-toplevel`.chomp
+    what_git_thinks      = SOURCE_ROOT
     what_hotcocoa_thinks = HotCocoa::Template.source_directory
     assert_equal what_git_thinks, what_hotcocoa_thinks
   end
@@ -34,9 +34,8 @@ class TestHotCocoaTemplate < MiniTest::Unit::TestCase
   end
 
   def test_copy_to_copies_everything
-    source_dir = `git rev-parse --show-toplevel`.chomp
-    from       = all_files_in(File.join(source_dir, 'template'))
-    from.map! { |file| file.sub /^#{File.join(source_dir, 'template')}/, '' }
+    from       = all_files_in(File.join(SOURCE_ROOT, 'template'))
+    from.map! { |file| file.sub /^#{File.join(SOURCE_ROOT, 'template')}/, '' }
     to         = all_files_in(@dir)
     to.map! { |file| file.sub /^#{@dir}/, '' }
     assert_empty to - from
