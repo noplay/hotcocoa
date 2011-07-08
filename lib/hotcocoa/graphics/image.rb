@@ -294,7 +294,7 @@ module HotCocoa::Graphics
     end
 
     # adjust the reference white point for an image and maps all colors in the source using the new reference
-    def whitepoint(color=Color.white.ish)
+    def whitepoint(color=Color.white)
       filter 'CIWhitePointAdjust', :inputColor => CIColor.colorWithRed(color.r, green:color.g, blue:color.b, alpha:color.a)
       self
     end
