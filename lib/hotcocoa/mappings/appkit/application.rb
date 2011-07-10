@@ -10,16 +10,16 @@ HotCocoa::Mappings.map :application => :NSApplication do
   end
 
   custom_methods do
+    # @todo Should we really be hardcoded to require lib/menu and should
+    #       it done here?
     def load_application_menu
-      begin
-        require 'lib/menu'
+      require 'lib/menu' # hmmm...
 
-        o = Object.new
-        o.extend HotCocoa
+      o = Object.new
+      o.extend HotCocoa
 
-        setMainMenu(o.application_menu)
-      rescue LoadError => e
-      end
+      setMainMenu(o.application_menu)
+    rescue LoadError => e
     end
 
     attr_accessor :name
