@@ -5,10 +5,10 @@ class __APPLICATION_NAME__
   include HotCocoa
 
   def start
-    application :name => "__APPLICATION_NAME__" do |app|
+    application name: '__APPLICATION_NAME__' do |app|
       app.delegate = self
-      window :frame => [100, 100, 500, 500], :title => "__APPLICATION_NAME__" do |win|
-        win << label(:text => "Hello from HotCocoa", :layout => {:start => false})
+      window frame: [100, 100, 500, 500], title: '__APPLICATION_NAME__' do |win|
+        win << label(text: 'Hello from HotCocoa', layout: {start: false})
         win.will_close { exit }
       end
     end
