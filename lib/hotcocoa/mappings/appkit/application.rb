@@ -22,13 +22,7 @@ HotCocoa::Mappings.map :application => :NSApplication do
       end
     end
 
-    def name=(name)
-      @name = name
-    end
-
-    def name
-      @name
-    end
+    attr_accessor :name
 
     def menu=(menu)
       setMainMenu(menu)
