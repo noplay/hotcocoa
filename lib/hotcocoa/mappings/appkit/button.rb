@@ -62,14 +62,12 @@ HotCocoa::Mappings.map button: :NSButton do
     end
 
     def state= value
-      case value
-        when :on
-          value = NSOnState
-        when :off
-          value = NSOffState
-        when :mixed
-          value = NSMixedState
-      end
+      value = case value
+              when :on    then NSOnState
+              when :off   then NSOffState
+              when :mixed then NSMixedState
+              else value
+              end
       setState(value)
     end
 
