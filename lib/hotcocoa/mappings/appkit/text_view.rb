@@ -1,11 +1,13 @@
-HotCocoa::Mappings.map :text_view => :NSTextView do
-  defaults :layout => {}, :frame => CGRectZero
+HotCocoa::Mappings.map text_view: :NSTextView do
 
-  def init_with_options(text_view, options)
+  defaults layout: {}, frame: CGRectZero
+
+  def init_with_options text_view, options
     if options[:container]
-      text_view.initWithFrame options.delete(:frame), :textContainer => options.delete(:container)
+      text_view.initWithFrame options.delete(:frame), textContainer: options.delete(:container)
     else
       text_view.initWithFrame options.delete(:frame)
     end
   end
+
 end

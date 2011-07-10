@@ -1,9 +1,10 @@
 ##
 # @note Alerts are shown immediately
-HotCocoa::Mappings.map :alert => :NSAlert do
-  defaults :default => "OK", :alternate => nil, :other => nil, :info => "", :show => true
+HotCocoa::Mappings.map alert: :NSAlert do
 
-  def alloc_with_options(options)
+  defaults default: 'OK', alternate: nil, other: nil, info: '', show: true
+
+  def alloc_with_options options
     if options[:message]
       alert = NSAlert.alertWithMessageText(options.delete(:message),
                              defaultButton:options.delete(:default),
@@ -19,5 +20,6 @@ HotCocoa::Mappings.map :alert => :NSAlert do
     end
   end
 
-  delegating "alertShowHelp:", :to => :show_help?
+  delegating 'alertShowHelp:', to: :show_help?
+
 end
