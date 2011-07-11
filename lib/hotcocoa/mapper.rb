@@ -136,6 +136,11 @@ class HotCocoa::Mappings::Mapper
     delegate_methods
   end
 
+  ##
+  # Return the `custom_methods` module for the class we are instantiating,
+  # as well as all of its ancestors.
+  #
+  # @return [Array<Module>]
   def inherited_custom_methods
     methods = []
     each_control_ancestor do |ancestor|

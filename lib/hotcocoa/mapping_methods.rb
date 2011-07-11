@@ -61,7 +61,6 @@ module HotCocoa::MappingMethods
   attr_reader :constants_map
 
   ##
-  # @method custom_methods do ... end
   #
   # Custom methods are modules that are mixed into the class being
   # mapped; they provide idiomatic Ruby methods for the mapped

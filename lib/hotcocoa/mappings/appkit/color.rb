@@ -1,5 +1,6 @@
-HotCocoa::Mappings.map :color => :NSColor do
-  def alloc_with_options(options)
+HotCocoa::Mappings.map color: :NSColor do
+
+  def alloc_with_options options
     if options.has_key?(:name)
       color = eval("NSColor.#{options.delete(:name)}Color")
       color = color.colorWithAlphaComponent(options.delete(:alpha)) if options.has_key?(:alpha)
@@ -30,4 +31,5 @@ HotCocoa::Mappings.map :color => :NSColor do
       raise "Cannot create color with the provided options"
     end
   end
+
 end

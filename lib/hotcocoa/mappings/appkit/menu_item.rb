@@ -1,21 +1,22 @@
-HotCocoa::Mappings.map :menu_item => :NSMenuItem do
-  defaults :title => "", :key => "", :action => nil
+HotCocoa::Mappings.map menu_item: :NSMenuItem do
+
+  defaults title: '', key: '', action: nil
 
   constant :modifiers, {
-    :control    => NSControlKeyMask,
-    :alt        => NSAlternateKeyMask,
-    :command    => NSCommandKeyMask,
-    :shift      => NSShiftKeyMask
+    control:  NSControlKeyMask,
+    alt:      NSAlternateKeyMask,
+    command:  NSCommandKeyMask,
+    shift:    NSShiftKeyMask
   }
 
-  def alloc_with_options(options)
+  def alloc_with_options options
     NSMenuItem.alloc.initWithTitle(options.delete(:title),
-                                      :action => options.delete(:action),
-                                      :keyEquivalent => options.delete(:key))
+                                   action: options.delete(:action),
+                                   keyEquivalent: options.delete(:key))
   end
 
   custom_methods do
-    def on_action=(behavior)
+    def on_action= behavior
       object = Object.new
       object.instance_variable_set("@behavior", behavior)
       def object.perform_action(sender)
@@ -25,7 +26,7 @@ HotCocoa::Mappings.map :menu_item => :NSMenuItem do
       setAction("perform_action:")
     end
 
-    def on_action(&behavior)
+    def on_action &behavior
       self.on_action = behavior
       self
     end
@@ -34,12 +35,13 @@ HotCocoa::Mappings.map :menu_item => :NSMenuItem do
       keyEquivalent
     end
 
-    def key=(value)
+    def key= value
       setKeyEquivalent(value)
     end
 
-    def modifiers=(value)
+    def modifiers= value
       setKeyEquivalentModifierMask(value)
     end
   end
+
 end

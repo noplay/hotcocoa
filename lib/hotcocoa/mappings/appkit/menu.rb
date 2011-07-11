@@ -1,14 +1,15 @@
-HotCocoa::Mappings.map :menu => :NSMenu do
-  defaults :title => ""
+HotCocoa::Mappings.map menu: :NSMenu do
 
-  def alloc_with_options(options)
+  defaults title: ''
+
+  def alloc_with_options options
     NSMenu.alloc.initWithTitle(options.delete(:title))
   end
 
   custom_methods do
-    def submenu(symbol, options={}, &block)
-      item = addItemWithTitle((options[:title] || titleize(symbol)), :action => nil, :keyEquivalent => "")
-      submenu = builder.menu :title => (options[:title] || titleize(symbol))
+    def submenu symbol, options = {}, &block
+      item = addItemWithTitle((options[:title] || titleize(symbol)), action: nil, keyEquivalent: '')
+      submenu = builder.menu title: (options[:title] || titleize(symbol))
 
       case symbol
       when :apple
@@ -22,12 +23,12 @@ HotCocoa::Mappings.map :menu => :NSMenu do
       item_map[symbol] = submenu
       block.call(submenu) if block
 
-      setSubmenu(submenu, :forItem => item)
+      setSubmenu(submenu, forItem: item)
       submenu
     end
 
-    def item(symbol, options={})
-      options[:title] ||= titleize(symbol)
+    def item symbol, options = {}
+      options[:title]  ||= titleize(symbol)
       options[:action] ||= "on_#{symbol}:"
 
       item = builder.menu_item(options)
@@ -58,16 +59,19 @@ HotCocoa::Mappings.map :menu => :NSMenu do
       @builder
     end
 
+    # @todo Changing to an attr requires initializing on #include
+    #       which I do not know how to do...
     def item_map
       @item_map ||= {}
     end
 
     def titleize(symbol)
-      symbol.to_s.split("_").collect(&:capitalize).join(" ")
+      symbol.to_s.split('_').collect(&:capitalize).join(' ')
     end
 
     def app
       @app ||= NSApplication.sharedApplication
     end
   end
+
 end
