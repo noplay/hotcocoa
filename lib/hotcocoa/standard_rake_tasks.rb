@@ -3,14 +3,6 @@ unless defined?(AppConfigFile)
 end
 AppConfig = HotCocoa::ApplicationBuilder::Configuration.new(AppConfigFile)
 
-if MACRUBY_REVISION.match(/^git commit/)
-  require 'rake/compiletask'
-  Rake::CompileTask.new do |t|
-    t.files   = AppConfig.sources.map { |pattern| FileList[pattern] }.flatten
-    t.verbose = true
-  end
-end
-
 desc 'Build a deployable version of the application'
 task :deploy do
   HotCocoa::ApplicationBuilder.build AppConfig, deploy: true
