@@ -1,13 +1,14 @@
-HotCocoa::Mappings.map :web_view => :WebView , :framework => :WebKit do
-  defaults :layout => {}, :frame => CGRectZero
+HotCocoa::Mappings.map web_view: :WebView , framework: 'WebKit' do
 
-  def init_with_options(web_view, options)
+  defaults layout: {}, frame: CGRectZero
+
+  def init_with_options web_view, options
     web_view.initWithFrame(options.delete(:frame))
   end
 
   custom_methods do
-    def url=(url)
-      url = url.kind_of?(String) ? NSURL.alloc.initWithString(url) : url
+    def url= url
+      url = url.kind_of?(String) ? NSURL.URLWithString(url) : url
       mainFrame.loadRequest(NSURLRequest.requestWithURL(url))
     end
 
@@ -15,4 +16,5 @@ HotCocoa::Mappings.map :web_view => :WebView , :framework => :WebKit do
       setAutoresizingMask(NSViewHeightSizable|NSViewWidthSizable)
     end
   end
+
 end

@@ -1,5 +1,6 @@
-HotCocoa::Mappings.map :movie => :QTMovie, :framework => :QTKit do
-  def alloc_with_options(options)
+HotCocoa::Mappings.map movie: :QTMovie, framework: 'QTKit' do
+
+  def alloc_with_options options
     if options.has_key?(:file)
       QTMovie.movieWithFile(options.delete(:file), error:options.delete(:error))
 
@@ -7,7 +8,8 @@ HotCocoa::Mappings.map :movie => :QTMovie, :framework => :QTKit do
       QTMovie.movieWithURL(NSURL.URLWithString(options.delete(:url)), error:options.delete(:error))
 
     else
-      raise "Can only allocate a movie from a file or a url"
+      raise 'Can only allocate a movie from a file or a url'
     end
   end
+
 end

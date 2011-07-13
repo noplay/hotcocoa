@@ -1,7 +1,8 @@
-HotCocoa::Mappings.map :notification => :NSNotification do
-  defaults :post => true, :distributed => false
+HotCocoa::Mappings.map notification: :NSNotification do
 
-  def alloc_with_options(options)
+  defaults post: true, distributed: false
+
+  def alloc_with_options options
     if options.delete(:post)
       if options.delete(:distributed)
         NSDistributedNotificationCenter.defaultCenter.postNotificationName(options.delete(:name),
@@ -19,4 +20,5 @@ HotCocoa::Mappings.map :notification => :NSNotification do
                              userInfo:options.delete(:info))
     end
   end
+
 end

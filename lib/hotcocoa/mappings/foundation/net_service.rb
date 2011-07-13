@@ -28,25 +28,14 @@ HotCocoa::Mappings.map bonjour_service: NSNetService do
     no_auto_rename: NSNetServiceNoAutoRename
   }
 
-  delegating 'netServiceWillPublish:',
-             :to => :will_publish
-  delegating 'netService:didNotPublish:',
-             :to => :did_not_publish,
-             :parameters => ['didNotPublish']
-  delegating 'netServiceDidPublish:',
-             :to => :did_publish
-  delegating 'netServiceWillResolve:',
-             :to => :will_resolve
-  delegating 'netService:didNotResolve:',
-             :to => :did_not_resolve,
-             :parameters => ['didNotResolve']
-  delegating 'netServiceDidResolveAddress:',
-             :to => :did_resolve
-  delegating 'netService:didUpdateTXTRecordData:',
-             :to => :did_update_txt_record_data,
-             :parameters => ['didUpdateTXTRecordData']
-  delegating 'netServiceDidStop:',
-             :to => :did_stop
+  delegating 'netServiceWillPublish:',              to: :will_publish
+  delegating 'netService:didNotPublish:',           to: :did_not_publish,             parameters: ['didNotPublish']
+  delegating 'netServiceDidPublish:',               to: :did_publish
+  delegating 'netServiceWillResolve:',              to: :will_resolve
+  delegating 'netService:didNotResolve:',           to: :did_not_resolve,             parameters: ['didNotResolve']
+  delegating 'netServiceDidResolveAddress:',        to: :did_resolve
+  delegating 'netService:didUpdateTXTRecordData:',  to: :did_update_txt_record_data,  parameters: ['didUpdateTXTRecordData']
+  delegating 'netServiceDidStop:',                  to: :did_stop
 
   ##
   # @key [String] domain specify the domain to advertise in, defaults to

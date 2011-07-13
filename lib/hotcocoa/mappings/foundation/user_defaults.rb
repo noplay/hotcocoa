@@ -1,7 +1,8 @@
-HotCocoa::Mappings.map :user_defaults => :NSUserDefaults do
-  defaults :defaults => {}
+HotCocoa::Mappings.map user_defaults: :NSUserDefaults do
 
-  def alloc_with_options(options)
+  defaults defaults: {}
+
+  def alloc_with_options options
     user_defaults = NSUserDefaults.standardUserDefaults
 
     unless options[:defaults].nil?
@@ -15,7 +16,7 @@ HotCocoa::Mappings.map :user_defaults => :NSUserDefaults do
   end
 
   custom_methods do
-    def []=(key, value)
+    def []= key, value
       if value.nil?
         delete(key.to_s)
       else
@@ -24,17 +25,19 @@ HotCocoa::Mappings.map :user_defaults => :NSUserDefaults do
       sync
     end
 
-    def [](key)
+    def [] key
       objectForKey(key.to_s)
     end
 
-    def delete(key)
+    def delete key
       removeObjectForKey(key)
       sync
     end
 
+    # @todo Perhaps we should be making a an alert instead of printing to the log?
     def sync
-      puts "Failed to synchronize" unless synchronize
+      puts 'Failed to synchronize' unless synchronize
     end
   end
+
 end

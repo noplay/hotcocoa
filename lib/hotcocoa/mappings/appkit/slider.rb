@@ -1,7 +1,8 @@
-HotCocoa::Mappings.map :slider => :NSSlider do
-  defaults :frame => CGRectZero, :layout => {}
+HotCocoa::Mappings.map slider: :NSSlider do
 
-  def init_with_options(button, options)
+  defaults frame: CGRectZero, layout: {}
+
+  def init_with_options button, options
     button.initWithFrame options.delete(:frame)
   end
 
