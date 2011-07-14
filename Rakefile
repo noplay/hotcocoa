@@ -47,5 +47,5 @@ begin
   require 'yard'
   YARD::Rake::YardocTask.new
 rescue LoadError
-  warn "yard (or a dependency) not available. Install it with: macgem install yard"
+  warn 'yard not available. Install it with: macgem install yard'
 end
