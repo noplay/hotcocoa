@@ -29,3 +29,6 @@ module HotCocoa::Behaviors
   end
 
 end
+
+# @return [Module] alias for HotCocoa::Behaviors
+HotCocoa::Behaviours = HotCocoa::Behaviors
