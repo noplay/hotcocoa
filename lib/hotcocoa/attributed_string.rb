@@ -94,19 +94,6 @@ class String
   end
 end
 
-class Range
-  def to_NSRange(max = nil)
-    location = first
-    if last == -1 and max
-      length = max - first + 1
-    else
-      length = last - first + 1
-    end
-
-    NSRange.new(location, length)
-  end
-end
-
 class NSMutableAttributedString
   def with_attributes(attributes = {})
     string.with_attributes(attributes)
