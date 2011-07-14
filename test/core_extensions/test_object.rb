@@ -10,7 +10,7 @@ module TestNamespaceForConstLookup
   end
 end
 
-class TestObjectExt < MiniTest::Unit::TestCase
+class TestObjectFullConstGet < MiniTest::Unit::TestCase
   def test_returns_a_constant_by_FQ_name_in_receiver_namespace
     assert_equal HotCocoa,           Object.full_const_get('HotCocoa')
     assert_equal HotCocoa::Mappings, Object.full_const_get('HotCocoa::Mappings')
