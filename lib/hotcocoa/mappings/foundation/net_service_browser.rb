@@ -4,9 +4,7 @@ HotCocoa::Mappings.map bonjour_browser: :NSNetServiceBrowser do
     def search_for_services type, domain = ''
       searchForServicesOfType type, inDomain: domain
     end
-  end
 
-  custom_methods do
     def search_for_domains
       searchForBrowsableDomains
     end
