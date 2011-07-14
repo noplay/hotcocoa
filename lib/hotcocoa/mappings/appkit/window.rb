@@ -65,16 +65,12 @@ HotCocoa::Mappings.map window: :NSWindow do
   end
 
   custom_methods do
+    method_alias :view, :content_view
+    method_alias :view=, :setContentView
+    method_alias :has_shadow?, :hasShadow
+
     def << control
       contentView.addSubview control
-    end
-
-    def view
-      contentView
-    end
-
-    def view= view
-      setContentView(view)
     end
 
     def on_notification options={}, &block
@@ -86,10 +82,6 @@ HotCocoa::Mappings.map window: :NSWindow do
       display
       makeKeyAndOrderFront(nil)
       orderFrontRegardless
-    end
-
-    def has_shadow?
-      hasShadow
     end
   end
 

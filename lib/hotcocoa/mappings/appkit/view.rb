@@ -24,17 +24,8 @@ HotCocoa::Mappings.map  view: :NSView do
   end
 
   custom_methods do
-    def auto_resize=(value)
-      setAutoresizingMask(value)
-    end
-
-    # @todo We can use alias_method instead. How, you ask? With hacks
-    #       of course. Give the module created by custom_methods an
-    #       implementation of Module#included that iterates over a list
-    #       of methods to alias.
-    def <<(view)
-      addSubview(view)
-    end
+    method_alias :<<, 'addSubview:'
+    method_alias :auto_resize=, 'setAutoresizingMask:'
 
     def layout=(options)
       @layout = HotCocoa::LayoutOptions.new(self, options)

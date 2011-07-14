@@ -9,35 +9,14 @@ HotCocoa::Mappings.map array_controller: :NSArrayController do
   end
 
   custom_methods do
-    def avoids_empty_selection?
-      avoidsEmptySelection
-    end
+    method_alias :avoids_empty_selection?,  :avoidsEmptySelection
+    method_alias :preserves_selection?,     :preservesSelection
+    method_alias :rearrange_automatically=, 'setAutomaticallyRearrangesObjects:'
+    method_alias :rearrange_automatically?, :automaticallyRearrangesObjects
+    method_alias :selects_inserted=,        'setSelectsInsertedObjects:'
+    method_alias :selects_inserted?,        :selectsInsertedObjects
+    method_alias :<<,                       'addObject:'
 
-    def preserves_selection?
-      preservesSelection
-    end
-
-    def rearrange_automatically=(value)
-      setAutomaticallyRearrangesObjects(value)
-    end
-
-    def rearrange_automatically?
-      automaticallyRearrangesObjects
-    end
-
-    def selects_inserted=(value)
-      setSelectsInsertedObjects(value)
-    end
-
-    def selects_inserted?
-      selectsInsertedObjects
-    end
-
-    def <<(object)
-      addObject(object)
-    end
-
-  custom_methods do
     def [] index
       arrangedObjects[index]
     end

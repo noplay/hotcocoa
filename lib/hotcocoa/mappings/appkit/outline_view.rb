@@ -16,6 +16,9 @@ HotCocoa::Mappings.map outline_view: :NSOutlineView do
   end
 
   custom_methods do
+    method_alias :reload, :reloadData
+    method_alias :column=, 'addTableColumn:'
+
     def data= data_source
       data_source = HotCocoa::OutlineViewDataSource.new(data_source) if data_source.kind_of? Array
       setDataSource data_source
@@ -24,14 +27,6 @@ HotCocoa::Mappings.map outline_view: :NSOutlineView do
     def columns= columns
       columns.each { |column| addTableColumn column }
       setOutlineTableColumn(columns[0]) if outlineTableColumn.nil?
-    end
-
-    def column=(column)
-      addTableColumn(column)
-    end
-
-    def reload
-      reloadData
     end
 
     def on_double_action= behavior
