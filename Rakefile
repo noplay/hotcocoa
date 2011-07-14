@@ -26,10 +26,7 @@ end
 
 require 'rake/gempackagetask'
 spec = Gem::Specification.load('hotcocoa.gemspec')
-Rake::GemPackageTask.new(spec) do |pkg|
-  pkg.need_zip = false
-  pkg.need_tar = true
-end
+Rake::GemPackageTask.new(spec) { }
 
 require 'rubygems/installer'
 desc 'Install hotcocoa'
