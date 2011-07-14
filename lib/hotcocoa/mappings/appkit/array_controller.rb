@@ -37,7 +37,6 @@ HotCocoa::Mappings.map array_controller: :NSArrayController do
       addObject(object)
     end
 
-  custom_methods do
     def [] index
       arrangedObjects[index]
     end
