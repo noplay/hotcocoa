@@ -1,8 +1,9 @@
-HotCocoa::Mappings.map :array_controller => :NSArrayController do
-  def init_with_options(array_controller, options)
+HotCocoa::Mappings.map array_controller: :NSArrayController do
+
+  def init_with_options array_controller, options
     result = array_controller.init
-    if options.has_key?(:for)
-      result.addObjects(options.delete(:for))
+    if options.has_key? :for
+      result.addObjects(options.delete :for)
     end
     result
   end
@@ -36,22 +37,23 @@ HotCocoa::Mappings.map :array_controller => :NSArrayController do
       addObject(object)
     end
 
-    def [](index)
+  custom_methods do
+    def [] index
       arrangedObjects[index]
     end
 
-    def each(&block)
-      arrangedObjects.each(&block)
+    def each &block
+      arrangedObjects.each &block
     end
 
     def selected
       selectedObjects.first
     end
 
-    def sort_by=(sort_descriptors)
-      sort_descriptors = [sort_descriptors] if sort_descriptors.kind_of?(Hash)
+    def sort_by= sort_descriptors
+      sort_descriptors = [sort_descriptors] if sort_descriptors.kind_of? Hash
       descriptors = sort_descriptors.collect do |descriptor|
-        selector = descriptor.delete(:selector)
+        selector = descriptor.delete :selector
         ascending = (descriptor.values.first == :ascending)
         if selector
           NSSortDescriptor.alloc.initWithKey(descriptor.keys.first.to_s, ascending:ascending, selector:selector)
@@ -59,9 +61,10 @@ HotCocoa::Mappings.map :array_controller => :NSArrayController do
           NSSortDescriptor.alloc.initWithKey(descriptor.keys.first.to_s, ascending:ascending)
         end
       end
-      setSortDescriptors(descriptors)
+      setSortDescriptors descriptors
     end
   end
+
 end
 
 =begin
