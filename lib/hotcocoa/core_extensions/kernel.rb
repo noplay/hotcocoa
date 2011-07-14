@@ -1,4 +1,19 @@
+##
+# HotCocoa extensions for the Kernel module
 module Kernel
+
+  alias_method :default_framework, :framework
+  ##
+  # Override MacRuby's built-in #framework method in order to support lazy
+  # loading frameworks inside of HotCocoa.
+  def framework name
+    if default_framework(name)
+      HotCocoa::Mappings.framework_loaded
+      true
+    else
+      false
+    end
+  end
 
   ##
   # A mapping, lol
@@ -10,15 +25,15 @@ module Kernel
   ##
   # @todo encoding format can be pushed upstream?
   #
-  # override macruby's built-in {kernel#to_plist} method to support
-  # specifying an output format. see {plist_formats} for the available
+  # Override MacRuby's built-in {Kernel#to_plist} method to support
+  # specifying an output format. See {PLIST_FORMATS} for the available
   # formats.
   #
-  # @example encoding a plist in the binary format
+  # @example Encoding a plist in the binary format
   #  { key: 'value' }.to_plist(:binary)
   #
   # @return [String] returns `self` serialized as a plist and encoded
-  #  using `format`
+  #   using `format`
   def to_plist format = :xml
     format_const = PLIST_FORMATS[format]
     raise ArgumentError, "invalid format `#{format}'" unless format_const

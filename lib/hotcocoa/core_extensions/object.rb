@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-# Object.full_const_get was taken from the ‘extlib’ project:
-# http://github.com/sam/extlib which is released under a MIT License and
-# copyrighted by Sam Smoot (2008).
 
 ##
 # HotCocoa extensions for the Object class
 class Object
 
   ##
+  # Object.full_const_get was taken from the ‘extlib’ project:
+  # http://github.com/sam/extlib which is released under a MIT License and
+  # copyrighted by Sam Smoot (2008).
+  #
   # Given a string, return the fully qualified constant name found in the
   # receiver's namespace.
   #

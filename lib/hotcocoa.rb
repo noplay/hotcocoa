@@ -10,8 +10,7 @@ module HotCocoa
 end
 
 require 'hotcocoa/version'
-require 'hotcocoa/object_ext'
-require 'hotcocoa/kernel_ext'
+require 'hotcocoa/core_extensions'
 require 'hotcocoa/mappings'
 require 'hotcocoa/target_action_convenience'
 require 'hotcocoa/behaviors'
@@ -23,7 +22,6 @@ require 'hotcocoa/notification_listener'
 require 'hotcocoa/data_sources/table_data_source'
 require 'hotcocoa/data_sources/combo_box_data_source'
 require 'hotcocoa/data_sources/outline_view_data_source'
-require 'hotcocoa/plist'
 require 'hotcocoa/kvo_accessors'
 require 'hotcocoa/attributed_string'
 
