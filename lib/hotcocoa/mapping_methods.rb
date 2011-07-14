@@ -61,16 +61,54 @@ module HotCocoa::MappingMethods
   attr_reader :constants_map
 
   ##
-  #
+  # The base for all custom methods modules.
+  class CustomMethods < Module
+    # @return [Array<Array(Symbol,Symbol)>]
+    attr_reader :alias_map
+
+    def initialize
+      @alias_map = []
+    end
+
+    ##
+    # Override the built in {#alias_method} feature so that we delay when
+    # the method is aliased so that it works as expected.
+    #
+    # @param [Symbol] old_name
+    # @param [Symbol] new_name
+    def method_alias new_name, old_name
+      @alias_map << [new_name, old_name]
+    end
+
+    ##
+    # Called when being applied to an instance
+    def extended klass
+      klass.module_eval do
+        alias_map.each do |new_name, old_name|
+          alias_method new_name, old_name
+        end
+      end
+    end
+
+    ##
+    # Called when being included via HotCocoa::Behaviors
+    def included klass
+      klass.module_eval do
+        alias_map.each do |new_name, old_name|
+          alias_method new_name, old_name
+        end
+      end
+    end
+  end
+
+  ##
   # Custom methods are modules that are mixed into the class being
   # mapped; they provide idiomatic Ruby methods for the mapped
   # Objective-C class instances.
   #
   # @example
   #   custom_methods do
-  #     def bezel= value
-  #       setBezelStyle(value)
-  #     end
+  #     alias_method :bezel=, 'setBezelStyle:'
   #     def on?
   #       state == NSOnState
   #     end
@@ -95,7 +133,7 @@ module HotCocoa::MappingMethods
   #   @return [Module,nil] Return the Module if it exists, otherwise nil.
   def custom_methods &block
     if block
-      @custom_methods = Module.new
+      @custom_methods = CustomMethods.new
       @custom_methods.module_eval(&block)
     else
       @custom_methods
