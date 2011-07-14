@@ -6,9 +6,11 @@ HotCocoa::Mappings.map movie_view: :QTMovieView, framework: :QTKit do
     movie_view.initWithFrame(options.delete(:frame))
   end
 
-  alias_method :controller_visible=, 'setControllerVisible:'
-
   custom_methods do
+    def controller_visible= value
+        setControllerVisible value
+    end
+
     def controller_buttons= buttons
       setBackButtonVisible(buttons.include?(:back))
       setCustomButtonVisible(buttons.include?(:custom))

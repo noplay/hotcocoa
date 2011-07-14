@@ -6,7 +6,11 @@ HotCocoa::Mappings.map bonjour_browser: :NSNetServiceBrowser do
     end
   end
 
-  alias_method :search_for_domains, :searchForBrowsableDomains
+  custom_methods do
+    def search_for_domains
+      searchForBrowsableDomains
+    end
+  end
 
   delegating 'netServiceBrowser:didFindDomain:moreComing:',     to: 'did_find_domain',     parameters: ['didFindDomain',    'moreComing']
   delegating 'netServiceBrowser:didRemoveDomain:moreComing:',   to: 'did_remove_domain',   parameters: ['didRemoveDomain',  'moreComing']
