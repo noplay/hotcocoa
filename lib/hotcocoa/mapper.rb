@@ -270,7 +270,7 @@ class HotCocoa::Mappings::Mapper
           options = value.delete(:options)
           bind "#{exposed_binding}", toObject:value.keys.first, withKeyPath:value.values.first, options:options
         else
-          self.send("set#{exposed_binding.capitalize}", value)
+          instance.send "set#{HotCocoa::Mappings::Mapper.camel_case(exposed_binding)}", value
         end
       end
     end
