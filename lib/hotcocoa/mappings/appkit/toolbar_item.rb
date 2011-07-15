@@ -8,8 +8,8 @@ HotCocoa::Mappings.map toolbar_item: :NSToolbarItem do
     user:     NSToolbarItemVisibilityPriorityUser
   }
 
-    if !options.has_key?(:label) && !options.has_key?(:identifier)
   def init_with_options toolbar_item, options
+    unless options.has_key?(:label) || options.has_key?(:identifier)
       raise ArgumentError, ":identifier or :label required"
     end
 

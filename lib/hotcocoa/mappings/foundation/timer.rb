@@ -7,7 +7,7 @@ HotCocoa::Mappings.map timer: :NSTimer do
 
     target   = options.delete :target
     selector = options.delete :selector
-    if !target || !selector
+    unless target && selector
       raise ArgumentError, 'timer requires either :target and :selector or :on_action' unless options.has_key? :on_action
 
       target = Object.new
