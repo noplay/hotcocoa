@@ -22,6 +22,7 @@ class Object
     define_methods_with_signatures(signatures, &b)
   end
 
+
   private
 
   def self.define_methods_with_signatures(signatures, &b)

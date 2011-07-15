@@ -6,7 +6,7 @@ HotCocoa::Mappings.map application: :NSApplication do
 
   def handle_block application, &block
     application.load_application_menu
-    block.call(application)
+    block.call application
     application.run
   end
 
@@ -16,10 +16,10 @@ HotCocoa::Mappings.map application: :NSApplication do
     def load_application_menu
       require 'lib/menu' # hmmm...
 
-      o = Object.new
-      o.extend HotCocoa
+      obj = Object.new
+      obj.extend HotCocoa
 
-      setMainMenu(o.application_menu)
+      setMainMenu obj.application_menu
     rescue LoadError => e
     end
 
@@ -41,11 +41,11 @@ HotCocoa::Mappings.map application: :NSApplication do
     end
 
     def menu= menu
-      setMainMenu(menu)
+      setMainMenu menu
     end
 
     def on_hide menu
-      hide(menu)
+      hide menu
     end
 
     def on_about menu
@@ -53,15 +53,15 @@ HotCocoa::Mappings.map application: :NSApplication do
     end
 
     def on_hide_others menu
-      hideOtherApplications(menu)
+      hideOtherApplications menu
     end
 
     def on_show_all menu
-      unhideAllApplications(menu)
+      unhideAllApplications menu
     end
 
     def on_quit menu
-      terminate(menu)
+      terminate menu
     end
 
 
@@ -72,8 +72,8 @@ HotCocoa::Mappings.map application: :NSApplication do
       value = path.values.first
       menu = menu[key]
 
-      if value.kind_of?(Array)
-        find_menu(menu, value.first)
+      if value.kind_of? Array
+        find_menu menu, value.first
       else
         menu[value]
       end

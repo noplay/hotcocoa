@@ -3,7 +3,7 @@ HotCocoa::Mappings.map combo_box: :NSComboBox do
   defaults selectable: true, editable: true, completes: true, layout: {}
 
   def init_with_options combo_box, options
-    combo_box.initWithFrame options.delete(:frame)
+    combo_box.initWithFrame options.delete :frame
   end
 
   custom_methods do

@@ -78,27 +78,29 @@ module HotCocoa
   end
 end
 
-HotCocoa::Mappings.map :popup => :NSPopUpButton do
-  defaults :pulls_down => false,
-           :frame => CGRectZero,
-           :layout => {}
+HotCocoa::Mappings.map popup: :NSPopUpButton do
 
-  def init_with_options(popup, options)
-    popup.initWithFrame(options.delete(:frame), pullsDown:options.delete(:pulls_down))
+  defaults pulls_down: false,
+           frame: CGRectZero,
+           layout: {}
+
+  def init_with_options popup, options
+    popup.initWithFrame options.delete(:frame), pullsDown:options.delete(:pulls_down)
   end
 
   custom_methods do
-    def items=(values)
+    def items= values
       removeAllItems
-      addItemsWithTitles(values)
+      addItemsWithTitles values
     end
 
     def items
-      @_item_list ||= HotCocoa::PopUpItemList.new(self)
+      @_item_list ||= HotCocoa::PopUpItemList.new self
     end
 
     def menu_items
-      @_menu_item_list ||=  HotCocoa::PopUpMenuItemList.new(self)
+      @_menu_item_list ||=  HotCocoa::PopUpMenuItemList.new self
     end
   end
+
 end

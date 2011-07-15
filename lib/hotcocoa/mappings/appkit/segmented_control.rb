@@ -56,46 +56,45 @@ module HotCocoa
   end
 end
 
-HotCocoa::Mappings.map :segmented_control => :NSSegmentedControl do
-  
+HotCocoa::Mappings.map segmented_control: :NSSegmentedControl do
+
   constant :segment_style, {
-    :rounded          => NSSegmentStyleRounded,
-    :textured_rounded => NSSegmentStyleTexturedRounded,
-    :round_rect       => NSSegmentStyleRoundRect,
-    :capsule          => NSSegmentStyleCapsule,
-    :small_square     => NSSegmentStyleSmallSquare
+    rounded:          NSSegmentStyleRounded,
+    textured_rounded: NSSegmentStyleTexturedRounded,
+    round_rect:       NSSegmentStyleRoundRect,
+    capsule:          NSSegmentStyleCapsule,
+    small_square:     NSSegmentStyleSmallSquare
   }
 
-  defaults :layout => {}, :frame => [0,0,0,0]
-  
-  def init_with_options(segmented_control, options)
-    segmented_control.initWithFrame options.delete(:frame)
+  defaults layout: {}, frame: CGRectZero
+
+  def init_with_options segmented_control, options
+    segmented_control.initWithFrame options.delete :frame
   end
 
   custom_methods do
-    def segments=(segments)
-      segments.each do |segment|
-        self << segment
-      end
+    def segments= segments
+      segments.each { |segment| self << segment }
     end
 
-    def <<(data)
+    def << data
       setSegmentCount(segmentCount + 1)
 
       segment = HotCocoa::SegmentedControlSegment.new(self, segmentCount - 1)
       data.each { |key, value| segment.send("#{key}=", value) }
     end
 
-    def [](segment_number)
-      HotCocoa::SegmentedControlSegment.new(self, segment_number)
+    def [] segment_number
+      HotCocoa::SegmentedControlSegment.new self, segment_number
     end
 
-    def select(segment_number)
-      setSelectedSegment(segment_number)
+    def select segment_number
+      setSelectedSegment segment_number
     end
 
     def selected_segment
-      HotCocoa::SegmentedControlSegment.new(self, selectedSegment)
+      HotCocoa::SegmentedControlSegment.new self, selectedSegment
     end
   end
+
 end

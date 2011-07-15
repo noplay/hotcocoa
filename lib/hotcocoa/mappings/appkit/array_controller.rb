@@ -17,24 +17,24 @@ HotCocoa::Mappings.map array_controller: :NSArrayController do
       preservesSelection
     end
 
-    def rearrange_automatically=(value)
-      setAutomaticallyRearrangesObjects(value)
+    def rearrange_automatically= value
+      setAutomaticallyRearrangesObjects value
     end
 
     def rearrange_automatically?
       automaticallyRearrangesObjects
     end
 
-    def selects_inserted=(value)
-      setSelectsInsertedObjects(value)
+    def selects_inserted= value
+      setSelectsInsertedObjects value
     end
 
     def selects_inserted?
       selectsInsertedObjects
     end
 
-    def <<(object)
-      addObject(object)
+    def << object
+      addObject object
     end
 
     def [] index

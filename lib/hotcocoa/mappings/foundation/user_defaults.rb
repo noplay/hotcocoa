@@ -18,19 +18,19 @@ HotCocoa::Mappings.map user_defaults: :NSUserDefaults do
   custom_methods do
     def []= key, value
       if value.nil?
-        delete(key.to_s)
+        delete key.to_s
       else
-        setObject(value, forKey:key.to_s)
+        setObject value, forKey: key.to_s
       end
       sync
     end
 
     def [] key
-      objectForKey(key.to_s)
+      objectForKey key.to_s
     end
 
     def delete key
-      removeObjectForKey(key)
+      removeObjectForKey key.to_s
       sync
     end
 

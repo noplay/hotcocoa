@@ -50,16 +50,16 @@ HotCocoa::Mappings.map button: :NSButton do
   }
 
   def init_with_options button, options
-    button.initWithFrame options.delete(:frame)
+    button.initWithFrame options.delete :frame
   end
 
   custom_methods do
     def bezel= value
-      setBezelStyle(value)
+      setBezelStyle value
     end
 
     def type= value
-      setButtonType(value)
+      setButtonType value
     end
 
     def state= value
@@ -69,7 +69,7 @@ HotCocoa::Mappings.map button: :NSButton do
               when :mixed then NSMixedState
               else value
               end
-      setState(value)
+      setState value
     end
 
     def on?

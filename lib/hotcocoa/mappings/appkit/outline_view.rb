@@ -12,7 +12,7 @@ HotCocoa::Mappings.map outline_view: :NSOutlineView do
   }
 
   def init_with_options outline_view, options
-    outline_view.initWithFrame(options.delete :frame)
+    outline_view.initWithFrame options.delete :frame
   end
 
   custom_methods do
@@ -23,11 +23,11 @@ HotCocoa::Mappings.map outline_view: :NSOutlineView do
 
     def columns= columns
       columns.each { |column| addTableColumn column }
-      setOutlineTableColumn(columns[0]) if outlineTableColumn.nil?
+      setOutlineTableColumn columns[0] if outlineTableColumn.nil?
     end
 
-    def column=(column)
-      addTableColumn(column)
+    def column= column
+      addTableColumn column
     end
 
     def reload
@@ -36,19 +36,19 @@ HotCocoa::Mappings.map outline_view: :NSOutlineView do
 
     def on_double_action= behavior
       if target && (
-          target.instance_variable_get('@action_behavior') ||
-            target.instance_variable_get('@double_action_behavior'))
-        object.instance_variable_set('@double_action_behavior', behavior)
+          target.instance_variable_get(:@action_behavior) ||
+            target.instance_variable_get(:@double_action_behavior))
+        object.instance_variable_set :@double_action_behavior, behavior
         object = target
 
       else
         object = Object.new
-        object.instance_variable_set('@double_action_behavior', behavior)
+        object.instance_variable_set :@double_action_behavior, behavior
         setTarget object
       end
 
       def object.perform_double_action sender
-        @double_action_behavior.call(sender)
+        @double_action_behavior.call sender
       end
       setDoubleAction 'perform_double_action:'
     end

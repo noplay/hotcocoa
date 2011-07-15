@@ -1,7 +1,9 @@
-HotCocoa::Mappings.map :layout_view => :"HotCocoa::LayoutView" do
-  defaults :frame => CGRectZero, :layout => {}
+HotCocoa::Mappings.map layout_view: :'HotCocoa::LayoutView' do
 
-  def init_with_options(view, options)
-    view.initWithFrame options.delete(:frame)
+  defaults frame: CGRectZero, layout: {}
+
+  def init_with_options view, options
+    view.initWithFrame options.delete :frame
   end
+
 end

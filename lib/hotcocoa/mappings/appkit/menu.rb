@@ -3,7 +3,7 @@ HotCocoa::Mappings.map menu: :NSMenu do
   defaults title: ''
 
   def alloc_with_options options
-    NSMenu.alloc.initWithTitle(options.delete(:title))
+    NSMenu.alloc.initWithTitle options.delete :title
   end
 
   custom_methods do
@@ -13,28 +13,28 @@ HotCocoa::Mappings.map menu: :NSMenu do
 
       case symbol
       when :apple
-        app.setAppleMenu(submenu)
+        app.setAppleMenu submenu
       when :services
-        app.setServicesMenu(submenu)
+        app.setServicesMenu submenu
       when :window
-        app.setWindowsMenu(submenu)
+        app.setWindowsMenu submenu
       end
 
       item_map[symbol] = submenu
-      block.call(submenu) if block
+      block.call submenu if block
 
-      setSubmenu(submenu, forItem: item)
+      setSubmenu submenu, forItem: item
       submenu
     end
 
     def item symbol, options = {}
-      options[:title]  ||= titleize(symbol)
+      options[:title]  ||= titleize symbol
       options[:action] ||= "on_#{symbol}:"
 
-      item = builder.menu_item(options)
+      item = builder.menu_item options
       item_map[symbol] = item
 
-      addItem(item)
+      addItem item
       item
     end
 
@@ -42,10 +42,11 @@ HotCocoa::Mappings.map menu: :NSMenu do
       addItem NSMenuItem.separatorItem
     end
 
-    def [](*symbols)
+    def [] *symbols
       symbol = symbols.shift
       symbols.empty? ? item_map[symbol] : item_map[symbol][*symbols]
     end
+
 
     private
 
@@ -60,12 +61,12 @@ HotCocoa::Mappings.map menu: :NSMenu do
     end
 
     # @todo Changing to an attr requires initializing on #include
-    #       which I do not know how to do...
+    #       or #extend, which could be tricky
     def item_map
       @item_map ||= {}
     end
 
-    def titleize(symbol)
+    def titleize symbol
       symbol.to_s.split('_').collect(&:capitalize).join(' ')
     end
 

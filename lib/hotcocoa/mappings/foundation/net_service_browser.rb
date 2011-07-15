@@ -1,5 +1,11 @@
 HotCocoa::Mappings.map bonjour_browser: :NSNetServiceBrowser do
 
+  ##
+  # There are no values that need to be set at initialization
+  def init_with_options browser, opts
+    browser.init
+  end
+
   custom_methods do
     def search_for_services type, domain = ''
       searchForServicesOfType type, inDomain: domain
@@ -17,11 +23,5 @@ HotCocoa::Mappings.map bonjour_browser: :NSNetServiceBrowser do
   delegating 'netServiceBrowserWillSearch:',                    to: 'will_search'
   delegating 'netServiceBrowser:didNotSearch:',                 to: 'did_not_search',      parameters: ['didNotSearch']
   delegating 'netServiceBrowserDidStopSearch:',                 to: 'did_stop_search'
-
-  ##
-  # There are no values that need to be set at initialization
-  def init_with_options browser, opts
-    browser.init
-  end
 
 end

@@ -21,17 +21,17 @@ HotCocoa::Mappings.map timer: :NSTimer do
     end
 
     if options.delete :scheduled
-      NSTimer.scheduledTimerWithTimeInterval(options.delete(:interval),
-                                      target:target,
-                                    selector:selector,
-                                    userInfo:options.delete(:info),
-                                     repeats:options.delete(:repeats))
+      NSTimer.scheduledTimerWithTimeInterval options.delete(:interval),
+                                     target: target,
+                                   selector: selector,
+                                   userInfo: options.delete(:info),
+                                    repeats: options.delete(:repeats)
     else
-      NSTimer.timerWithTimeInterval(options.delete(:interval),
-                             target:target,
-                           selector:selector,
-                           userInfo:options.delete(:info),
-                            repeats:options.delete(:repeats))
+      NSTimer.timerWithTimeInterval options.delete(:interval),
+                            target: target,
+                          selector: selector,
+                          userInfo: options.delete(:info),
+                           repeats: options.delete(:repeats)
     end
   end
 

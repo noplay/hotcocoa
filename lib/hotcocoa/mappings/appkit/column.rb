@@ -1,8 +1,9 @@
-HotCocoa::Mappings.map :column => :NSTableColumn do
-  defaults :title => 'Column'
+HotCocoa::Mappings.map  column: :NSTableColumn do
 
-  def init_with_options(column, options)
-    column.initWithIdentifier(options.delete(:id))
+  defaults title: 'Column'
+
+  def init_with_options column, options
+    column.initWithIdentifier options.delete :id
   end
 
   custom_methods do
@@ -10,8 +11,9 @@ HotCocoa::Mappings.map :column => :NSTableColumn do
       headerCell.stringValue
     end
 
-    def title=(newTitle)
+    def title= newTitle
       headerCell.stringValue = newTitle
     end
   end
+
 end

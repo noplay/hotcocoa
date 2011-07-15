@@ -1,61 +1,63 @@
-HotCocoa::Mappings.map :toolbar => :NSToolbar do
+HotCocoa::Mappings.map toolbar: :NSToolbar do
+
   constant :size, {
-    :default  => NSToolbarSizeModeDefault,
-    :regular  => NSToolbarSizeModeRegular,
-    :small    => NSToolbarSizeModeSmall
+    default:  NSToolbarSizeModeDefault,
+    regular:  NSToolbarSizeModeRegular,
+    small:    NSToolbarSizeModeSmall
   }
 
   constant :display, {
-    :default        => NSToolbarDisplayModeDefault,
-    :icon_and_label => NSToolbarDisplayModeIconAndLabel,
-    :icon           => NSToolbarDisplayModeIconOnly,
-    :label          => NSToolbarDisplayModeLabelOnly
+    default:        NSToolbarDisplayModeDefault,
+    icon_and_label: NSToolbarDisplayModeIconAndLabel,
+    icon:           NSToolbarDisplayModeIconOnly,
+    label:          NSToolbarDisplayModeLabelOnly
   }
 
-  defaults :identifier => 'DefaultToolbarIdentifier',
-           :allowed => [:separator, :space, :flexible_space, :show_colors,
+  defaults identifier: 'DefaultToolbarIdentifier',
+           allowed: [:separator, :space, :flexible_space, :show_colors,
                         :show_fonts, :customize, :print],
-           :default => [],
-           :allow_customization => true,
-           :size => :default
+           default: [],
+           allow_customization: true,
+           size: :default
 
-  def init_with_options(toolbar, options)
-    toolbar = toolbar.initWithIdentifier options.delete(:identifier)
-    toolbar.allowsUserCustomization = options.delete(:allow_customization)
+  def init_with_options toolbar, options
+    toolbar = toolbar.initWithIdentifier options.delete :identifier
+    toolbar.allowsUserCustomization = options.delete :allow_customization
     toolbar
   end
 
   custom_methods do
-    def size=(mode)
-      setSizeMode(mode)
+    def size= mode
+      setSizeMode mode
     end
 
-    def display=(mode)
-      setDisplayMode(mode)
+    def display= mode
+      setDisplayMode mode
     end
 
-    def default=(list)
+    def default= list
       @default = list.dup
       build_custom_items
     end
 
-    def allowed=(list)
+    def allowed= list
       @allowed = list.dup
       build_custom_items
     end
+
 
     private
 
     def build_custom_items
       if @allowed && @default
-        ary = @default.select { |x| x.is_a?(NSToolbarItem) }
+        ary = @default.select { |x| x.is_a? NSToolbarItem }
 
-        @default.map! { |x| x.is_a?(NSToolbarItem) ? x.itemIdentifier : x }
-        @allowed.map! { |x| x.is_a?(NSToolbarItem) ? x.itemIdentifier : x }
+        @default.map! { |x| x.is_a? NSToolbarItem ? x.itemIdentifier : x }
+        @allowed.map! { |x| x.is_a? NSToolbarItem ? x.itemIdentifier : x }
 
         @custom_items = {}
         ary.each { |x| @custom_items[x.itemIdentifier] = x }
-        @allowed.concat(@custom_items.keys)
+        @allowed.concat @custom_items.keys
 
         [@allowed, @default].each do |a|
           a.map! do |i|
@@ -87,10 +89,11 @@ HotCocoa::Mappings.map :toolbar => :NSToolbar do
     end
   end
 
-  delegating "toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:", :to => :item_for_identifier,         :parameters => [:itemForItemIdentifier, :willBeInsertedIntoToolbar], :required => true
-  delegating "toolbarAllowedItemIdentifiers:",                           :to => :allowed_items, :required => true
-  delegating "toolbarDefaultItemIdentifiers:",                           :to => :default_items, :required => true
-  delegating "toolbarSelectableItemIdentifiers:",                        :to => :selectable_items
-  delegating "toolbarDidRemoveItem:",                                    :to => :did_remove_item,             :parameters => ["toolbarDidRemoveItem.userInfo['item']"]
-  delegating "toolbarWillAddItem:",                                      :to => :will_add_item,               :parameters => ["toolbarWillAddItem.userInfo['item']"]
+  delegating 'toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:', to: :item_for_identifier, required: true,  parameters: [:itemForItemIdentifier, :willBeInsertedIntoToolbar]
+  delegating 'toolbarAllowedItemIdentifiers:',                           to: :allowed_items,       required: true
+  delegating 'toolbarDefaultItemIdentifiers:',                           to: :default_items,       required: true
+  delegating 'toolbarSelectableItemIdentifiers:',                        to: :selectable_items
+  delegating 'toolbarDidRemoveItem:',                                    to: :did_remove_item,                      parameters: ["toolbarDidRemoveItem.userInfo['item']"]
+  delegating 'toolbarWillAddItem:',                                      to: :will_add_item,                        parameters: ["toolbarWillAddItem.userInfo['item']"]
+
 end

@@ -20,32 +20,32 @@ HotCocoa::Mappings.map  view: :NSView do
   }
 
   def init_with_options view, options
-    view.initWithFrame options.delete(:frame)
+    view.initWithFrame options.delete :frame
   end
 
   custom_methods do
-    def auto_resize=(value)
-      setAutoresizingMask(value)
+    def auto_resize= value
+      setAutoresizingMask value
     end
 
     # @todo We can use alias_method instead. How, you ask? With hacks
     #       of course. Give the module created by custom_methods an
     #       implementation of Module#included that iterates over a list
     #       of methods to alias.
-    def <<(view)
-      addSubview(view)
+    def << view
+      addSubview view
     end
 
-    def layout=(options)
-      @layout = HotCocoa::LayoutOptions.new(self, options)
+    def layout= options
+      @layout = HotCocoa::LayoutOptions.new self, options
       @layout.update_layout_views!
     end
 
     attr_reader :layout
 
-    def on_notification(options={}, &block)
+    def on_notification options = {}, &block
       options[:sent_by] = self
-      NotificationListener.new(options, &block)
+      NotificationListener.new options, &block
     end
 
     def remove subview, options = {}
@@ -54,7 +54,7 @@ HotCocoa::Mappings.map  view: :NSView do
     end
 
     def enter_full_screen options = {}
-      enterFullScreenMode((options.delete(:screen) || NSScreen.mainScreen), withOptions:options)
+      enterFullScreenMode (options.delete(:screen) || NSScreen.mainScreen), withOptions: options
     end
 
     def leave_full_screen options = {}

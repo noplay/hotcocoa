@@ -1,16 +1,15 @@
 ##
-# Cocoa Reference: NSWindow
+# @cocoa NSWindow
 #
-# Usage example:
-# ==============
+# @example
 #
-#   window :frame => [100, 100, 604, 500], :title => "My app", :style => [:titled, :closable, :miniaturizable, :resizable] do |win|
+#   window frame: [100, 100, 604, 500], title: 'My app', style: [:titled, :closable, :miniaturizable, :resizable] do |win|
 #     win.contentView.margin  = 0
-#     win.background_color    = color(:name => 'white')
+#     win.background_color    = color(name: 'white')
 #     win.will_close { exit }
 #   end
 #
-# Apple Developer Connection url: http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Classes/NSWindow_Class/Reference/Reference.html
+# @adc http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Classes/NSWindow_Class/Reference/Reference.html
 #
 HotCocoa::Mappings.map window: :NSWindow do
   defaults  style:    [:titled, :closable, :miniaturizable, :resizable],
@@ -20,7 +19,9 @@ HotCocoa::Mappings.map window: :NSWindow do
             view:     :layout,
             default_layout: {}
 
-  constant :backing, buffered: NSBackingStoreBuffered
+  constant :backing, {
+    buffered: NSBackingStoreBuffered
+  }
 
   constant :style, {
     borderless:      NSBorderlessWindowMask,
@@ -37,7 +38,7 @@ HotCocoa::Mappings.map window: :NSWindow do
       width, height = size
 
       screen_frame = NSScreen.mainScreen.visibleFrame
-      center = options.delete(:center)
+      center = options.delete :center
 
       x = screen_frame.origin.x + (center ? (screen_frame.size.width - width) / 2 : 30)
       y = screen_frame.origin.y + (center ? (screen_frame.size.height - height) / 2 : (screen_frame.size.height - height - 30))
@@ -46,19 +47,19 @@ HotCocoa::Mappings.map window: :NSWindow do
     end
 
     window = window.initWithContentRect options.delete(:frame),
-                               styleMask:options.delete(:style),
-                               backing:options.delete(:backing),
-                               defer:options.delete(:defer)
+                             styleMask: options.delete(:style),
+                               backing: options.delete(:backing),
+                                 defer: options.delete(:defer)
 
-    default_layout = options.delete(:default_layout)
+    default_layout = options.delete :default_layout
     if options[:view] == :layout
-      options.delete(:view)
+      options.delete :view
       window.setContentView(HotCocoa::LayoutView.alloc.initWithFrame([0, 0,
                                                         window.contentView.frameSize.width,
                                                         window.contentView.frameSize.height]))
       window.contentView.default_layout = default_layout
     elsif options[:view] == :nolayout
-      options.delete(:view)
+      options.delete :view
     end
 
     window
@@ -74,17 +75,17 @@ HotCocoa::Mappings.map window: :NSWindow do
     end
 
     def view= view
-      setContentView(view)
+      setContentView view
     end
 
-    def on_notification options={}, &block
+    def on_notification options = {}, &block
       options[:sent_by] = self
-      NotificationListener.new(options, &block)
+      NotificationListener.new options, &block
     end
 
     def show
       display
-      makeKeyAndOrderFront(nil)
+      makeKeyAndOrderFront nil
       orderFrontRegardless
     end
 
