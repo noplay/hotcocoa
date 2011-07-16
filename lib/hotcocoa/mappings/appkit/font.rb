@@ -27,7 +27,7 @@ HotCocoa::Mappings.map font: :NSFont do
       palette:         :paletteFontOfSize,
       small_system:    :smallSystemFontOfSize,
       title_bar:       :titleBarFontOfSize,
-      tool_tip:        :toolTipFontOfSize,
+      tool_tip:        :toolTipsFontOfSize,
       user_fixed:      :userFixedPitchFontOfSize,
       user:            :userFontOfSize
     }.each do |key, method|
