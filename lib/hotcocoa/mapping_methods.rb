@@ -95,8 +95,7 @@ module HotCocoa::MappingMethods
   #   @return [Module,nil] Return the Module if it exists, otherwise nil.
   def custom_methods &block
     if block
-      @custom_methods = Module.new
-      @custom_methods.module_eval(&block)
+      @custom_methods = Module.new &block
     else
       @custom_methods
     end
