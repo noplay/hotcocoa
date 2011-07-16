@@ -32,7 +32,7 @@ HotCocoa::Mappings.map font: :NSFont do
       user:            :userFontOfSize
     }.each do |key, method|
       if options.has_key? key
-        font = eval "NSFont.#{method}(#{options.delete(key)})"
+        font = NSFont.send method, options.delete(key)
         break
       end
     end
