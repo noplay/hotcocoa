@@ -44,4 +44,10 @@ HotCocoa::Mappings.map font: :NSFont do
     font
   end
 
+  custom_methods do
+    def size
+      pointSize
+    end
+  end
+
 end
