@@ -11,23 +11,6 @@ class HotCocoa::Mappings::Mapper
       new(klass).map_method(builder_method, &block)
     end
 
-    ##
-    # Borrowed from Active Support.
-    def underscore string
-      new_string = string.gsub(/::/, '/') # do we need this substitution?
-      new_string.gsub!(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-      new_string.gsub!(/([a-z\d])([A-Z])/, '\1_\2')
-      new_string.tr!("-", "_")
-      new_string.downcase!
-      new_string
-    end
-
-    ##
-    # Borrowed from Active Support.
-    def camel_case string
-      string.to_s.gsub /(?:^|_)(.)/ do $1.upcase end
-    end
-
     attr_reader :bindings_modules
     attr_reader :delegate_modules
   end
@@ -85,8 +68,8 @@ class HotCocoa::Mappings::Mapper
             control.send(key)
 
           end
-        elsif control.respond_to?("set#{HotCocoa::Mappings::Mapper.camel_case(key)}")
-          control.send("set#{HotCocoa::Mappings::Mapper.camel_case(key)}", value)
+        elsif control.respond_to? "set#{key.camel_case}"
+          control.send "set#{key.camel_case}", value
 
         else
           NSLog("Unable to map #{key} as a method")
@@ -265,12 +248,12 @@ class HotCocoa::Mappings::Mapper
 
     bindings_module = Module.new
     instance.exposedBindings.each do |exposed_binding|
-      bindings_module.send(:define_method, "#{underscore(exposed_binding)}=") do |value|
         if value.kind_of?(Hash)
           options = value.delete(:options)
           bind "#{exposed_binding}", toObject:value.keys.first, withKeyPath:value.values.first, options:options
+      bindings_module.send(:define_method, "#{exposed_binding.underscore}=") do |value|
         else
-          instance.send "set#{HotCocoa::Mappings::Mapper.camel_case(exposed_binding)}", value
+          instance.send "set#{exposed_binding.camel_case}", value
         end
       end
     end
