@@ -1,9 +1,14 @@
+##
+# @todo Allow aliasing of mappings (so we can have :coloUr as well)
+#
+# @cocoa NSColor
+#
 HotCocoa::Mappings.map color: :NSColor do
 
   def alloc_with_options options
     if options.has_key? :name
-      color = color.colorWithAlphaComponent(options.delete(:alpha)) if options.has_key? :alpha
       color = NSColor.send "#{options.delete :name}Color"
+      color = color.colorWithAlphaComponent(options.delete :alpha) if options.has_key? :alpha
       return color
 
     elsif options.has_key? :rgb

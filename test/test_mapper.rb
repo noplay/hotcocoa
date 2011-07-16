@@ -21,15 +21,11 @@ class TestMapper < MiniTest::Unit::TestCase
     assert_equal sample_mapper(true).control_class, SampleClass
   end
 
-  def test_convert_from_camelcase_to_underscore
-    assert sample_mapper.class.underscore("SampleCamelCasedWord"), 'sample_camel_cased_word'
-  end
-
   def test_include_in_class
-    m = sample_mapper(true)
+    m = sample_mapper true
     m.include_in_class
 
-    assert_equal m.instance_variable_get('@extension_method'), :include
+    assert_equal m.instance_variable_get(:@extension_method), :include
 
     skip 'Pending.'
   end
@@ -52,7 +48,7 @@ class TestMapper < MiniTest::Unit::TestCase
 
   private
 
-  def sample_mapper(flush = false)
+  def sample_mapper flush = false
     @mapper = nil if flush
     @mapper || Mapper.new(SampleClass)
   end

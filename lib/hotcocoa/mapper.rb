@@ -78,23 +78,23 @@ class HotCocoa::Mappings::Mapper
       end
 
       if default_empty_rect_used
-        control.sizeToFit if control.respondsToSelector(:sizeToFit)
+        control.sizeToFit if control.respondsToSelector :sizeToFit
       end
 
       if control_block
-        if inst.respond_to?(:handle_block)
-          inst.handle_block(control, &control_block)
+        if inst.respond_to? :handle_block
+          inst.handle_block control, &control_block
         else
-          control_block.call(control)
+          control_block.call control
         end
       end
       control
     end
 
     # make the function callable using HotCocoa.xxxx
-    HotCocoa.send(:module_function, builder_method)
+    HotCocoa.send :module_function, builder_method
     # module_function makes the instance method private, but we want it to stay public
-    HotCocoa.send(:public, builder_method)
+    HotCocoa.send :public, builder_method
     self
   end
 
@@ -248,10 +248,10 @@ class HotCocoa::Mappings::Mapper
 
     bindings_module = Module.new
     instance.exposedBindings.each do |exposed_binding|
-        if value.kind_of?(Hash)
-          options = value.delete(:options)
-          bind "#{exposed_binding}", toObject:value.keys.first, withKeyPath:value.values.first, options:options
       bindings_module.send(:define_method, "#{exposed_binding.underscore}=") do |value|
+        if value.kind_of? Hash
+          options = value.delete :options
+          bind "#{exposed_binding}", toObject: value.keys.first, withKeyPath: value.values.first, options: options
         else
           instance.send "set#{exposed_binding.camel_case}", value
         end

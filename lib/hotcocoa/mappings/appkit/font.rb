@@ -1,3 +1,6 @@
+##
+# @cocoa NSFont
+#
 HotCocoa::Mappings.map font: :NSFont do
 
   constant :trait, {
@@ -18,6 +21,8 @@ HotCocoa::Mappings.map font: :NSFont do
   def alloc_with_options options
     font = nil
 
+    # @todo would it not be faster to iterate over given keys looked up
+    #       from a static hash?
     {
       label:           :labelFontOfSize,
       system:          :systemFontOfSize,
