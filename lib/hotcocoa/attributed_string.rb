@@ -86,13 +86,7 @@ module HotCocoa
   end
 end
 
-class String
-  def with_attributes(attributes = {})
-    attributed_string = NSMutableAttributedString.alloc.initWithString(self)
-    attributed_string.attributes << attributes
-    attributed_string
   end
-end
 
 class NSMutableAttributedString
   def with_attributes(attributes = {})

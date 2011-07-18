@@ -19,4 +19,18 @@ class NSString
     to_s.gsub /(?:^|_)(.)/ do $1.upcase end
   end
 
+  ##
+  # Create an attributed string with the given attributes. The list of
+  # applicable attributes can be found in the Apple documentation for
+  # NSAttributedString class, as well as the ATTRIBUTE_KEYS hash in the
+  # {HotCocoa::NSRangedProxyAttributeHash} class.
+  #
+  # @param [Hash] attributes
+  # @return [NSMutableAttributedString]
+  def with_attributes attributes = {}
+    attributed_string = NSMutableAttributedString.alloc.initWithString self
+    attributed_string.attributes << attributes
+    attributed_string
+  end
+
 end
