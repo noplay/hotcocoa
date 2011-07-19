@@ -88,40 +88,15 @@ end
 
   end
 
-class NSMutableAttributedString
-  def with_attributes(attributes = {})
-    string.with_attributes(attributes)
   end
 
-  def <<(s)
-    case s
-    when String
-      mutableString.appendString s
-    else
-      appendAttributedString s
-    end
   end
 
-  def +(s)
-    attributed_string = mutableCopy
-    attributed_string << s
-    attributed_string
   end
 
-  def attributes
-    HotCocoa::NSRangedProxyAttributedString.new(self, 0..-1).attributes
   end
 
-  def [](r)
-    HotCocoa::NSRangedProxyAttributedString.new(self, r)
   end
 
-  def []=(r, s)
-    case s
-    when String
-      replaceCharactersInRange(r.to_NSRange(length - 1), :withString => s)
-    else
-      replaceCharactersInRange(r.to_NSRange(length - 1), :withAttributedString => s)
-    end
   end
 end
