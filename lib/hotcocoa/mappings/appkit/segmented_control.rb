@@ -1,57 +1,60 @@
 module HotCocoa
   class SegmentedControlSegment
-    attr_reader :number, :control
-    def initialize(control, number)
+
+    attr_reader :number
+    attr_reader :control
+
+    def initialize control, number
       @number = number
       @control = control
     end
 
     def width
-      control.widthForSegment(number)
+      control.widthForSegment number
     end
 
-    def width=(width)
-      control.setWidth(width, forSegment:number)
+    def width= width
+      control.setWidth width, forSegment: number
     end
 
     def label
-      control.labelForSegment(number)
+      control.labelForSegment number
     end
 
-    def label=(label)
-      control.setLabel(label, forSegment:number)
+    def label= label
+      control.setLabel label, forSegment: number
     end
 
     def image
-      control.imageForSegment(number)
+      control.imageForSegment number
     end
 
-    def image=(image)
-      control.setImage(image, forSegment:number)
+    def image= image
+      control.setImage image, forSegment: number
     end
 
     def menu
-      control.menuForSegment(number)
+      control.menuForSegment number
     end
 
-    def menu=(menu)
-      control.setMenu(menu, forSegment:number)
+    def menu= menu
+      control.setMenu menu, forSegment: number
     end
 
     def selected?
-      control.isSelectedForSegment(number)
+      control.isSelectedForSegment number
     end
 
-    def selected=(value)
-      control.setSelected(value, forSegment:number)
+    def selected= value
+      control.setSelected value, forSegment: number
     end
 
     def enabled?
-      control.isEnabledForSegment(number)
+      control.isEnabledForSegment number
     end
 
-    def enabled=(value)
-      control.setEnabled(value, forSegment:number)
+    def enabled= value
+      control.setEnabled value, forSegment: number
     end
   end
 end

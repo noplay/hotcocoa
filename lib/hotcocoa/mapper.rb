@@ -17,7 +17,7 @@ class HotCocoa::Mappings::Mapper
     #
     # @param [Class] klass
     def map_instances_of klass, builder_method, &block
-      new(klass).map_method(builder_method, &block)
+      new(klass).map_method builder_method, &block
     end
 
     # @return [Hash{Symbol=>Module}] cached bindings modules
