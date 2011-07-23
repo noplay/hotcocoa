@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map user_defaults: :NSUserDefaults do
+HotCocoa::Mappings.map user_defaults: NSUserDefaults do
 
   defaults defaults: {}
 

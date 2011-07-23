@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map sort_descriptor: :NSSortDescriptor do
+HotCocoa::Mappings.map sort_descriptor: NSSortDescriptor do
 
   defaults ascending: true
 

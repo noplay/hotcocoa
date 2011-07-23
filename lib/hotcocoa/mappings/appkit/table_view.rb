@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map table_view: :NSTableView do
+HotCocoa::Mappings.map table_view: NSTableView do
 
   defaults column_resize: :uniform, frame: CGRectZero, layout: {}
 

@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map button: :NSButton do
+HotCocoa::Mappings.map button: NSButton do
 
   defaults bezel:  :rounded,
            frame:  CGRectZero,

@@ -1,4 +1,5 @@
-HotCocoa::Mappings.map toolbar_item: :NSToolbarItem do
+HotCocoa::Mappings.map toolbar_item: NSToolbarItem do
+
   defaults priority: :standard
 
   constant :priority, {

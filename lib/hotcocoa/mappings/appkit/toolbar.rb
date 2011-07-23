@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map toolbar: :NSToolbar do
+HotCocoa::Mappings.map toolbar: NSToolbar do
 
   constant :size, {
     default:  NSToolbarSizeModeDefault,

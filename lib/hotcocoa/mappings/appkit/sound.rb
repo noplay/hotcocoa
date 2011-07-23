@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map sound: :NSSound do
+HotCocoa::Mappings.map sound: NSSound do
 
   defaults by_reference: true
 

@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map bonjour_browser: :NSNetServiceBrowser do
+HotCocoa::Mappings.map bonjour_browser: NSNetServiceBrowser do
 
   ##
   # There are no values that need to be set at initialization

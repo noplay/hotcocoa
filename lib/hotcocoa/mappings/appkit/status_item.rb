@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map status_item: :NSStatusItem do
+HotCocoa::Mappings.map status_item: NSStatusItem do
 
   defaults length: NSVariableStatusItemLength
 

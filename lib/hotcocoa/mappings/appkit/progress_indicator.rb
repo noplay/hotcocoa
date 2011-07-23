@@ -3,7 +3,7 @@
 #
 # @adc http://developer.apple.com/DOCUMENTATION/Cocoa/Reference/ApplicationKit/Classes/NSProgressIndicator_Class/Reference/Reference.html
 #
-HotCocoa::Mappings.map progress_indicator: :NSProgressIndicator do
+HotCocoa::Mappings.map progress_indicator: NSProgressIndicator do
 
   defaults layout: {}, frame: [0, 0, 250, 20]
 

@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map application: :NSApplication do
+HotCocoa::Mappings.map application: NSApplication do
 
   def alloc_with_options options
     NSApplication.sharedApplication

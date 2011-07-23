@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map gradient: :NSGradient do
+HotCocoa::Mappings.map gradient: NSGradient do
 
   def alloc_with_options options
     if options[:colors]

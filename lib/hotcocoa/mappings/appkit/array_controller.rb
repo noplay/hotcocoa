@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map array_controller: :NSArrayController do
+HotCocoa::Mappings.map array_controller: NSArrayController do
 
   def init_with_options array_controller, options
     result = array_controller.init

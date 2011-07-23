@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map collection_view: :NSCollectionView do
+HotCocoa::Mappings.map collection_view: NSCollectionView do
 
   defaults layout: {}, frame: [0,0,100,100]
 

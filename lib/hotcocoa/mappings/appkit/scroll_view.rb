@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map scroll_view: :NSScrollView do
+HotCocoa::Mappings.map scroll_view: NSScrollView do
 
   defaults vertical_scroller: true, horizontal_scroller: true,
            autoresizes_subviews: true, layout: {}, frame: CGRectZero

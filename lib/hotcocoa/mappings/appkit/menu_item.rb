@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map menu_item: :NSMenuItem do
+HotCocoa::Mappings.map menu_item: NSMenuItem do
 
   defaults title: '', key: '', action: nil
 

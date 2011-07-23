@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map search_field: :NSSearchField do
+HotCocoa::Mappings.map search_field: NSSearchField do
 
   defaults layout: {}, frame: CGRectZero
 

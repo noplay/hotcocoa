@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map text_view: :NSTextView do
+HotCocoa::Mappings.map text_view: NSTextView do
 
   defaults layout: {}, frame: CGRectZero
 

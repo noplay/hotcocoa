@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map  column: :NSTableColumn do
+HotCocoa::Mappings.map  column: NSTableColumn do
 
   defaults title: 'Column'
 

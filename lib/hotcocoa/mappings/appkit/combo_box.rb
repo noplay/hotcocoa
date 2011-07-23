@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map combo_box: :NSComboBox do
+HotCocoa::Mappings.map combo_box: NSComboBox do
 
   defaults selectable: true, editable: true, completes: true, layout: {}
 

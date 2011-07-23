@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map image: :NSImage do
+HotCocoa::Mappings.map image: NSImage do
 
   def alloc_with_options options
     if options.has_key? :file

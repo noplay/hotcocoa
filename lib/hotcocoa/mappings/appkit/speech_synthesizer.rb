@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map :speech_synthesizer => :NSSpeechSynthesizer do
+HotCocoa::Mappings.map speech_synthesizer: NSSpeechSynthesizer do
 
   def init_with_options obj, options
     if voice = options.delete(:voice)

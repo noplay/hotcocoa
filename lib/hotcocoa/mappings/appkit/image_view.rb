@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map image_view: :NSImageView do
+HotCocoa::Mappings.map image_view: NSImageView do
 
   defaults layout: {}, frame_style: :none
 

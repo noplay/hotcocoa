@@ -78,7 +78,7 @@ module HotCocoa
   end
 end
 
-HotCocoa::Mappings.map popup: :NSPopUpButton do
+HotCocoa::Mappings.map popup: NSPopUpButton do
 
   defaults pulls_down: false,
            frame: CGRectZero,

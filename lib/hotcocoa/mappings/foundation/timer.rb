@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map timer: :NSTimer do
+HotCocoa::Mappings.map timer: NSTimer do
 
   defaults scheduled: true, repeats: false
 

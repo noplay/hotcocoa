@@ -11,7 +11,7 @@
 #
 # @adc http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Classes/NSWindow_Class/Reference/Reference.html
 #
-HotCocoa::Mappings.map window: :NSWindow do
+HotCocoa::Mappings.map window: NSWindow do
 
   defaults  style:    [:titled, :closable, :miniaturizable, :resizable],
             backing:  :buffered,

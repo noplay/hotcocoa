@@ -7,7 +7,7 @@
 #
 # @adc http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/Classes/NSTextField_Class/Reference/Reference.html
 #
-HotCocoa::Mappings.map text_field: :NSTextField do
+HotCocoa::Mappings.map text_field: NSTextField do
 
   constant :text_align, {
     right:  NSRightTextAlignment,

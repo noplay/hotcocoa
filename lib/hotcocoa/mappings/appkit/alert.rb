@@ -1,6 +1,6 @@
 ##
 # @note Alerts are shown immediately
-HotCocoa::Mappings.map alert: :NSAlert do
+HotCocoa::Mappings.map alert: NSAlert do
 
   defaults default: 'OK', alternate: nil, other: nil, info: '', show: true
 

@@ -1,7 +1,7 @@
 ##
 # @cocoa NSFont
 #
-HotCocoa::Mappings.map font: :NSFont do
+HotCocoa::Mappings.map font: NSFont do
 
   constant :trait, {
     italic:                    NSItalicFontMask,

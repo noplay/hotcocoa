@@ -59,7 +59,7 @@ module HotCocoa
   end
 end
 
-HotCocoa::Mappings.map segmented_control: :NSSegmentedControl do
+HotCocoa::Mappings.map segmented_control: NSSegmentedControl do
 
   constant :segment_style, {
     rounded:          NSSegmentStyleRounded,

@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map control: :NSControl do
+HotCocoa::Mappings.map control: NSControl do
 
   constant :alignment, {
     left:      NSLeftTextAlignment,

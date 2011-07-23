@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map split_view: :NSSplitView do
+HotCocoa::Mappings.map split_view: NSSplitView do
 
   defaults layout: {}
 

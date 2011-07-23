@@ -3,7 +3,7 @@
 #
 # @cocoa NSColor
 #
-HotCocoa::Mappings.map color: :NSColor do
+HotCocoa::Mappings.map color: NSColor do
 
   def alloc_with_options options
     if options.has_key? :name

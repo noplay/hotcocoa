@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map label: :NSTextField do
+HotCocoa::Mappings.map label: NSTextField do
 
   constant :text_align, {
     right:  NSRightTextAlignment,

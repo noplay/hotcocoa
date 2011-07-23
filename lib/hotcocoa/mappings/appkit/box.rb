@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map box: :NSBox do
+HotCocoa::Mappings.map box: NSBox do
 
   defaults frame: CGRectZero, layout: {}
 

@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map slider: :NSSlider do
+HotCocoa::Mappings.map slider: NSSlider do
 
   defaults frame: CGRectZero, layout: {}
 

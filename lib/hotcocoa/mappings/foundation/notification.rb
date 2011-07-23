@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map notification: :NSNotification do
+HotCocoa::Mappings.map notification: NSNotification do
 
   defaults post: true, distributed: false
 

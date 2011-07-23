@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map layout_view: :'HotCocoa::LayoutView' do
+HotCocoa::Mappings.map layout_view: HotCocoa::LayoutView do
 
   defaults frame: CGRectZero, layout: {}
 

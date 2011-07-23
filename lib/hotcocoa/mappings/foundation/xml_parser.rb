@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map xml_parser: :NSXMLParser do
+HotCocoa::Mappings.map xml_parser: NSXMLParser do
 
   def alloc_with_options options
     if options[:url]

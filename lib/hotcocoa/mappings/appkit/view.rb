@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map view: :NSView do
+HotCocoa::Mappings.map view: NSView do
 
   defaults frame: CGRectZero, layout: {}
 

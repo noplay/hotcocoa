@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map outline_view: :NSOutlineView do
+HotCocoa::Mappings.map outline_view: NSOutlineView do
 
   defaults column_resize: :uniform, frame: CGRectZero, layout: {}
 
