@@ -13,9 +13,10 @@ class HotCocoa::Mappings::Mapper
     end
 
     ##
-    # Map an instance of a mapped class.
+    # Add mappings to an instance of a class.
     #
     # @param [Class] klass
+    # @param [Symbol] builder_method
     def map_instances_of klass, builder_method, &block
       new(klass).map_method builder_method, &block
     end
@@ -33,6 +34,8 @@ class HotCocoa::Mappings::Mapper
   # @return [Class]
   attr_reader :control_class
 
+  # @return [Symbol] the name which the mapping goes by
+  #   (e.g. :window for NSWindow)
   attr_reader :builder_method
 
   # @return [Class] singleton class for the mapper instance
