@@ -7,8 +7,8 @@ module Kernel
   # Override MacRuby's built-in #framework method in order to support lazy
   # loading frameworks inside of HotCocoa.
   def framework name
-    if default_framework(name)
-      HotCocoa::Mappings.framework_loaded
+    if default_framework name
+      HotCocoa::Mappings.framework_loaded name
       true
     else
       false

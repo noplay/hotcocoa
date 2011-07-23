@@ -9,11 +9,11 @@ class TestKernelFramework < MiniTest::Unit::TestCase
 
   def test_framework_makes_proper_callback
     callback_called = false
-    HotCocoa::Mappings.on_framework :Accelerate do
+    HotCocoa::Mappings.on_framework 'Accelerate' do
       callback_called = true
     end
     framework 'Accelerate'
-    assert callback_called
+    assert callback_called, 'mapper did not receive callback'
   end
 
 end

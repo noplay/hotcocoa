@@ -110,11 +110,11 @@ class TestFrameworkLazyLoading < MiniTest::Unit::TestCase
     assert_equal CWConfiguration, Mappings.mappings[:cw_config].control_class
   end
 
-  def test_returns_whether_or_not_a_framework_has_been_loaded_yet
-    assert Mappings.loaded_framework?('Cocoa')
-    refute Mappings.loaded_framework?('IHasNotBeenLoaded')
-    refute Mappings.loaded_framework?(nil)
-    refute Mappings.loaded_framework?('')
+  def test_returns_list_of_loaded_frameworks
+    assert Mappings.loaded_frameworks.include? 'Cocoa'
+    refute Mappings.loaded_frameworks.include? 'IHasNotBeenLoaded'
+    refute Mappings.loaded_frameworks.include? nil
+    refute Mappings.loaded_frameworks.include? ''
   end
 
 end
