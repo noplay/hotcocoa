@@ -47,7 +47,7 @@ class NSMutableAttributedString
 
   ##
   # @deprecated Who uses this? Removing this in HotCocoa 0.7 unless
-  #   there are objections
+  #   there are reasonable objections
   #
   # Create a range proxy for an arbitrary portion of the receiver.
   #
