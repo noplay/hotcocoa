@@ -21,6 +21,6 @@ require 'hotcocoa/delegate_builder'
 require 'hotcocoa/notification_listener'
 require 'hotcocoa/data_sources'
 require 'hotcocoa/kvo_accessors'
-require 'hotcocoa/attributed_string'
+require 'hotcocoa/attributed_string_helpers'
 
 HotCocoa::Mappings.reload
