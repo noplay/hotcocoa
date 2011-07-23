@@ -3,35 +3,58 @@
 class HotCocoa::Mappings::Mapper
 
   class << self
+    ##
+    # Add mappings to a class so instances of the class can benefit from
+    # HotCocoa features. Usually called by {HotCocoa::Behaviors.included}.
+    #
+    # @param [Class] klass
     def map_class klass
       new(klass).include_in_class
     end
 
+    ##
+    # Map an instance of a mapped class.
+    #
+    # @param [Class] klass
     def map_instances_of klass, builder_method, &block
       new(klass).map_method(builder_method, &block)
     end
 
+    # @return [Hash{Symbol=>Module}] cached bindings modules
     attr_reader :bindings_modules
+    # @return [Hash{Symbol=>Module}] cached delegate modules
     attr_reader :delegate_modules
   end
 
+  # they need to be initialized
   @bindings_modules = {}
   @delegate_modules = {}
 
+  # @return [Class]
   attr_reader :control_class
+
   attr_reader :builder_method
+
+  # @return [Class] singleton class for the mapper instance
   attr_reader :control_module
+
   attr_accessor :map_bindings
 
+  # @param [Class] klass the class that is being mapped
   def initialize klass
     @control_class = klass
   end
 
+  ##
+  # Add HotCocoa features to a class. The class will receive features
+  # for all ancestors that have mappings.
   def include_in_class
     @extension_method = :include
-    customize(@control_class)
+    customize @control_class
   end
 
+  ##
+  # Does all the heavy lifting...
   def map_method builder_method, &block
     @extension_method = :extend
     @builder_method   = builder_method
@@ -157,12 +180,14 @@ class HotCocoa::Mappings::Mapper
   # @param control
   def customize control
     inherited_custom_methods.each do |custom_methods|
-      control.send(@extension_method, custom_methods)
+      control.send @extension_method, custom_methods
     end
-    decorate_with_delegate_methods(control)
-    decorate_with_bindings_methods(control)
+    decorate_with_delegate_methods control
+    decorate_with_bindings_methods control
   end
 
+  ##
+  # Add delegate method hooks to
   def decorate_with_delegate_methods control
     control.send(@extension_method, delegate_module_for_control_class)
   end
@@ -205,12 +230,10 @@ class HotCocoa::Mappings::Mapper
         EOM
       end
 
-      delegate_module.module_eval <<-EOM
-        def delegate_to(object)
-          @_delegate_builder ||= HotCocoa::DelegateBuilder.new(self, #{required_methods.inspect})
-          @_delegate_builder.delegate_to(object, #{delegate_methods.values.map {|method| ":#{method[:to]}"}.join(', ')})
-        end
-      EOM
+      delegate_module.send :define_method, :delegate_to do |object|
+        @_delegate_builder ||= HotCocoa::DelegateBuilder.new(self, required_methods)
+        @_delegate_builder.delegate_to(object, *delegate_methods.values.map { |method| method[:to].to_sym })
+      end
     end
 
     HotCocoa::Mappings::Mapper.delegate_modules[control_class] = delegate_module
@@ -262,18 +285,22 @@ class HotCocoa::Mappings::Mapper
     bindings_module
   end
 
+  ##
+  #
   def remap_constants tags
     constants = inherited_constants
     if control_module.defaults
       control_module.defaults.each do |key, value|
-        tags[key] = value unless tags.has_key?(key)
+        tags[key] = value unless tags.has_key? key
       end
     end
 
     result = {}
     tags.each do |tag, value|
       if constants[tag]
-        result[tag] = value.kind_of?(Array) ? value.inject(0) {|a, i| a|constants[tag][i]} : constants[tag][value]
+        result[tag] = value.kind_of?(Array) ?
+          value.inject(0) { |a, i| a|constants[tag][i] } :
+          constants[tag][value]
       else
         result[tag] = value
       end
