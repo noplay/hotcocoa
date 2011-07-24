@@ -61,7 +61,7 @@ class << HotCocoa::Mappings
   # @param [Class]  mapped_class
   def add_mapping mapped_name, mapped_class, &block
     m = HotCocoa::Mappings::Mapper.map_instances_of mapped_class, mapped_name, &block
-    mappings[m.builder_method] = m
+    mappings[mapped_name] = m
   end
 
   ##
