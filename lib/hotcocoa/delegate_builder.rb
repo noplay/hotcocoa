@@ -98,7 +98,7 @@ class HotCocoa::DelegateBuilder
     params = selector_name.split(':')
     result = "#{params.shift} p1"
     params.each_with_index do |param, i|
-      result << ", #{param}:p#{i + 2}"
+      result << ",#{param}:p#{i + 2}"
     end
     result
   end
