@@ -6,3 +6,4 @@
 lib/**/*.rb
 -
 History.txt
+docs/Contributors.markdown
