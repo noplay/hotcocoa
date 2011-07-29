@@ -34,6 +34,8 @@ module Kernel
 
   ##
   # A mapping, lol
+  #
+  # @return [Hash]
   PLIST_FORMATS = {
     xml:    NSPropertyListXMLFormat_v1_0,
     binary: NSPropertyListBinaryFormat_v1_0
@@ -47,19 +49,19 @@ module Kernel
   # formats.
   #
   # @example Encoding a plist in the binary format
-  #  { key: 'value' }.to_plist(:binary)
+  #   { key: 'value' }.to_plist(:binary)
   #
-  # @return [String] returns `self` serialized as a plist and encoded
-  #   using `format`
+  # @return [String] returns a string with the caller's contents
+  #   serialized as a plist and encoded using `format`
   def to_plist format = :xml
     format_const = PLIST_FORMATS[format]
     raise ArgumentError, "invalid format `#{format}'" unless format_const
 
-    error = Pointer.new(:id)
-    data  = NSPropertyListSerialization.dataFromPropertyList  self,
-                                                      format: format_const,
-                                            errorDescription: error
-    error[0] ? raise( Exception, error[0] ) : data.to_str
+    error = Pointer.new :id
+    data  = NSPropertyListSerialization.dataFromPropertyList self,
+                                                     format: format_const,
+                                           errorDescription: error
+    error[0] ? raise(Exception, error[0]) : data.to_str
   end
 
 end
