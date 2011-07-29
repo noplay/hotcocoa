@@ -19,10 +19,9 @@ end
 
 require 'rake/testtask'
 Rake::TestTask.new do |t|
-  t.libs << 'test'
-  t.pattern = 'test/**/test_*.rb'
-  t.ruby_opts = ['-rhelper']
-  t.verbose = true
+  t.pattern   = 'test/**/test_*.rb'
+  t.ruby_opts = ['-rtest/helper']
+  t.verbose   = true
 end
 
 require 'rake/gempackagetask'
