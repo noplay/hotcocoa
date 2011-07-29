@@ -11,7 +11,7 @@ class HotCocoa::Template
   #
   # @return [String]
   def self.source_directory
-    File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
+    File.expand_path('../../..', __FILE__)
   end
 
   ##
