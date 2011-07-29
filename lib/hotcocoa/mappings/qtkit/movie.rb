@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map movie: :QTMovie, framework: :QTKit do
+HotCocoa::Mappings.map movie: QTMovie do
 
   def alloc_with_options options
     if options.has_key? :file

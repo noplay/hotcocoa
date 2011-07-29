@@ -7,13 +7,16 @@ class TestKernelFramework < MiniTest::Unit::TestCase
     assert_raises RuntimeError do framework 'MadeUpFrameworkName' end
   end
 
-  def test_framework_makes_proper_callback
-    callback_called = false
-    HotCocoa::Mappings.on_framework 'Accelerate' do
-      callback_called = true
-    end
-    framework 'Accelerate'
-    assert callback_called, 'mapper did not receive callback'
+  def test_loaded_frameworks
+    refute $LOADED_FRAMEWORKS.find { |x| x.match /.framework/ }
+    assert_empty $LOADED_FRAMEWORKS - $LOADED_FRAMEWORKS
+    assert_includes $LOADED_FRAMEWORKS, 'Cocoa'
+    assert_includes $LOADED_FRAMEWORKS, 'AppKit'
+    assert_includes $LOADED_FRAMEWORKS, 'Foundation'
+
+    refute_includes $LOADED_FRAMEWORKS, 'CoreWLAN'
+    framework 'CoreWLAN'
+    assert_includes $LOADED_FRAMEWORKS, 'CoreWLAN'
   end
 
 end

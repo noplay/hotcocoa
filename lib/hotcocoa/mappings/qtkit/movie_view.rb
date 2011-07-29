@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map movie_view: :QTMovieView, framework: :QTKit do
+HotCocoa::Mappings.map movie_view: QTMovieView do
 
   defaults layout: {}, frame: CGRectZero
 

@@ -2,18 +2,35 @@
 # HotCocoa extensions for the Kernel module
 module Kernel
 
+  ##
+  # Like $LOADED_FEATURES, but for frameworks.
+  #
+  # @return [Array<String>]
+  $LOADED_FRAMEWORKS = []
+
   alias_method :default_framework, :framework
   ##
   # Override MacRuby's built-in #framework method in order to support lazy
   # loading frameworks inside of HotCocoa.
   def framework name
     if default_framework name
-      HotCocoa::Mappings.framework_loaded name
+      $LOADED_FRAMEWORKS << name
+      HotCocoa::Mappings.load name
       true
     else
       false
     end
   end
+
+  # Populate the list with everything that has already been loaded
+  $LOADED_FRAMEWORKS.concat NSBundle.allFrameworks.map { |bundle|
+    bundle.bundlePath.split('/').last
+  }.select { |framework|
+    framework.split('.')[1] == 'framework'
+  }.map! { |framework|
+    framework.split('.')[0]
+  }
+  $LOADED_FRAMEWORKS.uniq!
 
   ##
   # A mapping, lol

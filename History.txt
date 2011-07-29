@@ -1,6 +1,7 @@
 === 0.6.0 20xx-xx-xx
 
 * x major enhancement:
+  * True lazy loading for mappings (may break custom mappings!)
   * Revamped application builder to work with MacRuby 0.11
   * Began documenting the API
   * Started regression testing

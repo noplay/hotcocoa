@@ -1,4 +1,4 @@
-HotCocoa::Mappings.map web_view: :WebView , framework: :WebKit do
+HotCocoa::Mappings.map web_view: WebView do
 
   defaults layout: {}, frame: CGRectZero
 
