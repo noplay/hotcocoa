@@ -1,5 +1,14 @@
 # Contributors
 
+Hot Cocoa was originally developed as part of the MacRuby standard
+library; the project was led by Rich Kilmer and had contributions from
+the MacRuby core team and a few others.
+
+In late 2009, Hot Cocoa was pulled out of the MacRuby repository and
+moved to Github.
+
+## Credits
+
 * [Rich Kilmer](https://github.com/richkilmer)
 * [Laurent Sansonetti](https://github.com/lrz)
 * [Ben Stiglitz](https://github.com/benstiglitz)
