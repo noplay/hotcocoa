@@ -68,8 +68,8 @@ class HotCocoa::Mappings::Mapper
     mod.module_eval(&block)
 
     @control_module = mod
-    inst = self # why can't I get rid of this variable and just use self?!?
     HotCocoa.send(:define_method, builder_method) do |*args, &control_block|
+    inst = self # put self in a variable, because context of self changes inside the define_method block
       map  = (args.length == 1 ? args[0] : args[1]) || {}
       guid =  args.length == 1 ? nil     : args[0]
 
