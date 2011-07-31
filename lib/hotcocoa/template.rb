@@ -11,7 +11,8 @@ class HotCocoa::Template
   #
   # @return [String]
   def self.source_directory
-    File.expand_path('../../..', __FILE__)
+    file = $LOADED_FEATURES.find { |file| file.match /hotcocoa\/template\.rbo?$/ }
+    File.expand_path(File.join(File.dirname(file), '../..'))
   end
 
   ##
