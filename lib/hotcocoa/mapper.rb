@@ -220,17 +220,18 @@ class HotCocoa::Mappings::Mapper
         required_methods << delegate_method if mapping[:required]
       end
 
-      # I have to remove both #module_eval calls at once
       delegate_methods.each do |delegate_method, mapping|
-        parameters = mapping[:parameters] ? (', ' + mapping[:parameters].map {|param| %{"#{param}"} }.join(',')) : ''
-        delegate_module.module_eval <<-EOM
-          def #{mapping[:to]} &block
-            raise "Must pass in a block to use this delegate method" unless block_given?
+        parameters = mapping[:parameters] ? mapping[:parameters] : []
 
-            @_delegate_builder ||= HotCocoa::DelegateBuilder.new(self, #{required_methods.inspect})
-            @_delegate_builder.add_delegated_method(block, "#{delegate_method}" #{parameters})
-          end
-        EOM
+        # kind of a hack, giving a block directly to define_method is not working
+        # for some odd reason, possibly a bug in MacRuby
+        callback = Proc.new do |&block|
+          raise 'Must pass in a block to use this delegate method' unless block
+
+          @_delegate_builder ||= HotCocoa::DelegateBuilder.new(self, required_methods)
+          @_delegate_builder.add_delegated_method(block, delegate_method, *parameters)
+        end
+        delegate_module.send :define_method, mapping[:to], callback
       end
 
       delegate_module.send :define_method, :delegate_to do |object|
