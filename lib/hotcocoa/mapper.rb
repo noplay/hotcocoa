@@ -8,22 +8,32 @@ class HotCocoa::Mappings::Mapper
     # HotCocoa features. Usually called by {HotCocoa::Behaviors.included}.
     #
     # @param [Class] klass
+    # @return [nil] do not count on a return value from this method
     def map_class klass
       new(klass).include_in_class
     end
 
     ##
-    # Add mappings to an instance of a class.
+    # Create a mapper for the given `klass` and assign it to the
+    # given `builder_method`.
     #
     # @param [Class] klass
     # @param [Symbol] builder_method
+    # @return [HotCocoa::Mappings::Mapper]
     def map_instances_of klass, builder_method, &block
-      new(klass).map_method builder_method, &block
+      new(klass).map_method(builder_method, &block)
     end
 
-    # @return [Hash{Symbol=>Module}] cached bindings modules
+    ##
+    # Cached bindings modules.
+    #
+    # @return [Hash{Symbol=>Module}]
     attr_reader :bindings_modules
-    # @return [Hash{Symbol=>Module}] cached delegate modules
+
+    ##
+    # Cached delegate modules.
+    #
+    # @return [Hash{Symbol=>Module}]
     attr_reader :delegate_modules
   end
 
@@ -34,11 +44,16 @@ class HotCocoa::Mappings::Mapper
   # @return [Class]
   attr_reader :control_class
 
-  # @return [Symbol] the name which the mapping goes by
-  #   (e.g. :window for NSWindow)
+  ##
+  # The name which the mapping goes by (e.g. :window for NSWindow)
+  #
+  # @return [Symbol]
   attr_reader :builder_method
 
-  # @return [Class] singleton class for the mapper instance
+  ##
+  # Singleton class for the mapper instance
+  #
+  # @return [Class]
   attr_reader :control_module
 
   attr_accessor :map_bindings
@@ -49,8 +64,9 @@ class HotCocoa::Mappings::Mapper
   end
 
   ##
-  # Add HotCocoa features to a class. The class will receive features
-  # for all ancestors that have mappings.
+  # Add HotCocoa features to a class. The `control_class` that the mapper
+  # was initialized with will receive features for all ancestors that
+  # have mappings.
   def include_in_class
     @extension_method = :include
     customize @control_class
@@ -65,7 +81,7 @@ class HotCocoa::Mappings::Mapper
     # @todo use self.singleton_class instead (not implemented in MacRuby yet)
     mod = (class << self; self; end)
     mod.extend HotCocoa::MappingMethods
-    mod.module_eval(&block)
+    mod.module_eval &block
 
     @control_module = mod
     inst = self # put self in a variable, because context of self changes inside the define_method block
@@ -77,18 +93,18 @@ class HotCocoa::Mappings::Mapper
       default_empty_rect_used = (map[:frame].__id__ == CGRectZero.__id__)
       control = inst.respond_to?(:init_with_options) ? inst.init_with_options(inst.control_class.alloc, map) : inst.alloc_with_options(map)
 
-      inst.customize(control)
+      inst.customize control
       map.each do |key, value|
-        if control.respond_to?("#{key}=")
-          control.send("#{key}=", value)
+        if control.respond_to? "#{key}="
+          control.send "#{key}=", value
 
-        elsif control.respond_to?(key)
+        elsif control.respond_to? key
           new_key = (key.start_with?('set') ? key : "set#{key[0].capitalize}#{key[1..-1]}")
-          if control.respond_to?(new_key)
-            control.send(new_key, value)
+          if control.respond_to? new_key
+            control.send new_key, value
 
           else
-            control.send(key)
+            control.send key
 
           end
         elsif control.respond_to? "set#{key.camel_case}"
@@ -201,7 +217,7 @@ class HotCocoa::Mappings::Mapper
   # methods on that object. Then the object is set to be the delegate
   # of the control.
   #
-  # The generated module is cached for later (re-)use.
+  # The generated module is cached for later reuse.
   #
   # @return [Module] the generated delegate module
   def delegate_module_for_control_class
