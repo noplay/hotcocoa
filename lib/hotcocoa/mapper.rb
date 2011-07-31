@@ -71,7 +71,6 @@ class HotCocoa::Mappings::Mapper
     HotCocoa.send(:define_method, builder_method) do |*args, &control_block|
     inst = self # put self in a variable, because context of self changes inside the define_method block
       map  = (args.length == 1 ? args[0] : args[1]) || {}
-      guid =  args.length == 1 ? nil     : args[0]
 
       map  = inst.remap_constants(map)
       inst.map_bindings = map.delete(:map_bindings)
@@ -79,7 +78,6 @@ class HotCocoa::Mappings::Mapper
       default_empty_rect_used = (map[:frame].__id__ == CGRectZero.__id__)
       control = inst.respond_to?(:init_with_options) ? inst.init_with_options(inst.control_class.alloc, map) : inst.alloc_with_options(map)
 
-      HotCocoa::Views[guid] = control if guid
       inst.customize(control)
       map.each do |key, value|
         if control.respond_to?("#{key}=")
