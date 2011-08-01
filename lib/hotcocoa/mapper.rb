@@ -45,6 +45,9 @@ class HotCocoa::Mappings::Mapper
   attr_reader :control_class
 
   ##
+  # @todo We do not use the cached `builder_method` attribute unless
+  #       you count tests. So maybe we should get rid of it?
+  #
   # The name which the mapping goes by (e.g. :window for NSWindow)
   #
   # @return [Symbol]
@@ -56,6 +59,11 @@ class HotCocoa::Mappings::Mapper
   # @return [Class]
   attr_reader :control_module
 
+  ##
+  # Whether or not bindings should be mapped for an instance of
+  # the mapped class.
+  #
+  # @return [Boolean]
   attr_accessor :map_bindings
 
   # @param [Class] klass the class that is being mapped
@@ -73,7 +81,11 @@ class HotCocoa::Mappings::Mapper
   end
 
   ##
-  # Does all the heavy lifting...
+  # Create the mapping method named `builder_method`.
+  #
+  # @param [Symbol] builder_method
+  # @yield
+  # @return [HotCocoa::Mappings::Mapper]
   def map_method builder_method, &block
     @extension_method = :extend
     @builder_method   = builder_method
@@ -145,7 +157,7 @@ class HotCocoa::Mappings::Mapper
   def inherited_constants
     constants = {}
     each_control_ancestor do |ancestor|
-      constants.merge!(ancestor.control_module.constants_map)
+      constants.merge! ancestor.control_module.constants_map
     end
     constants
   end
@@ -153,7 +165,7 @@ class HotCocoa::Mappings::Mapper
   def inherited_delegate_methods
     delegate_methods = {}
     each_control_ancestor do |ancestor|
-      delegate_methods.merge!(ancestor.control_module.delegate_map)
+      delegate_methods.merge! ancestor.control_module.delegate_map
     end
     delegate_methods
   end
@@ -166,7 +178,9 @@ class HotCocoa::Mappings::Mapper
   def inherited_custom_methods
     methods = []
     each_control_ancestor do |ancestor|
-      methods << ancestor.control_module.custom_methods if ancestor.control_module.custom_methods
+      if ancestor.control_module.custom_methods
+        methods << ancestor.control_module.custom_methods
+      end
     end
     methods
   end
@@ -203,9 +217,10 @@ class HotCocoa::Mappings::Mapper
   end
 
   ##
-  # Add delegate method hooks to
+  # Add the delegate method hooks. For #include they become instance methods
+  # and for #extend they become singleton methods.
   def decorate_with_delegate_methods control
-    control.send(@extension_method, delegate_module_for_control_class)
+    control.send @extension_method, delegate_module_for_control_class
   end
 
   ##
@@ -256,11 +271,12 @@ class HotCocoa::Mappings::Mapper
     HotCocoa::Mappings::Mapper.delegate_modules[control_class] = delegate_module
   end
 
-
   # @return [nil] do not count on a return value
   def decorate_with_bindings_methods control
     return if control_class == NSApplication
-    control.send(@extension_method, bindings_module_for_control(control)) if @map_bindings
+    if @map_bindings
+      control.send @extension_method, bindings_module_for_control(control)
+    end
   end
 
   ##
@@ -303,7 +319,13 @@ class HotCocoa::Mappings::Mapper
   end
 
   ##
+  # Takes a hash and processes symbols, if the symbol is a mapped
+  # constant then it will be swapped with the value of the constant.
   #
+  # This is how constant mappings are used in Hot Cocoa.
+  #
+  # @param [Hash] tags
+  # @return [Hash]
   def remap_constants tags
     constants = inherited_constants
     if control_module.defaults
@@ -324,4 +346,5 @@ class HotCocoa::Mappings::Mapper
     end
     result
   end
+
 end
