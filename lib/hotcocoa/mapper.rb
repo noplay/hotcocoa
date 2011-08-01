@@ -315,7 +315,6 @@ class HotCocoa::Mappings::Mapper
     end
 
     HotCocoa::Mappings::Mapper.bindings_modules[control_class] = bindings_module
-    bindings_module
   end
 
   ##
