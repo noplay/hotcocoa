@@ -304,14 +304,17 @@ class HotCocoa::Mappings::Mapper
 
     bindings_module = Module.new
     instance.exposedBindings.each do |exposed_binding|
-      bindings_module.send(:define_method, "#{exposed_binding.underscore}=") do |value|
+      p = Proc.new do |value|
         if value.kind_of? Hash
           options = value.delete :options
-          bind "#{exposed_binding}", toObject: value.keys.first, withKeyPath: value.values.first, options: options
+          bind "#{exposed_binding}", toObject: value.keys.first,
+                                  withKeyPath: value.values.first,
+                                      options: options
         else
-          instance.send "set#{exposed_binding.camel_case}", value
+          send "set#{exposed_binding.camel_case}", value
         end
       end
+      bindings_module.send :define_method, "#{exposed_binding.underscore}=", p
     end
 
     HotCocoa::Mappings::Mapper.bindings_modules[control_class] = bindings_module
