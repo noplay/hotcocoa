@@ -53,7 +53,7 @@ module HotCocoa
 
       # Four letter code that is a signature of the bundle, defaults to '????'
       # since most apps never set this value
-      # @exapmle TextEdit
+      # @example TextEdit
       #  'ttxt'
       # @example Mail
       #  'emal'
