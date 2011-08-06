@@ -49,10 +49,6 @@ class CollectionView
   end
 
   def self.create
-        cv = collection_view :content => {@icons => "arrangedObjects"}, 
-                             :selection_indexes => {@icons => "selectionIndexes"},
-                             :item_view => MyIconView.create,
-                             :map_bindings => true
     @icons = array_controller for: (1..100).collect { |i| Icon.new("Rich #{i}", icon_image) },
                                 avoids_empty_selection: true,
                                    preserves_selection: false,
@@ -62,6 +58,10 @@ class CollectionView
 
     layout_view frame: CGRectZero, layout: {expand: [:width, :height]}, margin: 0, spacing: 0 do |view|
       view << scroll_view(layout: {expand: [:width, :height]}) do |scroll|
+        cv = collection_view item_view: MyIconView.create,
+                               content: { @icons => 'arrangedObjects' },
+                     selection_indexes: { @icons => 'selectionIndexes' },
+                          map_bindings: true
         scroll << cv
       end
     end
