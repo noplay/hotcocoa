@@ -4,13 +4,11 @@ If you've done any amount of programming on Mac OS X, you know that
 the API can be quite verbose. Even with MacRuby's wonderful keyword
 arguments, it can be daunting to enter this...
 
-```ruby
-win = NSWindow.alloc.initWithContentRect [10,20,300,300],
-  styleMask: (NSTitledWindowMask         |
-              NSClosableWindowMask       |
-              NSMiniaturizableWindowMask |
-              NSResizableWindowMask)
-```
+    win = NSWindow.alloc.initWithContentRect [10,20,300,300],
+      styleMask: (NSTitledWindowMask         |
+                  NSClosableWindowMask       |
+                  NSMiniaturizableWindowMask |
+                  NSResizableWindowMask)
 
 ...every time you want to create and configure a new `NSWindow` instance!
 
@@ -22,9 +20,7 @@ user interfaces on Mac OS X without an Interface Builder.
 
 With HotCocoa, creating the `NSWindow` instance above is as simple as:
 
-```ruby
-win = window frame: [10,20,300,300]
-```
+   win = window frame: [10,20,300,300]
 
 HotCocoa achieves this feat by creating Mappings over the most common
 Classes and Constants used on Mac OS X. Those mappings create
