@@ -20,7 +20,7 @@ user interfaces on Mac OS X without an Interface Builder.
 
 With HotCocoa, creating the `NSWindow` instance above is as simple as:
 
-   win = window frame: [10,20,300,300]
+    win = window frame: [10,20,300,300]
 
 HotCocoa achieves this feat by creating Mappings over the most common
 Classes and Constants used on Mac OS X. Those mappings create
@@ -43,7 +43,7 @@ In HotCocoa, Mappings provide the following:
 * Constructors: Building the instances of the mapped classes using the
   correct class-specific APIs.
 * Custom Methods: Ruby-friendly API for commonly used methods (like
-  `<<` for `addSubview` on 'NSView' subclasses).
+  `#<<` for `#addSubview` on `NSView` subclasses).
 * Delegate Methods: Simplified Ruby-friendly methods for delegating
   instances that use Ruby blocks
 
@@ -53,6 +53,6 @@ building it, please look at
 {file:docs/Tutorial.markdown HotCocoa Tutorial}) for examples of how
 to build Mac OS X applications with it. For a more detailed
 understanding of how to read, create, edit, or contribute mapping
-files, see {file:docs/Mappings.markdown HotCocoaMappings}. For the
+files, see {file:docs/Mappings.markdown HotCocoa Mappings}. For the
 current status of the project, visit the
 [code repository](http://github.com/ferrous26/hotcocoa) on Github.
