@@ -3,8 +3,10 @@
 # the default NSNotificationCenter or NSDistributedNotificationCenter.
 class HotCocoa::NotificationListener
 
-  # @return [Hash{Symbol=>NSNotificationSuspensionBehavior}] map rubyish
-  #   names for distributed behaviors
+  ##
+  # Map Ruby-ish names for distributed behaviors.
+  #
+  # @return [Hash{Symbol=>NSNotificationSuspensionBehavior}]
   DistributedBehaviors = {
     drop:                NSNotificationSuspensionBehaviorDrop,
     coalesce:            NSNotificationSuspensionBehaviorCoalesce,
@@ -12,23 +14,34 @@ class HotCocoa::NotificationListener
     deliver_immediately: NSNotificationSuspensionBehaviorDeliverImmediately
   }
 
-  # @return [String] name of the notification to listen for
+  ##
+  # Name of the notification to listen for.
+  #
+  # @return [String]
   attr_reader :name
 
-  # @return [String] name of the notification sender
+  ##
+  # Name of the notification sender.
+  #
+  # @return [String]
   attr_reader :sender
 
   # @return [NSNotificationSuspensionBehavior]
   attr_reader :suspension_behavior
 
-  # @return [Boolean] Whether or not the object is registered with the
-  #   default distributed or regular notification center
+  ##
+  # Whether or not the object is registered with the default distributed
+  # or regular notification center.
+  #
+  # @return [Boolean]
   attr_reader :distributed
   alias_method :distributed?, :distributed
 
   class << self
-    # @return [HotCocoa::NotificationListener] list of all
-    #   {HotCocoa::NotificationListeners}
+    ##
+    # List of all {HotCocoa::NotificationListeners}.
+    #
+    # @return [HotCocoa::NotificationListener]
     attr_reader :registered_listeners
   end
   @registered_listeners = []
@@ -70,9 +83,11 @@ class HotCocoa::NotificationListener
   # `:named` and `:sent_by` options.
   def stop_notifications options = {}
     if options.has_key?(:named) || options.has_key?(:sent_by)
-      notification_center.removeObserver(self, name:options[:named], object:options[:sent_by])
+      notification_center.removeObserver self,
+                                   name: options[:named],
+                                 object: options[:sent_by]
     else
-      notification_center.removeObserver(self)
+      notification_center.removeObserver self
     end
   end
 
@@ -80,7 +95,7 @@ class HotCocoa::NotificationListener
   # The callback called when a notification is posted. You should not be
   # directly calling this yourself.
   def receive notification
-    @callback.call(notification)
+    @callback.call notification
   end
 
 
@@ -90,10 +105,17 @@ class HotCocoa::NotificationListener
   # Register for the notification.
   def observe
     if distributed?
-      notification_center.addObserver(self, selector:'receive:', name:name,
-                                      object:sender, suspensionBehavior:suspension_behavior)
+      notification_center.addObserver self,
+                            selector: 'receive:',
+                                name: name,
+                              object: sender,
+                  suspensionBehavior: suspension_behavior
+
     else
-      notification_center.addObserver(self, selector:'receive:', name:name, object:sender)
+      notification_center.addObserver self,
+                            selector: 'receive:',
+                                name: name,
+                              object: sender
     end
   end
 
