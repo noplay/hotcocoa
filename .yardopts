@@ -8,4 +8,5 @@ lib/**/*.rb
 -
 History.txt
 docs/Contributors.markdown
+docs/Overview.markdown
 docs/Resources.markdown
