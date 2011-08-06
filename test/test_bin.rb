@@ -28,7 +28,7 @@ end
 class TestHotCocoaBinaryUsesTemplate < TestHotCocoaBinary
 
   def setup
-    @dir = File.join(File.dirname(__FILE__), 'bin_test')
+    @dir = File.join(ENV['TMPDIR'], 'hot_cocoa_test')
     Dir.mkdir @dir
   end
 
