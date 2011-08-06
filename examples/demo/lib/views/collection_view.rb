@@ -57,6 +57,11 @@ class CollectionView
                                                sort_by: { name: :ascending }
 
     layout_view frame: CGRectZero, layout: {expand: [:width, :height]}, margin: 0, spacing: 0 do |view|
+
+      message = label text: 'Try resizing the window!',
+                    layout: { start: false, align: :center }
+      view << message
+
       view << scroll_view(layout: {expand: [:width, :height]}) do |scroll|
         cv = collection_view item_view: MyIconView.create,
                                content: { @icons => 'arrangedObjects' },
