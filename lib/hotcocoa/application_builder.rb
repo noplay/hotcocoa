@@ -15,60 +15,108 @@ module HotCocoa
     # @todo support arbitrary info.plist key/value pairs
     class Configuration
 
+      ##
       # Name of the app
+      #
+      # @return [String]
       attr_reader :name
 
-      # @return [String] Reverse URL unique identifier
+      ##
+      # Reverse URL unique identifier
+      #
       # @example Identifier for Mail.app
+      #
       #  'com.apple.mail'
+      #
+      # @return [String]
       attr_reader :identifier
 
-      # @return [String] Version of the app
+      ##
+      # Version of the app
+      #
+      # @return [String]
       attr_reader :version
 
+      ##
       # Path to the icon file
+      #
+      # @return [String]
       attr_reader :icon
 
-      # @return [Array<String>] Globbing patterns describing where to find
-      #  resources that need to be copied into the app bundle
+      ##
+      # Globbing patterns describing where to find resources that need
+      # to be copied into the app bundle
+      #
+      # @return [Array<String>]
       attr_reader :resources
 
-      # @return [Array<String>] Globbing patterns describing where to find
-      #  source code that needs to be copied into the app bundle
+      ##
+      # Globbing patterns describing where to find source code that
+      # needs to be copied into the app bundle
+      #
+      # @return [Array<String>]
       attr_reader :sources
 
-      # @return [Boolean] Whether the app is an daemon with UI or a regular app
+      ##
+      # Whether the app is an daemon with UI or a regular app
+      #
+      # @return [Boolean]
       attr_reader :agent
 
-      # @return [Boolean] Whether to include the Ruby stdlib in the app
+      ##
+      # Whether to include the Ruby stdlib in the app
+      #
+      # @return [Boolean]
       attr_reader :stdlib
 
-      # @return [Array<String>] Any `.xcdatamodel` directories to compile and
-      #  add to the app bundle
+      ##
+      # Any `.xcdatamodel` directories to compile and add to the app
+      # bundle
+      #
+      # @return [Array<String>]
       attr_reader :data_models
 
+      ##
       # Four letter code identifying bundle type, the default value is 'APPL'
       # to specify the bundle is an application
+      #
+      # @return [String]
       attr_reader :type
 
-      # Four letter code that is a signature of the bundle, defaults to '????'
-      # since most apps never set this value
+      ##
+      # Four letter code that is a signature of the bundle, defaults
+      # to '????' since most apps never set this value
+      #
       # @example TextEdit
+      #
       #  'ttxt'
+      #
       # @example Mail
+      #
       #  'emal'
+      #
+      # @return [String]
       attr_reader :signature
 
-      # @return [Array<String>] An array of gem names to embed in the app
-      #   bundle during deployment
+      ##
+      # An array of gem names to embed in the app bundle during
+      # deployment
+      #
+      # @return [Array<String>]
       attr_reader :gems
 
-      # @return [Boolean] Whether or not to embed BridgeSupport files
-      #   embedding the MacRuby framework
+      ##
+      # Whether or not to embed BridgeSupport files embedding the
+      # MacRuby framework
+      #
+      # @return [Boolean]
       attr_reader :embed_bs
       alias_method :embed_bs?, :embed_bs
 
-      # @return [Boolean] Always make a clean build of the app
+      ##
+      # Always make a clean build of the app
+      #
+      # @return [Boolean]
       attr_reader :overwrite
       alias_method :overwrite?, :overwrite
 
@@ -96,12 +144,17 @@ module HotCocoa
       end
     end
 
-    # @return [HotCocoa::ApplicationBuilder::Configuration] the cached
-    #  app configuration options
+    ##
+    # The cached app configuration options
+    #
+    # @return [HotCocoa::ApplicationBuilder::Configuration]
     attr_accessor :config
 
-    # @return [Boolean] Whether or not to build the app bundle for deployment
-    #  by calling `macruby_deploy` on the generated app bundle
+    ##
+    # Whether or not to build the app bundle for deployment by calling
+    # `macruby_deploy` on the generated app bundle
+    #
+    # @return [Boolean]
     attr_accessor :deploy
     alias_method  :deploy?, :deploy
 
