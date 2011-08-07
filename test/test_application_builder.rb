@@ -6,7 +6,7 @@ require 'hotcocoa/application_builder'
 class TestConfiguration < MiniTest::Unit::TestCase
 
   Configuration = HotCocoa::ApplicationBuilder::Configuration
-  TEST_DIR      = File.join( File.dirname(__FILE__), 'test_app_builder' )
+  TEST_DIR      = File.join( ENV['TMPDIR'], 'test_app_builder' )
 
   # Some HotCocoa build.yml files, borrowed from projects on Github
   HOTCONSOLE = 'test/fixtures/hotconsole.yml'
