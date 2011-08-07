@@ -1,235 +1,234 @@
 # -*- coding: utf-8 -*-
-##
-# An application specification, inspired by Gem::Specification that is
-# used by Rubygems.
-#
-# The specification object is used to build your [app bundle](http://developer.apple.com/library/mac/#documentation/CoreFoundation/Conceptual/CFBundles/Introduction/Introduction.html#//apple_ref/doc/uid/10000123i-CH1-SW1) and define the
-# `[Info.plist](http://developer.apple.com/library/mac/#documentation/MacOSX/Conceptual/BPRuntimeConfig/000-Introduction/introduction.html#//apple_ref/doc/uid/10000170-SW1)`
-# metadata for the application.
-module HotCocoa
-  module Application
-    class Specification
 
-      # @group App Metadata
+module Application
+  ##
+  # An application specification, inspired by Gem::Specification that is
+  # used by Rubygems.
+  #
+  # The specification object is used to build your [app bundle](http://developer.apple.com/library/mac/#documentation/CoreFoundation/Conceptual/CFBundles/Introduction/Introduction.html#//apple_ref/doc/uid/10000123i-CH1-SW1) and define the
+  # `[Info.plist](http://developer.apple.com/library/mac/#documentation/MacOSX/Conceptual/BPRuntimeConfig/000-Introduction/introduction.html#//apple_ref/doc/uid/10000170-SW1)`
+  # metadata for the application.
+  class Specification
 
-      ##
-      # Name of the app. Required.
-      #
-      # @plist CFBundleName
-      # @return [String]
-      attr_accessor :name
+    # @group App Metadata
 
-      ##
-      # The app's unique identifier, in reverse URL form. Required.
-      #
-      # Defaults to `'com.#{ENV['USER']}.#{@name}'`
-      #
-      # @example Identifier for Mail.app
-      #   'com.apple.mail'
-      #
-      # @plist CFBundleIdentifier
-      # @return [String]
-      attr_accessor :identifier
+    ##
+    # Name of the app. Required.
+    #
+    # @plist CFBundleName
+    # @return [String]
+    attr_accessor :name
 
-      ##
-      # The version of the app. Required.
-      #
-      # Defaults to `'1.0'`.
-      #
-      # @plist CFBundleVersion
-      # @return [String]
-      attr_accessor :version
+    ##
+    # The app's unique identifier, in reverse URL form. Required.
+    #
+    # Defaults to `'com.#{ENV['USER']}.#{@name}'`
+    #
+    # @example Identifier for Mail.app
+    #   'com.apple.mail'
+    #
+    # @plist CFBundleIdentifier
+    # @return [String]
+    attr_accessor :identifier
 
-      ##
-      # The short version for the app. Optional.
-      #
-      # @plist CFBundleShortVersionString
-      # @return [String]
-      attr_accessor :short_version
+    ##
+    # The version of the app. Required.
+    #
+    # Defaults to `'1.0'`.
+    #
+    # @plist CFBundleVersion
+    # @return [String]
+    attr_accessor :version
 
-      ##
-      # The copyright string. Recommended.
-      #
-      # @example
-      #   © 2011, Your Company
-      #
-      # @plist NSHumanReadableCopyright
-      attr_accessor :copyright
+    ##
+    # The short version for the app. Optional.
+    #
+    # @plist CFBundleShortVersionString
+    # @return [String]
+    attr_accessor :short_version
 
-      ##
-      # Path to the icon file. Recommended.
-      #
-      # @plist CFBundleIconFile
-      # @return [String]
-      attr_accessor :icon
+    ##
+    # The copyright string. Recommended.
+    #
+    # @example
+    #   © 2011, Your Company
+    #
+    # @plist NSHumanReadableCopyright
+    attr_accessor :copyright
 
-      ##
-      # Four letter code identifying the bundle type. Required.
-      #
-      # The default value is 'APPL', which specifies that the bundle
-      # is an application.
-      #
-      # @plist CFBundlePackageType
-      # @return [String]
-      attr_accessor :type
+    ##
+    # Path to the icon file. Recommended.
+    #
+    # @plist CFBundleIconFile
+    # @return [String]
+    attr_accessor :icon
 
-      ##
-      # Four letter code that acts as a signature for the bundle. Optional.
-      #
-      # Defaults to '????', and most apps never set this value.
-      #
-      # @exapmle TextEdit.app
-      #   'ttxt'
-      # @example Mail.app
-      #   'emal'
-      #
-      # @plist CFBundleSignature
-      # @return [String]
-      attr_accessor :signature
+    ##
+    # Four letter code identifying the bundle type. Required.
+    #
+    # The default value is 'APPL', which specifies that the bundle
+    # is an application.
+    #
+    # @plist CFBundlePackageType
+    # @return [String]
+    attr_accessor :type
 
-      ##
-      # Whether the app is an daemon with UI or a regular app. Optional.
-      #
-      # You can use this flag to hide the dock icon for the app.
-      #
-      # @return [Boolean]
-      attr_accessor :agent
+    ##
+    # Four letter code that acts as a signature for the bundle. Optional.
+    #
+    # Defaults to '????', and most apps never set this value.
+    #
+    # @example TextEdit.app
+    #   'ttxt'
+    # @example Mail.app
+    #   'emal'
+    #
+    # @plist CFBundleSignature
+    # @return [String]
+    attr_accessor :signature
 
-      # @todo CFBundleDocumentTypes
-      # @return [Array<Hash>]
-      # attr_accessor :doc_types
+    ##
+    # Whether the app is an daemon with UI or a regular app. Optional.
+    #
+    # You can use this flag to hide the dock icon for the app.
+    #
+    # @return [Boolean]
+    attr_accessor :agent
 
-      ##
-      # Any additional plist values that an application could have.
-      #
-      # Values here will override attributes set by other plist related
-      # attributes.
-      #
-      # Empty by default.
-      #
-      # @return [Hash]
-      attr_accessor :plist
+    # @todo CFBundleDocumentTypes
+    # @return [Array<Hash>]
+    # attr_accessor :doc_types
 
-      # @todo Support localization related plist keys natively
-      # @todo CFBundleDevelopmentRegion (Recommended)
+    ##
+    # Any additional plist values that an application could have.
+    #
+    # Values here will override attributes set by other plist related
+    # attributes.
+    #
+    # Empty by default.
+    #
+    # @return [Hash]
+    attr_accessor :plist
 
-      # @group App Layout
+    # @todo Support localization related plist keys natively
+    # @todo CFBundleDevelopmentRegion (Recommended)
 
-      ##
-      # List of resources that will be copied to the `Contents/Resources`
-      # directory inside the app bundle.
-      #
-      # @return [Array<String>]
-      attr_accessor :resources
+    # @group App Layout
 
-      ##
-      # List of source code files that will be copied to the app bundle.
-      #
-      # @return [Array<String>]
-      attr_accessor :sources
+    ##
+    # List of resources that will be copied to the `Contents/Resources`
+    # directory inside the app bundle.
+    #
+    # @return [Array<String>]
+    attr_accessor :resources
 
-      ##
-      # Path to any Core Data `.xcdatamodel` directories that need to be
-      # compiled and added to the app bundle.
-      #
-      # @return [Array<String>]
-      attr_accessor :data_models
+    ##
+    # List of source code files that will be copied to the app bundle.
+    #
+    # @return [Array<String>]
+    attr_accessor :sources
 
-      # @group Deloyment Options
+    ##
+    # Path to any Core Data `.xcdatamodel` directories that need to be
+    # compiled and added to the app bundle.
+    #
+    # @return [Array<String>]
+    attr_accessor :data_models
 
-      ##
-      # Whether to include the Ruby stdlib in the app when embedding MacRuby.
-      #
-      # @return [Boolean]
-      attr_accessor :stdlib
+    # @group Deloyment Options
 
-      ##
-      # Array of gem names to embed in the app bundle during deployment
-      #
-      # @return [Array<Gem::Requirement>]
-      attr_accessor :gems
+    ##
+    # Whether to include the Ruby stdlib in the app when embedding MacRuby.
+    #
+    # @return [Boolean]
+    attr_accessor :stdlib
 
-      ##
-      # Declares a runtime dependency on a gem, with any given version
-      # requirements. If the embedding is also set, then any dependent gems
-      # will also be embedded into the app bundle.
-      #
-      # @example
-      #   spec.add_runtime_dependency 'hotcocoa', '~> 0.6'
-      def add_runtime_dependency gem, *requirements
-        raise NotImplementedError, 'Please implement me :('
-      end
+    ##
+    # Array of gem names to embed in the app bundle during deployment
+    #
+    # @return [Array<Gem::Requirement>]
+    attr_accessor :gems
 
-      ##
-      # Whether or not to embed BridgeSupport files when embedding the
-      # MacRuby framework during deployment.
-      #
-      # Defaults to false. Useful if you need to deploy the app to
-      # OS X 10.6.
-      #
-      # @return [Boolean]
-      attr_accessor :embed_bs
-      alias_method :embed_bs?, :embed_bs
-
-      ##
-      # Whether or not to always make a clean build of the app.
-      #
-      # Defaults to false.
-      #
-      # @return [Boolean]
-      attr_accessor :overwrite
-      alias_method :overwrite?, :overwrite
-
-      ##
-      # Any additional arguments to pass to `macruby_deploy` during
-      # deployment.
-      #
-      # @return [Array<String>]
-      attr_accessor :deploy_opts
-
-      # @endgroup
-
-      DEFAULT_ATTRIBUTES = {
-        :plist       => {},
-        :sources     => [],
-        :resources   => [],
-        :data_models => [],
-        :gems        => [],
-        :type       => 'APPL',
-        :signature  => '????',
-        :version    => '1.0',
-        :stdlib     => true,
-        :agent      => false,
-        :overwrite  => false,
-        :embed_bs   => false
-      }
-
-      def initialize
-        DEFAULT_ATTRIBUTES.each { |key, value| send "#{key}=", value }
-
-        yield self if block_given?
-
-        @identifier ||= "com.#{ENV['USER']}.#{@name}"
-
-        # go through plist and overwrite specific keys?
-      end
-
-      def verify!
-        # make sure everything is kosher
-        raise NotImplementedError, 'Please Implement Me :('
-      end
-
-      class Error < ArgumentError
-      end
-
-      def icon_exists?
-        @icon ? File.exist?(@icon) : false
-      end
-
-      def self.load file
-        eval File.read(file)
-      end
-
+    ##
+    # Declares a runtime dependency on a gem, with any given version
+    # requirements. If the embedding is also set, then any dependent gems
+    # will also be embedded into the app bundle.
+    #
+    # @example
+    #   spec.add_runtime_dependency 'hotcocoa', '~> 0.6'
+    def add_runtime_dependency gem, *requirements
+      raise NotImplementedError, 'Please implement me :('
     end
+
+    ##
+    # Whether or not to embed BridgeSupport files when embedding the
+    # MacRuby framework during deployment.
+    #
+    # Defaults to false. Useful if you need to deploy the app to
+    # OS X 10.6.
+    #
+    # @return [Boolean]
+    attr_accessor :embed_bs
+    alias_method :embed_bs?, :embed_bs
+
+    ##
+    # Whether or not to always make a clean build of the app.
+    #
+    # Defaults to false.
+    #
+    # @return [Boolean]
+    attr_accessor :overwrite
+    alias_method :overwrite?, :overwrite
+
+    ##
+    # Any additional arguments to pass to `macruby_deploy` during
+    # deployment.
+    #
+    # @return [Array<String>]
+    attr_accessor :deploy_opts
+
+    # @endgroup
+
+    DEFAULT_ATTRIBUTES = {
+      :plist       => {},
+      :sources     => [],
+      :resources   => [],
+      :data_models => [],
+      :gems        => [],
+      :type       => 'APPL',
+      :signature  => '????',
+      :version    => '1.0',
+      :stdlib     => true,
+      :agent      => false,
+      :overwrite  => false,
+      :embed_bs   => false
+    }
+
+    def initialize
+      DEFAULT_ATTRIBUTES.each { |key, value| send "#{key}=", value }
+
+      yield self if block_given?
+
+      @identifier ||= "com.#{ENV['USER']}.#{@name}"
+
+      # go through plist and overwrite specific keys?
+    end
+
+    def verify!
+      # make sure everything is kosher
+      raise NotImplementedError, 'Please Implement Me :('
+    end
+
+    class Error < ArgumentError
+    end
+
+    def icon_exists?
+      @icon ? File.exist?(@icon) : false
+    end
+
+    def self.load file
+      eval File.read(file)
+    end
+
   end
 end
