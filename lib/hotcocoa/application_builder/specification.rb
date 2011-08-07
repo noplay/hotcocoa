@@ -215,8 +215,7 @@ module Application
     end
 
     def verify!
-      # make sure everything is kosher
-      raise NotImplementedError, 'Please Implement Me :('
+      verify_name
     end
 
     class Error < ArgumentError
@@ -228,6 +227,15 @@ module Application
 
     def self.load file
       eval File.read(file)
+    end
+
+
+    private
+
+    def verify_name
+      raise Error, 'a name is required for an appspec' unless @name
+      @name = @name.to_s
+      raise Error, 'an app name cannot be an empty string' if @name.empty?
     end
 
   end
