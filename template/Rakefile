@@ -1,5 +1,34 @@
 require 'rubygems'
-require 'hotcocoa/application_builder'
-require 'hotcocoa/standard_rake_tasks'
+require 'hotcocoa/application_builder/builder'
+
+spec = Application::Specification.new do |s|
+  s.name       = '__APPLICATION_NAME__'
+  s.identifier = 'com.yourcompany.__APPLICATION_NAME__'
+  s.version    = '1.0'
+  s.icon       = 'resources/HotCocoa.icns'
+  s.resources  = Dir.glob('resources/**/*.*')
+  s.sources    = Dir.glob('lib/**/*.rb')
+end
+
+desc 'Build the application'
+task :build do
+  Application::Builder.build spec
+end
+
+desc 'Build a deployable version of the application'
+task :deploy do
+  Application::Builder.build spec, deploy: true
+end
+
+desc 'Build and execute the application'
+task :run => [:build] do
+  `"./#{spec.name}.app/Contents/MacOS/#{spec.name.gsub(/ /, '')}"`
+end
+
+desc 'Cleanup build files'
+task :clean do
+  $stdout.puts "/bin/rm -rf '#{spec.name}.app'"
+  sh "/bin/rm -rf '#{spec.name}.app'"
+end
 
 task :default => [:run]
