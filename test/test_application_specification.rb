@@ -28,7 +28,10 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
 
   def test_name_is_string_of_given_name
     ['Test', [1,2,3]].each do |name|
-      spec = Specification.new { |s| s.name = name }
+      spec = Specification.new do |s|
+        s.name       = name
+        s.identifier = 'com.test.test'
+      end
       assert_equal name.to_s, spec.name
     end
   end
@@ -62,6 +65,36 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_match /should be less than 16 characters/, $stderr.string
   ensure
     $stderr = err
+  end
+
+  def test_identifier_has_default
+    before, ENV['USER'] = ENV['USER'], 'blah'
+    exception = nil
+    spec      = Specification.new { |s| s.name = 'test' }
+    assert_equal 'com.blah.test', spec.identifier
+  ensure
+    ENV['USER'] = before
+  end
+
+  def test_identifier_limits_character_set
+    assert_block do
+      Specification.new do |s|
+        s.name       = 'test'
+        s.identifier = 'com.hotcocoa.test'
+      end
+    end
+
+    exception = nil
+    begin
+      Specification.new do |s|
+        s.name       = 'test'
+        s.identifier = ','
+      end
+    rescue Specification::Error => e
+      exception = e
+    end
+    assert_match /bundle identifier may only/, exception.message
+    assert_match /You had ","/, exception.message
   end
 
   def test_version_defaults_to_1_if_not_set

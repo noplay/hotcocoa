@@ -26,7 +26,7 @@ module Application
     attr_accessor :name
 
     ##
-    # The app's unique identifier, in reverse URL form. Required.
+    # The app's unique identifier, in reverse DNS form. Required.
     #
     # Defaults to `'com.#{ENV['USER']}.#{@name}'`
     #
@@ -224,6 +224,7 @@ module Application
 
     def verify!
       verify_name
+      verify_identifier
     end
 
     class Error < ArgumentError
@@ -245,6 +246,16 @@ module Application
       @name = @name.to_s
       raise Error, 'an app name cannot be an empty string' if @name.empty?
       warn 'an app name should be less than 16 characters' if name.length >= 16
+    end
+
+    # @todo Should we try to make the regexp more strict?
+    def verify_identifier
+      raise Error, 'a bundle identifier is required' unless @identifier
+      @identifier = @identifier.to_s
+      unless @identifier.match /^[A-Za-z0-9\.-]+$/
+        raise Error, 'A bundle identifier may only use "-", ".", and alphanumeric characters.' +
+          "You had #{@identifier.inspect}"
+      end
     end
 
   end
