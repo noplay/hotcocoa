@@ -19,6 +19,8 @@ module Application
     ##
     # Name of the app. Required.
     #
+    # This name should be less than 16 characters long.
+    #
     # @plist CFBundleName
     # @return [String]
     attr_accessor :name
