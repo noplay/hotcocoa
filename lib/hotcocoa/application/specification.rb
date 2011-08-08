@@ -190,18 +190,18 @@ module Application
     # @endgroup
 
     DEFAULT_ATTRIBUTES = {
-      :plist       => {},
-      :sources     => [],
-      :resources   => [],
-      :data_models => [],
-      :gems        => [],
-      :type       => 'APPL',
-      :signature  => '????',
-      :version    => '1.0',
-      :stdlib     => true,
-      :agent      => false,
-      :overwrite  => false,
-      :embed_bs   => false
+      plist:       {},
+      sources:     [],
+      resources:   [],
+      data_models: [],
+      gems:        [],
+      type:        'APPL',
+      signature:   '????',
+      version:     '1.0',
+      stdlib:      true,
+      agent:       false,
+      overwrite:   false,
+      embed_bs:    false
     }
 
     def initialize
