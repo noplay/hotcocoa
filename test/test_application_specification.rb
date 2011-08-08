@@ -1,4 +1,5 @@
 require 'hotcocoa/application/specification'
+require 'stringio'
 
 class TestApplicationSpecification < MiniTest::Unit::TestCase
   include Application
@@ -25,12 +26,14 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal '2.0', spec.version
   end
 
-  def test_name_is_verified
+  def test_name_is_string_of_given_name
     ['Test', [1,2,3]].each do |name|
       spec = Specification.new { |s| s.name = name }
       assert_equal name.to_s, spec.name
     end
+  end
 
+  def test_name_is_verified
     exception = nil
 
     begin
@@ -46,6 +49,19 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
       exception = e
     end
     assert_match /cannot be an empty string/, exception.message
+  end
+
+  def test_name_warns_if_too_long
+    err, $stderr = $stderr, StringIO.new
+    begin
+      Specification.new do |s|
+        s.name = 'Really long app name'
+      end
+    rescue Specification::Error
+    end
+    assert_match /should be less than 16 characters/, $stderr.string
+  ensure
+    $stderr = err
   end
 
   def test_version_defaults_to_1_if_not_set

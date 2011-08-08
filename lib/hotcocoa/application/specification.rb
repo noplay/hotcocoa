@@ -238,12 +238,11 @@ module Application
 
     private
 
-    # @todo Find out if there are limits to what characters can be in
-    #       an app name.
     def verify_name
       raise Error, 'a name is required for an appspec' unless @name
       @name = @name.to_s
       raise Error, 'an app name cannot be an empty string' if @name.empty?
+      warn 'an app name should be less than 16 characters' if name.length >= 16
     end
 
   end
