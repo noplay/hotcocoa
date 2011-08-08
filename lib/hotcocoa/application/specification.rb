@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
+##
+# Application is a namespace for the classes that are used to specify
+# and build application bundles.
 module Application
+
   ##
   # An application specification, inspired by Gem::Specification that is
   # used by Rubygems.
