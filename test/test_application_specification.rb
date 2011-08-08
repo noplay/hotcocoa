@@ -1,4 +1,4 @@
-require 'hotcocoa/application_builder/specification'
+require 'hotcocoa/application/specification'
 
 class TestApplicationSpecification < MiniTest::Unit::TestCase
   include Application
