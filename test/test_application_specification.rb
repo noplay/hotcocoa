@@ -25,6 +25,29 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal '2.0', spec.version
   end
 
+  def test_name_is_verified
+    ['Test', [1,2,3]].each do |name|
+      spec = Specification.new { |s| s.name = name }
+      assert_equal name.to_s, spec.name
+    end
+
+    exception = nil
+
+    begin
+      Specification.new { |_| }
+    rescue Specification::Error => e
+      exception = e
+    end
+    assert_match /name is required/, exception.message
+
+    begin
+      Specification.new { |s| s.name = '' }
+    rescue Specification::Error => e
+      exception = e
+    end
+    assert_match /cannot be an empty string/, exception.message
+  end
+
   def test_version_defaults_to_1_if_not_set
     spec = Specification.load STOPWATCH
     refute_nil spec.version

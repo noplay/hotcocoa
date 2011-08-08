@@ -212,6 +212,8 @@ module Application
       @identifier ||= "com.#{ENV['USER']}.#{@name}"
 
       # go through plist and overwrite specific keys?
+
+      verify!
     end
 
     def verify!
@@ -232,6 +234,8 @@ module Application
 
     private
 
+    # @todo Find out if there are limits to what characters can be in
+    #       an app name.
     def verify_name
       raise Error, 'a name is required for an appspec' unless @name
       @name = @name.to_s
