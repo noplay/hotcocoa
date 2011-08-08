@@ -2,6 +2,7 @@ framework 'Foundation'
 
 require 'fileutils'
 require 'rbconfig'
+require 'hotcocoa/application_builder/specification'
 
 module Application
   class Builder
