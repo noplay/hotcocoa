@@ -44,6 +44,7 @@ class HotCocoa::Template
 
     all_files_in(template_directory) do |file|
       short_name  = file.sub(/^#{template_directory}/, '')
+      short_name.gsub! /__APPLICATION_NAME__/, app_name
       destination = File.join(directory, short_name)
 
       if File.directory? file
@@ -51,8 +52,8 @@ class HotCocoa::Template
 
       else
         File.open(destination, 'w') do |out|
-          input =  File.read(file)
-          input.gsub!(/__APPLICATION_NAME__/, app_name)
+          input = File.read(file)
+          input.gsub! /__APPLICATION_NAME__/, app_name
           out.write input
         end
       end
