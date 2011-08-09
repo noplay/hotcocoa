@@ -38,7 +38,8 @@ module Application
     attr_accessor :identifier
 
     ##
-    # The version of the app. Required.
+    # The version of the app, usually including the build number.
+    # Recommended.
     #
     # Defaults to `'1.0'`.
     #
@@ -225,6 +226,7 @@ module Application
     def verify!
       verify_name
       verify_identifier
+      verify_version
     end
 
     class Error < ArgumentError
@@ -256,6 +258,10 @@ module Application
         raise Error, 'A bundle identifier may only use "-", ".", and alphanumeric characters.' +
           "You had #{@identifier.inspect}"
       end
+    end
+
+    def verify_version
+      @version = @version.to_s
     end
 
   end

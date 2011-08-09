@@ -86,9 +86,16 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   end
 
   def test_version_defaults_to_1_if_not_set
-    spec = Specification.load STOPWATCH
-    refute_nil spec.version
+    spec = Specification.new { |s| s.name = 'test' }
     assert_equal '1.0', spec.version
+  end
+
+  def test_version_is_forced_to_a_string
+    spec = Specification.new do |s|
+      s.name    = 'test'
+      s.version = 3.1415
+    end
+    assert_equal '3.1415', spec.version
   end
 
   def test_sources_resources_and_data_models_are_initialized_to_an_empty_array_if_not_provided
