@@ -15,6 +15,14 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   def setup;    FileUtils.mkdir TEST_DIR; end
   def teardown; FileUtils.rm_rf TEST_DIR; end
 
+  def rescue_spec_error_for &block
+    begin
+      Specification.new &block
+    rescue Specification::Error => e
+      return e
+    end
+  end
+
   def test_reads_attributes
     spec = Specification.load HOTCONSOLE
     assert_equal 'HotConsole',                spec.name
@@ -37,31 +45,16 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   end
 
   def test_name_is_verified
-    exception = nil
-
-    begin
-      Specification.new { |_| }
-    rescue Specification::Error => e
-      exception = e
-    end
+    exception = rescue_spec_error_for { |_| }
     assert_match /name is required/, exception.message
 
-    begin
-      Specification.new { |s| s.name = '' }
-    rescue Specification::Error => e
-      exception = e
-    end
+    exception = rescue_spec_error_for { |s| s.name = '' }
     assert_match /cannot be an empty string/, exception.message
   end
 
   def test_name_warns_if_too_long
     err, $stderr = $stderr, StringIO.new
-    begin
-      Specification.new do |s|
-        s.name = 'Really long app name'
-      end
-    rescue Specification::Error
-    end
+    rescue_spec_error_for { |s| s.name = 'Really long app name' }
     assert_match /should be less than 16 characters/, $stderr.string
   ensure
     $stderr = err
@@ -84,14 +77,9 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
       end
     end
 
-    exception = nil
-    begin
-      Specification.new do |s|
-        s.name       = 'test'
-        s.identifier = ','
-      end
-    rescue Specification::Error => e
-      exception = e
+    exception = rescue_spec_error_for do |s|
+      s.name       = 'test'
+      s.identifier = ','
     end
     assert_match /bundle identifier may only/, exception.message
     assert_match /You had ","/, exception.message
