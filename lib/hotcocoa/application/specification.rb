@@ -50,6 +50,9 @@ module Application
     ##
     # The short version for the app. Optional.
     #
+    # The short version for an app should be in the standard
+    # `"$MAJOR.$MINOR.$PATCHLEVEL"` format.
+    #
     # @plist CFBundleShortVersionString
     # @return [String]
     attr_accessor :short_version
@@ -227,6 +230,7 @@ module Application
       verify_name
       verify_identifier
       verify_version
+      verify_short_version
     end
 
     class Error < ArgumentError
@@ -262,6 +266,12 @@ module Application
 
     def verify_version
       @version = @version.to_s
+    end
+
+    # @todo Should @version be enforced if @short_version is set?
+    def verify_short_version
+      return unless @short_version
+      @short_version = @short_version.to_s
     end
 
   end

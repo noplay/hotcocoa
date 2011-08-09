@@ -98,6 +98,19 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal '3.1415', spec.version
   end
 
+  def test_short_version_is_empty_by_default
+    spec = Specification.new { |s| s.name = 'test' }
+    assert_nil spec.short_version
+  end
+
+  def test_short_version_is_forced_to_a_string_if_defined
+    spec = Specification.new do |s|
+      s.name = 'test'
+      s.short_version = 3.1415
+    end
+    assert_equal '3.1415', spec.short_version
+  end
+
   def test_sources_resources_and_data_models_are_initialized_to_an_empty_array_if_not_provided
     spec = Specification.load EMPTY_APP
     assert_empty spec.sources
