@@ -60,6 +60,17 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     $stderr = err
   end
 
+  def test_identifier_is_verified
+    exception = rescue_spec_error_for { |s| s.name = 'test' }
+    assert_match /identifier is required/, exception.message
+
+    exception = rescue_spec_error_for do |s|
+      s.name       = 'test'
+      s.identifier = ''
+    end
+    assert_match /cannot be an empty string/, exception.message
+  end
+
   def test_identifier_limits_character_set
     assert_block do
       Specification.new do |s|
