@@ -254,8 +254,9 @@ module Application
 
     # @todo Should we try to make the regexp more strict?
     def verify_identifier
-      raise Error, 'a bundle identifier is required' unless @identifier
+      raise Error, 'a bundle identifier is required for an appspec' unless @identifier
       @identifier = @identifier.to_s
+      raise Error, 'a bundle identifier cannot be an empty string' if @identifier.empty?
       unless @identifier.match /^[A-Za-z0-9\.-]+$/
         raise Error, 'A bundle identifier may only use "-", ".", and alphanumeric characters.' +
           "You had #{@identifier.inspect}"
