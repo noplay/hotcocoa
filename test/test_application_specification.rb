@@ -77,26 +77,34 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   end
 
   def test_version_defaults_to_1_if_not_set
-    spec = Specification.new { |s| s.name = 'test' }
+    spec = Specification.new do |s|
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+    end
     assert_equal '1.0', spec.version
   end
 
   def test_version_is_forced_to_a_string
     spec = Specification.new do |s|
-      s.name    = 'test'
-      s.version = 3.1415
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+      s.version    = 3.1415
     end
     assert_equal '3.1415', spec.version
   end
 
   def test_short_version_is_empty_by_default
-    spec = Specification.new { |s| s.name = 'test' }
+    spec = Specification.new do |s|
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+    end
     assert_nil spec.short_version
   end
 
   def test_short_version_is_forced_to_a_string_if_defined
     spec = Specification.new do |s|
-      s.name = 'test'
+      s.name          = 'test'
+      s.identifier    = 'com.test.test'
       s.short_version = 3.1415
     end
     assert_equal '3.1415', spec.short_version
