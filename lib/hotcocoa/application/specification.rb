@@ -219,8 +219,6 @@ module Application
 
       yield self if block_given?
 
-      @identifier ||= "com.#{ENV['USER']}.#{@name}"
-
       # go through plist and overwrite specific keys?
 
       verify!
