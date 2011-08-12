@@ -60,15 +60,6 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     $stderr = err
   end
 
-  def test_identifier_has_default
-    before, ENV['USER'] = ENV['USER'], 'blah'
-    exception = nil
-    spec      = Specification.new { |s| s.name = 'test' }
-    assert_equal 'com.blah.test', spec.identifier
-  ensure
-    ENV['USER'] = before
-  end
-
   def test_identifier_limits_character_set
     assert_block do
       Specification.new do |s|
