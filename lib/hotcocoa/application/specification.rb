@@ -28,8 +28,6 @@ module Application
     ##
     # The app's unique identifier, in reverse DNS form. Required.
     #
-    # Defaults to `'com.#{ENV['USER']}.#{@name}'`
-    #
     # @example Identifier for Mail.app
     #   'com.apple.mail'
     #
