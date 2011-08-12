@@ -1,5 +1,5 @@
 require 'rubygems'
-gem     'minitest-macruby-pride'
+gem     'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 
