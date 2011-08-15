@@ -215,7 +215,11 @@ module Application
     def initialize
       DEFAULT_ATTRIBUTES.each { |key, value| send "#{key}=", value }
 
-      yield self if block_given?
+      unless block_given?
+        msg = 'You must pass a block at initialization to setup the specification'
+        raise Error, msg
+      end
+      yield self
 
       # go through plist and overwrite specific keys?
 

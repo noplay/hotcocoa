@@ -23,6 +23,11 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     end
   end
 
+  def test_spec_requires_a_block
+    error = rescue_spec_error_for # no block given
+    assert_match /must pass a block/, error.message
+  end
+
   def test_reads_attributes
     spec = Specification.load HOTCONSOLE
     assert_equal 'HotConsole',                spec.name
