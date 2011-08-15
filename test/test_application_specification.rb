@@ -1,5 +1,4 @@
 require 'hotcocoa/application/specification'
-require 'stringio'
 
 class TestApplicationSpecification < MiniTest::Unit::TestCase
   include Application
@@ -58,11 +57,10 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   end
 
   def test_name_warns_if_too_long
-    err, $stderr = $stderr, StringIO.new
-    rescue_spec_error_for { |s| s.name = 'Really long app name' }
-    assert_match /should be less than 16 characters/, $stderr.string
-  ensure
-    $stderr = err
+    output = capture_io do
+      rescue_spec_error_for { |s| s.name = 'Really long app name' }
+    end
+    assert_match /should be less than 16 characters/, output.last
   end
 
   def test_identifier_is_verified
