@@ -231,6 +231,7 @@ module Application
       verify_identifier
       verify_version
       verify_short_version
+      verify_copyright
     end
 
     class Error < ArgumentError
@@ -273,6 +274,10 @@ module Application
     def verify_short_version
       return unless @short_version
       @short_version = @short_version.to_s
+    end
+
+    def verify_copyright
+      @copyright = @copyright.to_s if @copyright
     end
 
   end

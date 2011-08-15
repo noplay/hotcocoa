@@ -113,6 +113,15 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal '3.1415', spec.short_version
   end
 
+  def test_copyright_is_verified
+    assert_nil minimal_spec.copyright
+
+    spec = minimal_spec do |s|
+      s.copyright = Math::PI
+    end
+    assert_equal Math::PI.to_s, spec.copyright
+  end
+
   def test_sources_resources_and_data_models_are_initialized_to_an_empty_array_if_not_provided
     spec = minimal_spec
     assert_empty spec.sources
