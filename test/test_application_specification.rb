@@ -22,6 +22,14 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     end
   end
 
+  def minimal_spec
+    Specification.new do |s|
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+      yield s if block_given?
+    end
+  end
+
   def test_spec_requires_a_block
     error = rescue_spec_error_for # no block given
     assert_match /must pass a block/, error.message
@@ -75,13 +83,6 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   end
 
   def test_identifier_limits_character_set
-    assert_block do
-      Specification.new do |s|
-        s.name       = 'test'
-        s.identifier = 'com.hotcocoa.test'
-      end
-    end
-
     exception = rescue_spec_error_for do |s|
       s.name       = 'test'
       s.identifier = ','
@@ -91,48 +92,36 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   end
 
   def test_version_defaults_to_1_if_not_set
-    spec = Specification.new do |s|
-      s.name       = 'test'
-      s.identifier = 'com.test.test'
-    end
-    assert_equal '1.0', spec.version
+    assert_equal '1.0', minimal_spec.version
   end
 
   def test_version_is_forced_to_a_string
-    spec = Specification.new do |s|
-      s.name       = 'test'
-      s.identifier = 'com.test.test'
+    spec = minimal_spec do |s|
       s.version    = 3.1415
     end
     assert_equal '3.1415', spec.version
   end
 
   def test_short_version_is_empty_by_default
-    spec = Specification.new do |s|
-      s.name       = 'test'
-      s.identifier = 'com.test.test'
-    end
-    assert_nil spec.short_version
+    assert_nil minimal_spec.short_version
   end
 
   def test_short_version_is_forced_to_a_string_if_defined
-    spec = Specification.new do |s|
-      s.name          = 'test'
-      s.identifier    = 'com.test.test'
+    spec = minimal_spec do |s|
       s.short_version = 3.1415
     end
     assert_equal '3.1415', spec.short_version
   end
 
   def test_sources_resources_and_data_models_are_initialized_to_an_empty_array_if_not_provided
-    spec = Specification.load EMPTY_APP
+    spec = minimal_spec
     assert_empty spec.sources
     assert_empty spec.resources
     assert_empty spec.data_models
   end
 
   def test_overwirte_attribute
-    spec = Specification.load EMPTY_APP
+    spec = minimal_spec
     refute spec.overwrite?
 
     spec = Specification.load STOPWATCH
