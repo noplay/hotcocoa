@@ -129,11 +129,11 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_empty spec.data_models
   end
 
-  def test_overwirte_attribute
+  def test_overwirte_attribute_is_false_by_default
     spec = minimal_spec
     refute spec.overwrite?
 
-    spec = Specification.load STOPWATCH
+    spec = minimal_spec { |s| s.overwrite = true }
     assert spec.overwrite?
   end
 
