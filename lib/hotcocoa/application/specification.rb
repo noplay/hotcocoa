@@ -241,7 +241,7 @@ module Application
       end
       yield self
 
-      # go through plist and overwrite specific keys?
+      # @todo go through plist and overwrite specific keys?
 
       verify!
     end
