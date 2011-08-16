@@ -97,10 +97,16 @@ end
 # Proxies the range of an attributed string.
 class HotCocoa::NSRangedProxyAttributedString
 
-  # @return [NSMutableAttributedString] the string this proxy belongs to
+  ##
+  # The string this proxy belongs to.
+  #
+  # @return [NSMutableAttributedString]
   attr_reader :string
 
-  # @return [Range] range in the string this proxy represents
+  ##
+  # Range in the string this proxy represents.
+  #
+  # @return [Range]
   attr_reader :range
 
   # @param [NSMutableAttributedString] string
