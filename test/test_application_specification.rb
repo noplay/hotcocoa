@@ -137,12 +137,16 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert spec.overwrite?
   end
 
-  def test_stdlib_attribute
-    spec = Specification.load HOTCONSOLE
+  def test_stdlib_attribute_true_by_default
+    spec = minimal_spec
     assert_equal true, spec.stdlib
 
-    spec = Specification.load STOPWATCH
+    spec = minimal_spec { |s| s.stdlib = false }
     assert_equal false, spec.stdlib
+
+    libs = ['base64', 'matrix']
+    spec = minimal_spec { |s| s.stdlib = libs }
+    assert_equal libs, spec.stdlib
   end
 
   def test_type_attribute

@@ -146,9 +146,29 @@ module Application
     # @group Deloyment Options
 
     ##
-    # Whether to include the Ruby stdlib in the app when embedding MacRuby.
+    # Whether to include the Ruby stdlib in the app when embedding
+    # MacRuby. Set this to a Boolean to include/exclude the entire
+    # standard library from being embedded.
     #
-    # @return [Boolean]
+    # If you want to embed specific files from the standard library,
+    # you can do so by setting this attribute a list of the names of
+    # libraries you want.
+    #
+    # @example
+    #
+    #   # Nothing
+    #   spec.stdlib = false
+    #   # Everything
+    #   spec.stdlib = true
+    #   # Just 'base64', 'matrix', and 'set'
+    #   spec.stdlib = ['base64', 'matrix', 'set']
+    #
+    # This attribute corresponds to the `--[no]-stdlib` and `--stdlib`
+    # arguments for `macruby_deploy`.
+    #
+    # Defaults to true.
+    #
+    # @return [Boolean, Array<String>]
     attr_accessor :stdlib
 
     ##
@@ -278,6 +298,13 @@ module Application
 
     def verify_copyright
       @copyright = @copyright.to_s if @copyright
+    end
+
+    # @todo Should a warning be given if not embedding the stdlib?
+    def verify_stdlib
+      # need to be careful here; the main components of hotcocoa do
+      # not depend on the stdlib right now, but if that changes then
+      # this needs to be a failsafe
     end
 
   end
