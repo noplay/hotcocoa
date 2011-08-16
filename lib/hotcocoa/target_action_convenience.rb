@@ -5,6 +5,8 @@ module HotCocoa::Mappings::TargetActionConvenience
 
   ##
   # @todo testing
+  #
+  # @param [Proc] behavior
   def on_action= behavior
     if target && (
                   target.instance_variable_get(:@action_behavior) ||
@@ -28,6 +30,8 @@ module HotCocoa::Mappings::TargetActionConvenience
 
   ##
   # @todo testing
+  #
+  # @yieldparam [id] sender
   def on_action &behavior
     self.on_action = behavior
     self
