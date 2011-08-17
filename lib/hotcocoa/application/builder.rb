@@ -44,8 +44,13 @@ module Application
 
     private
 
+    ##
+    # Build arguments list and call to `macruby_deploy`.
     def deploy
-      embed_framework
+      options = spec.stdlib ? '' : '--no-stdlib '
+      spec.gems.each { |g| options << "--gem #{g} " }
+      options << '--bs ' if spec.embed_bs?
+      puts `macruby_deploy --embed --gem hotcocoa #{options} #{bundle_root}`
     end
 
     def remove_bundle_root
@@ -119,13 +124,6 @@ module Application
       info[:CFBundleIconFile] = File.basename(spec.icon) if spec.icon_exists?
 
       File.open(info_plist_file, 'w') { |f| f.write info.to_plist }
-    end
-
-    def embed_framework # and also gems
-      options = spec.stdlib ? '' : '--no-stdlib '
-      spec.gems.each { |g| options << "--gem #{g} " }
-      options << '--bs ' if spec.embed_bs?
-      puts `macruby_deploy --embed --gem hotcocoa #{options} #{bundle_root}`
     end
 
     # @todo something better than puts `gcc`
