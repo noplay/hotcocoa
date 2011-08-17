@@ -5,6 +5,10 @@ require 'rbconfig'
 require 'hotcocoa/application/specification'
 
 module Application
+  ##
+  # This class is responsible for building application bundles, but could
+  # theoretically be used to build other bundles, such as frameworks, with
+  # only a few changes.
   class Builder
 
     ##
