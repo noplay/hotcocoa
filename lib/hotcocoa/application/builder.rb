@@ -7,18 +7,31 @@ require 'hotcocoa/application/specification'
 module Application
   class Builder
 
-    attr_reader :spec
-
+    ##
+    # Build an application from a specification, optionally for
+    # deployment.
+    #
+    # @param [Application::Specification] spec
+    # @param [Hash] opts
+    # @option opts [Symbol] :deploy (false)
     def self.build spec, opts = {}
       new(spec).build(*opts)
     end
 
+    # @return [Application::Specification]
+    attr_reader :spec
+
+    # @param [Application::Specification]
     def initialize spec
       @spec = spec
     end
 
+    # @param [Hash]
+    # @option opts [Symbol] :deploy (false)
     def build opts = {}
-      remove_bundle_root if spec.overwrite? || opts[:deploy] # Deploying always makes a fresh build...
+      if spec.overwrite? || opts[:deploy] # Deploying always makes a fresh build
+        remove_bundle_root
+      end
       build_bundle_structure
       write_bundle_files
       copy_sources
