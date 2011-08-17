@@ -172,6 +172,18 @@ module Application
     attr_accessor :stdlib
 
     ##
+    # @note If you choose to compile, the original source files will
+    #       be removed.
+    #
+    # Whether or not to compile ruby source files when embedding.
+    #
+    # Defaults to `true`.
+    #
+    # @return [Boolean]
+    attr_accessor :compile
+    alias_method :compile?, :compile
+
+    ##
     # Array of gem names to embed in the app bundle during deployment
     #
     # @return [Array<Gem::Requirement>]

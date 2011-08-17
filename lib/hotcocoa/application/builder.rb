@@ -50,6 +50,7 @@ module Application
       options = spec.stdlib ? '' : '--no-stdlib '
       spec.gems.each { |g| options << "--gem #{g} " }
       options << '--bs ' if spec.embed_bs?
+      options << '--compile ' if spec.compile?
       puts `macruby_deploy --embed --gem hotcocoa #{options} #{bundle_root}`
     end
 
