@@ -6,8 +6,8 @@
 module Application
 
   ##
-  # An application specification, inspired by Gem::Specification that is
-  # used by Rubygems.
+  # Inspired by Gem::Specification that is used by Rubygems, this class
+  # represents the configuration for a Mac OS X application bundle.
   #
   # A specification object is used to build your [app bundle](http://developer.apple.com/library/mac/#documentation/CoreFoundation/Conceptual/CFBundles/Introduction/Introduction.html#//apple_ref/doc/uid/10000123i-CH1-SW1) and define the
   # [Info.plist](http://developer.apple.com/library/mac/#documentation/MacOSX/Conceptual/BPRuntimeConfig/000-Introduction/introduction.html#//apple_ref/doc/uid/10000170-SW1)
