@@ -15,7 +15,7 @@ module Application
     # @param [Hash] opts
     # @option opts [Symbol] :deploy (false)
     def self.build spec, opts = {}
-      new(spec).build(*opts)
+      new(spec).build(opts)
     end
 
     # @return [Application::Specification]
