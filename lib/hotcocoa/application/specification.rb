@@ -118,7 +118,7 @@ module Application
     # Empty by default.
     #
     # @return [Hash]
-    attr_accessor :plist
+    # attr_accessor :plist
 
     # @todo Support localization related plist keys natively
     # @todo CFBundleDevelopmentRegion (Recommended)
@@ -232,7 +232,7 @@ module Application
     # @endgroup
 
     DEFAULT_ATTRIBUTES = {
-      plist:       {},
+      # plist:       {}, # @todo Finish this before release
       sources:     [],
       resources:   [],
       data_models: [],
