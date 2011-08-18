@@ -22,7 +22,7 @@ module HotCocoa::Mappings::TargetActionConvenience
     end
 
     def @object.perform_action sender
-      @action_behavior.call(sender)
+      @action_behavior.call sender
     end
 
     setAction('perform_action:')

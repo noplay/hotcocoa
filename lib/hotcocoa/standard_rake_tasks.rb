@@ -1,3 +1,11 @@
+$stderr.puts <<EOM
+standard_rake_tasks.rb is deprecated in favour of a new app template
+which declares the tasks directly in the template Rakefile.
+
+You can update your Rakefile by copying the new tasks from Github at
+https://github.com/ferrous26/hotcocoa/blob/master/template/Rakefile
+EOM
+
 AppConfig = HotCocoa::ApplicationBuilder::Configuration.new( 'config/build.yml' )
 
 desc 'Build a deployable version of the application'

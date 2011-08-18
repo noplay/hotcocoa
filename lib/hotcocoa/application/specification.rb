@@ -1,18 +1,28 @@
 # -*- coding: utf-8 -*-
 
+require 'rubygems'
+
 ##
 # Application is a namespace for the classes that are used to specify
 # and build application bundles.
 module Application
 
   ##
-  # An application specification, inspired by Gem::Specification that is
-  # used by Rubygems.
+  # Inspired by Gem::Specification that is used by Rubygems, this class
+  # represents the configuration for a Mac OS X application bundle.
   #
   # A specification object is used to build your [app bundle](http://developer.apple.com/library/mac/#documentation/CoreFoundation/Conceptual/CFBundles/Introduction/Introduction.html#//apple_ref/doc/uid/10000123i-CH1-SW1) and define the
   # [Info.plist](http://developer.apple.com/library/mac/#documentation/MacOSX/Conceptual/BPRuntimeConfig/000-Introduction/introduction.html#//apple_ref/doc/uid/10000170-SW1)
   # metadata for the application.
   class Specification
+
+    ##
+    # Read an app spec from file and return what is evaluated.
+    #
+    # @return [Application::Specification]
+    def self.load file
+      eval File.read(file)
+    end
 
     # @group App Metadata
 
@@ -98,7 +108,8 @@ module Application
     ##
     # Whether the app is an daemon with UI or a regular app. Optional.
     #
-    # You can use this flag to hide the dock icon for the app.
+    # You can use this flag to hide the dock icon for the app; the
+    # default value is false so that apps will have a dock icon by default.
     #
     # @return [Boolean]
     attr_accessor :agent
@@ -116,7 +127,7 @@ module Application
     # Empty by default.
     #
     # @return [Hash]
-    attr_accessor :plist
+    # attr_accessor :plist
 
     # @todo Support localization related plist keys natively
     # @todo CFBundleDevelopmentRegion (Recommended)
@@ -172,7 +183,22 @@ module Application
     attr_accessor :stdlib
 
     ##
-    # Array of gem names to embed in the app bundle during deployment
+    # @note If you choose to compile, the original source files will
+    #       be removed.
+    #
+    # Whether or not to compile ruby source files when embedding.
+    #
+    # Defaults to `true`.
+    #
+    # @return [Boolean]
+    attr_accessor :compile
+    alias_method :compile?, :compile
+
+    ##
+    # @note HotCocoa will automatically be embedded during deployment
+    #       and is not added to this list.
+    #
+    # Array of gem names to embed in the app bundle during deployment.
     #
     # @return [Array<Gem::Requirement>]
     attr_accessor :gems
@@ -182,11 +208,29 @@ module Application
     # requirements. If the embedding is also set, then any dependent gems
     # will also be embedded into the app bundle.
     #
+    # This method was liberally borrowed from RubyGems project and has
+    # the same semantics here as it does for a gem specification.
+    #
     # @example
+    #
     #   spec.add_runtime_dependency 'hotcocoa', '~> 0.6'
-    def add_runtime_dependency gem, *requirements
-      raise NotImplementedError, 'Please implement me :('
+    #
+    def add_runtime_dependency dependency, *requirements
+      requirements = if requirements.empty? then
+                       Gem::Requirement.default
+                     else
+                       requirements.flatten
+                     end
+
+      unless dependency.respond_to?(:name) &&
+          dependency.respond_to?(:version_requirements)
+
+        dependency = Gem::Dependency.new(dependency, requirements, :runtime)
+      end
+
+      gems << dependency
     end
+    alias_method :add_dependency, :add_runtime_dependency
 
     ##
     # Whether or not to embed BridgeSupport files when embedding the
@@ -200,6 +244,8 @@ module Application
     alias_method :embed_bs?, :embed_bs
 
     ##
+    # @todo Is this actually useful or can we get rid of it?
+    #
     # Whether or not to always make a clean build of the app.
     #
     # Defaults to false.
@@ -208,17 +254,10 @@ module Application
     attr_accessor :overwrite
     alias_method :overwrite?, :overwrite
 
-    ##
-    # Any additional arguments to pass to `macruby_deploy` during
-    # deployment.
-    #
-    # @return [Array<String>]
-    attr_accessor :deploy_opts
-
     # @endgroup
 
     DEFAULT_ATTRIBUTES = {
-      plist:       {},
+      # plist:       {}, # @todo Finish this before release
       sources:     [],
       resources:   [],
       data_models: [],
@@ -228,6 +267,7 @@ module Application
       version:     '1.0',
       stdlib:      true,
       agent:       false,
+      compile:     true,
       overwrite:   false,
       embed_bs:    false
     }
@@ -241,8 +281,9 @@ module Application
       end
       yield self
 
-      # go through plist and overwrite specific keys?
+      # @todo go through plist and overwrite specific keys?
 
+      # @todo should we verify at initialization or defer until building?
       verify!
     end
 
@@ -252,17 +293,18 @@ module Application
       verify_version
       verify_short_version
       verify_copyright
+      verify_type
+      verify_signature
+      verify_agent
     end
 
     class Error < ArgumentError
     end
 
+    ##
+    # Whether or not the icon exists for this spec.
     def icon_exists?
       @icon ? File.exist?(@icon) : false
-    end
-
-    def self.load file
-      eval File.read(file)
     end
 
 
@@ -305,6 +347,26 @@ module Application
       # need to be careful here; the main components of hotcocoa do
       # not depend on the stdlib right now, but if that changes then
       # this needs to be a failsafe
+    end
+
+    def verify_type
+      @type = @type.to_s
+      unless @type.length == 4
+        raise Error, 'A bundle type must be exactly 4 characters'
+      end
+    end
+
+    def verify_signature
+      @signature = @signature.to_s
+      unless @signature.length == 4
+        raise Error, 'A bundle signature must be exactly 4 characters'
+      end
+    end
+
+    def verify_agent
+      # we need to force this to a boolean since it will be written
+      # to the bundles Info.plist
+      @agent = !!@agent
     end
 
   end
