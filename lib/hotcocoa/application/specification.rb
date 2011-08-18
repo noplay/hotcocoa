@@ -16,6 +16,14 @@ module Application
   # metadata for the application.
   class Specification
 
+    ##
+    # Read an app spec from file and return what is evaluated.
+    #
+    # @return [Application::Specification]
+    def self.load file
+      eval File.read(file)
+    end
+
     # @group App Metadata
 
     ##
@@ -274,10 +282,6 @@ module Application
 
     def icon_exists?
       @icon ? File.exist?(@icon) : false
-    end
-
-    def self.load file
-      eval File.read(file)
     end
 
 

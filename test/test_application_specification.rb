@@ -35,17 +35,6 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_match /must pass a block/, error.message
   end
 
-  def test_reads_attributes
-    spec = Specification.load HOTCONSOLE
-    assert_equal 'HotConsole',                spec.name
-    assert_equal '1.0',                       spec.version
-    assert_equal 'resources/HotConsole.icns', spec.icon
-
-    spec = Specification.load CALCULATOR
-    assert_equal 'Calculator', spec.name
-    assert_equal '2.0', spec.version
-  end
-
   def test_name_is_string_of_given_name
     ['Test', [1,2,3]].each do |name|
       spec = Specification.new do |s|
@@ -179,6 +168,26 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     # works because this project uses the icon from a system app
     spec = Specification.load CALCULATOR
     assert spec.icon_exists?
+  end
+
+  # doubles as an integration test
+  def test_load_evaluates_files_properly
+    spec = Application::Specification.load HOTCONSOLE
+    assert_equal 'HotConsole',                     spec.name
+    assert_equal 'com.vincentisambart.HotConsole', spec.identifier
+    assert_equal '1.0',                            spec.version
+    assert_equal Dir.glob('lib/**/*.rb'),          spec.sources
+    assert_equal [],                               spec.resources
+    assert_equal 'girb',                           spec.signature
+
+    spec = Application::Specification.load STOPWATCH
+    assert_equal 'Stopwatch',                         spec.name
+    assert_equal 'nz.co.kearse.stopwatch',            spec.identifier
+    assert_equal Dir.glob('{lib,hotcocoa}*/**/*.rb'), spec.sources
+    assert_equal [],                                  spec.resources
+    assert_equal true,                                spec.agent
+    assert_equal true,                                spec.overwrite
+    assert_equal false,                               spec.stdlib
   end
 
 end
