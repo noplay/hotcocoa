@@ -65,7 +65,7 @@ module Application
     end
 
     def build_bundle_structure
-      [ bundle_root, contents_root, frameworks_root, macos_root, resources_root ].each do |dir|
+      [bundle_root, contents_root, frameworks_root, macos_root, resources_root].each do |dir|
         Dir.mkdir(dir) unless File.exist?(dir)
       end
     end
@@ -87,7 +87,7 @@ module Application
 
     def copy_resources
       spec.resources.each do |resource|
-        destination = File.join(resources_root, resource.split("/")[1..-1].join("/"))
+        destination = File.join(resources_root, resource.split('/')[1..-1].join('/'))
         FileUtils.mkdir_p(File.dirname(destination)) unless File.exist?(File.dirname(destination))
 
         if resource =~ /\.xib$/
