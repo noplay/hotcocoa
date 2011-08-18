@@ -242,6 +242,7 @@ module Application
       version:     '1.0',
       stdlib:      true,
       agent:       false,
+      compile:     true,
       overwrite:   false,
       embed_bs:    false
     }

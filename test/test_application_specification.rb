@@ -152,9 +152,16 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   def test_type_attribute
     spec = Specification.load HOTCONSOLE
     assert_equal 'APPL', spec.type
+  def test_compile_is_true_by_default
+    spec = minimal_spec
+    assert spec.compile?
+    assert spec.compile
 
     spec = Specification.load EMPTY_APP
     assert_equal 'BNDL', spec.type
+    spec = minimal_spec { |s| s.compile = false }
+    refute spec.compile?
+    refute spec.compile
   end
 
   def test_signature_attribute
