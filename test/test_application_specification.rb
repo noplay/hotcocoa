@@ -111,6 +111,21 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal Math::PI.to_s, spec.copyright
   end
 
+  def test_agent_has_a_default
+    assert_equal false, minimal_spec.agent
+
+    spec = minimal_spec { |s| s.agent = true }
+    assert_equal true, spec.agent
+  end
+
+  def test_agent_is_verified
+    spec = minimal_spec { |s| s.agent = 'cake' }
+    assert_equal true, spec.agent
+
+    spec = minimal_spec { |s| s.agent = nil }
+    assert_equal false, spec.agent
+  end
+
   def test_sources_resources_and_data_models_are_initialized_to_an_empty_array_if_not_provided
     spec = minimal_spec
     assert_empty spec.sources

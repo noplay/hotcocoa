@@ -108,7 +108,8 @@ module Application
     ##
     # Whether the app is an daemon with UI or a regular app. Optional.
     #
-    # You can use this flag to hide the dock icon for the app.
+    # You can use this flag to hide the dock icon for the app; the
+    # default value is false so that apps will have a dock icon by default.
     #
     # @return [Boolean]
     attr_accessor :agent
@@ -275,6 +276,7 @@ module Application
       verify_version
       verify_short_version
       verify_copyright
+      verify_agent
     end
 
     class Error < ArgumentError
