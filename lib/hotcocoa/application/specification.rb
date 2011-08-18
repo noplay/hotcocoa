@@ -231,13 +231,6 @@ module Application
     attr_accessor :overwrite
     alias_method :overwrite?, :overwrite
 
-    ##
-    # Any additional arguments to pass to `macruby_deploy` during
-    # deployment.
-    #
-    # @return [Array<String>]
-    attr_accessor :deploy_opts
-
     # @endgroup
 
     DEFAULT_ATTRIBUTES = {
