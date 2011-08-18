@@ -195,7 +195,10 @@ module Application
     alias_method :compile?, :compile
 
     ##
-    # Array of gem names to embed in the app bundle during deployment
+    # @note HotCocoa will automatically be embedded during deployment
+    #       and is not added to this list.
+    #
+    # Array of gem names to embed in the app bundle during deployment.
     #
     # @return [Array<Gem::Requirement>]
     attr_accessor :gems
@@ -205,11 +208,29 @@ module Application
     # requirements. If the embedding is also set, then any dependent gems
     # will also be embedded into the app bundle.
     #
+    # This method was liberally borrowed from RubyGems project and has
+    # the same semantics here as it does for a gem specification.
+    #
     # @example
+    #
     #   spec.add_runtime_dependency 'hotcocoa', '~> 0.6'
-    def add_runtime_dependency gem, *requirements
-      raise NotImplementedError, 'Please implement me :('
+    #
+    def add_runtime_dependency dependency, *requirements
+      requirements = if requirements.empty? then
+                       Gem::Requirement.default
+                     else
+                       requirements.flatten
+                     end
+
+      unless dependency.respond_to?(:name) &&
+          dependency.respond_to?(:version_requirements)
+
+        dependency = Gem::Dependency.new(dependency, requirements, :runtime)
+      end
+
+      gems << dependency
     end
+    alias_method :add_dependency, :add_runtime_dependency
 
     ##
     # Whether or not to embed BridgeSupport files when embedding the

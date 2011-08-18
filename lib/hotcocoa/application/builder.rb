@@ -52,7 +52,7 @@ module Application
     # Build arguments list and call to `macruby_deploy`.
     def deploy
       options = []
-      spec.gems.each { |g| options << "--gem #{g}" }
+      spec.gems.each { |g| options << "--gem #{g.name}" }
       options << '--bs'        if spec.embed_bs?
       options << '--compile'   if spec.compile?
       options << '--no-stdlib' unless spec.stdlib # @todo use attribute properly

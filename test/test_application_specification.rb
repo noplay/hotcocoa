@@ -201,6 +201,48 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     refute spec.compile
   end
 
+  # test is kind of annoying since it tests code that does
+  # not belong to us
+  def test_add_dependency_adds_dependency_to_list
+    spec = minimal_spec do |s|
+      s.add_runtime_dependency 'jiraSOAP'
+      s.add_dependency         'nokogiri'
+      s.add_dependency         'mail',           '2.3.0'
+      s.add_dependency         'activesupport',  ['3.0.10']
+      s.add_dependency         'meme_generator', '~> 1.9.0'
+      s.add_dependency         'Salut',          '>= 0', '< 2.0.0'
+    end
+
+    assert spec.gems.all? { |s| s.kind_of? Gem::Dependency }
+
+    assert_includes spec.gems,
+      Gem::Dependency.new('jiraSOAP', Gem::Requirement.default, :runtime)
+
+    assert_includes spec.gems,
+      Gem::Dependency.new('nokogiri', Gem::Requirement.default, :runtime)
+
+    assert_includes spec.gems,
+      Gem::Dependency.new('mail', '2.3.0', :runtime)
+
+    assert_includes spec.gems,
+      Gem::Dependency.new('activesupport', '3.0.10', :runtime)
+
+    assert_includes spec.gems,
+      Gem::Dependency.new('meme_generator', '~> 1.9.0', :runtime)
+
+    assert_includes spec.gems,
+      Gem::Dependency.new('Salut', '>= 0', '< 2.0.0', :runtime)
+  end
+
+  def test_embed_bs_has_a_default
+    spec = minimal_spec
+    assert_equal false, spec.embed_bs?
+    assert_equal false, spec.embed_bs
+
+    spec = minimal_spec { |s| s.embed_bs = true }
+    assert_equal true, spec.embed_bs?
+    assert_equal true, spec.embed_bs
+  end
 
   def test_overwirte_attribute_is_false_by_default
     spec = minimal_spec
