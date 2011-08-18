@@ -3,16 +3,9 @@ require 'hotcocoa/application/specification'
 class TestApplicationSpecification < MiniTest::Unit::TestCase
   include Application
 
-  TEST_DIR = File.join(ENV['TMPDIR'], 'test_app_specification')
-
   # Some HotCocoa appspec files, converted from build.yml files borrowed from projects on Github
   HOTCONSOLE = 'test/fixtures/hotconsole.appspec'
-  CALCULATOR = 'test/fixtures/calculator.appspec'
   STOPWATCH  = 'test/fixtures/stopwatch.appspec'
-  EMPTY_APP  = 'test/fixtures/empty.appspec'
-
-  def setup;    FileUtils.mkdir TEST_DIR; end
-  def teardown; FileUtils.rm_rf TEST_DIR; end
 
   def rescue_spec_error_for &block
     begin
