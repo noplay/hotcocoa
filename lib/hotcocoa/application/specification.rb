@@ -272,6 +272,8 @@ module Application
       verify_version
       verify_short_version
       verify_copyright
+      verify_type
+      verify_signature
       verify_agent
     end
 
@@ -322,6 +324,26 @@ module Application
       # need to be careful here; the main components of hotcocoa do
       # not depend on the stdlib right now, but if that changes then
       # this needs to be a failsafe
+    end
+
+    def verify_type
+      @type = @type.to_s
+      unless @type.length == 4
+        raise Error, 'A bundle type must be exactly 4 characters'
+      end
+    end
+
+    def verify_signature
+      @signature = @signature.to_s
+      unless @signature.length == 4
+        raise Error, 'A bundle signature must be exactly 4 characters'
+      end
+    end
+
+    def verify_agent
+      # we need to force this to a boolean since it will be written
+      # to the bundles Info.plist
+      @agent = !!@agent
     end
 
   end

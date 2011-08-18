@@ -111,6 +111,52 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal Math::PI.to_s, spec.copyright
   end
 
+  def test_type_has_a_default
+    assert_equal 'APPL', minimal_spec.type
+
+    spec = minimal_spec { |s| s.type = 'BNDL' }
+    assert_equal 'BNDL', spec.type
+  end
+
+  def test_type_is_verified
+    error = rescue_spec_error_for do |s|
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+      s.type       = 'TOO LONG'
+    end
+    assert_match /bundle type must be exactly 4 characters/, error.message
+
+    error = rescue_spec_error_for do |s|
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+      s.type       = 'TOO'
+    end
+    assert_match /bundle type must be exactly 4 characters/, error.message
+  end
+
+  def test_signature_has_a_default
+    assert_equal '????', minimal_spec.signature
+
+    spec = minimal_spec { |s| s.signature = 'girb' }
+    assert_equal 'girb', spec.signature
+  end
+
+  def test_signature_is_verified
+    error = rescue_spec_error_for do |s|
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+      s.signature  = 'thingy'
+    end
+    assert_match /bundle signature must be exactly 4 characters/, error.message
+
+    error = rescue_spec_error_for do |s|
+      s.name       = 'test'
+      s.identifier = 'com.test.test'
+      s.signature  = 'two'
+    end
+    assert_match /bundle signature must be exactly 4 characters/, error.message
+  end
+
   def test_agent_has_a_default
     assert_equal false, minimal_spec.agent
 
@@ -153,27 +199,17 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal libs, spec.stdlib
   end
 
-  def test_type_attribute
-    spec = Specification.load HOTCONSOLE
-    assert_equal 'APPL', spec.type
   def test_compile_is_true_by_default
     spec = minimal_spec
     assert spec.compile?
     assert spec.compile
 
-    spec = Specification.load EMPTY_APP
-    assert_equal 'BNDL', spec.type
     spec = minimal_spec { |s| s.compile = false }
     refute spec.compile?
     refute spec.compile
   end
 
-  def test_signature_attribute
-    spec = Specification.load EMPTY_APP
-    assert_equal '????', spec.signature
 
-    spec = Specification.load HOTCONSOLE
-    assert_equal 'girb', spec.signature
   end
 
   def test_icon_exists?
