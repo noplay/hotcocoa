@@ -223,6 +223,8 @@ module Application
     alias_method :embed_bs?, :embed_bs
 
     ##
+    # @todo Is this actually useful or can we get rid of it?
+    #
     # Whether or not to always make a clean build of the app.
     #
     # Defaults to false.
@@ -260,6 +262,7 @@ module Application
 
       # @todo go through plist and overwrite specific keys?
 
+      # @todo should we verify at initialization or defer until building?
       verify!
     end
 
