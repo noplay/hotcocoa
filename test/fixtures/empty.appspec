@@ -1,5 +1,0 @@
-HotCocoa::Application::Specification.new do |s|
-  s.name       = 'Empty'
-  s.identifier = 'com.yourcompany.Empty'
-  s.type       = 'BNDL'
-end
