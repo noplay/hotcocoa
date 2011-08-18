@@ -253,11 +253,14 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
   end
 
   def test_icon_exists?
-    spec = Specification.load HOTCONSOLE
+    refute minimal_spec.icon_exists?
+
+    spec = minimal_spec { |s| s.icon = '/thing.png' }
     refute spec.icon_exists?
 
-    # works because this project uses the icon from a system app
-    spec = Specification.load CALCULATOR
+    spec = minimal_spec do |s|
+      s.icon = '/Applications/Calculator.app/Contents/Resources/Calculator.icns'
+    end
     assert spec.icon_exists?
   end
 

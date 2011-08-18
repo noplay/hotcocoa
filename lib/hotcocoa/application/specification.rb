@@ -301,6 +301,8 @@ module Application
     class Error < ArgumentError
     end
 
+    ##
+    # Whether or not the icon exists for this spec.
     def icon_exists?
       @icon ? File.exist?(@icon) : false
     end
