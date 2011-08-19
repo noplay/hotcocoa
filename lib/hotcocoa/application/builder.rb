@@ -45,6 +45,10 @@ module Application
       deploy if opts[:deploy]
     end
 
+    def run
+      `"./#{executable_file}"`
+    end
+
     def remove_bundle_root
       FileUtils.rm_rf bundle_root if File.exist?(bundle_root)
     end
