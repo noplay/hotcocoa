@@ -27,7 +27,12 @@ module Application
 
     # @param [Application::Specification]
     def initialize spec
-      @spec = spec
+      @spec = case spec
+      when Specification
+        spec
+      when String
+        Specification.load spec
+      end
     end
 
     # @param [Hash]
