@@ -28,7 +28,7 @@ HotCocoa is a Cocoa mapping library for MacRuby.  It simplifies the use of compl
     ['README.markdown', 'History.txt'] +
     Dir.glob('docs/**/*.markdown')
 
-  s.add_development_dependency 'minitest',  '~> 2.4.0'
+  s.add_development_dependency 'minitest',  '~> 2.5.0'
   s.add_development_dependency 'yard',      '~> 0.7.2'
   s.add_development_dependency 'redcarpet', '~> 1.17'
 end
