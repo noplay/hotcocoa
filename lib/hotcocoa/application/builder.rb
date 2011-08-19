@@ -45,6 +45,10 @@ module Application
       deploy if opts[:deploy]
     end
 
+    def remove_bundle_root
+      FileUtils.rm_rf bundle_root if File.exist?(bundle_root)
+    end
+
 
     private
 
@@ -58,10 +62,6 @@ module Application
       options << '--no-stdlib' unless spec.stdlib # @todo use attribute properly
       options = options.join(' ')
       puts `macruby_deploy --embed --gem hotcocoa #{options} #{bundle_root}`
-    end
-
-    def remove_bundle_root
-      FileUtils.rm_rf bundle_root if File.exist?(bundle_root)
     end
 
     def build_bundle_structure
