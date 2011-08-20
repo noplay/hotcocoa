@@ -3,18 +3,29 @@
 class TestMapper < MiniTest::Unit::TestCase
   include HotCocoa::Mappings
 
-  def test_has_two_hash_attributes_named_bindings_and_delegate
+  def test_module_has_bindings_and_delegate_caches
     assert_instance_of Hash, Mapper.bindings_modules
     assert_instance_of Hash, Mapper.delegate_modules
   end
 
-  [ :control_class, :builder_method, :control_module,
-    :map_bindings, :map_bindings= ].each do |method|
+  def test_exposes_control_class
+    assert_respond_to sample_mapper, :control_class
+    refute_respond_to sample_mapper, :control_class=
+  end
 
-    define_method "test_has_a_#{method}_attribute" do
-      assert_respond_to sample_mapper, method
-    end
+  def test_exposes_builder_method
+    assert_respond_to sample_mapper, :builder_method
+    refute_respond_to sample_mapper, :builder_method=
+  end
 
+  def test_exposes_control_module
+    assert_respond_to sample_mapper, :control_module
+    refute_respond_to sample_mapper, :control_module=
+  end
+
+  def test_exposes_map_bindings
+    assert_respond_to sample_mapper, :map_bindings
+    assert_respond_to sample_mapper, :map_bindings=
   end
 
   def test_sets_its_control_class_on_initialization
@@ -50,7 +61,7 @@ class TestMapper < MiniTest::Unit::TestCase
 
   def sample_mapper flush = false
     @mapper = nil if flush
-    @mapper || Mapper.new(SampleClass)
+    @mapper ||= Mapper.new(SampleClass)
   end
 
 end
