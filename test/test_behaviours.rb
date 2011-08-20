@@ -7,6 +7,10 @@ end
 
 class TestBehaviors < MiniTest::Unit::TestCase
 
+  def test_behaviours_is_alias_to_behaviors
+    assert_equal HotCocoa::Behaviors, HotCocoa::Behaviours
+  end
+
   def test_inherits_custom_methods
     assert_respond_to BehaviorsTest.new, :search_for_domains
   end

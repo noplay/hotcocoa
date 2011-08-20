@@ -1,21 +1,24 @@
 ##
-# A mixin module for classes that subclass Cocoa classes and want to alse
+# A mixin module for classes that subclass Cocoa classes and want to also
 # inherit HotCocoa customizations (custom methods, constants, etc.)
 module HotCocoa::Behaviors
 
   ##
-  # Implements the callback Module#included; this method declares that when
-  # HotCocoa::Behaviors is mixed in to a class, that class will gain all the
-  # HotCocoa customizations made to classes that the class inherits from.
+  # Implements the callback `Module#included`; this method declares that
+  # when `HotCocoa::Behaviors` is mixed in to a class that the class mixing
+  # in `HotCocoa::Behaviors` will gain all the HotCocoa customizations made
+  # to its superclasses.
   #
   # @example
   #
+  #   # Without including, you cannot call HotCocoa custom methods
   #   class CustomView < NSView
   #     def begin
   #       enter_full_screen # => NoMethodError
   #     end
   #   end
   #
+  #   # HotCocoa custom methods work when you inculde HotCocoa::Behaviors
   #   class OtherCustomView < NSView
   #     include HotCocoa::Behaviors
   #
@@ -30,5 +33,8 @@ module HotCocoa::Behaviors
 
 end
 
-# @return [Module] alias for HotCocoa::Behaviors
+##
+# Alias for HotCocoa::Behaviors
+#
+# @return [Module]
 HotCocoa::Behaviours = HotCocoa::Behaviors
