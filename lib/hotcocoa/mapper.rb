@@ -106,6 +106,7 @@ class HotCocoa::Mappings::Mapper
       control = inst.respond_to?(:init_with_options) ? inst.init_with_options(inst.control_class.alloc, map) : inst.alloc_with_options(map)
 
       inst.customize control
+
       map.each do |key, value|
         if control.respond_to? "#{key}="
           control.send "#{key}=", value
@@ -139,6 +140,7 @@ class HotCocoa::Mappings::Mapper
           control_block.call control
         end
       end
+
       control
     end
 

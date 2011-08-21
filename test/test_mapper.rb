@@ -1,6 +1,6 @@
 # Originally imported from MacRuby sources
 
-class TestMapper < MiniTest::Unit::TestCase
+class TestMapperDetails < MiniTest::Unit::TestCase
   include HotCocoa::Mappings
 
   def test_module_has_bindings_and_delegate_caches
@@ -41,6 +41,47 @@ class TestMapper < MiniTest::Unit::TestCase
     skip 'Pending.'
   end
 
+
+  private
+
+  def sample_mapper flush = false
+    @mapper = nil if flush
+    @mapper ||= Mapper.new(SampleClass)
+  end
+
+end
+
+
+class TestMapperFeatures < MiniTest::Unit::TestCase
+
+  def teardown
+    HotCocoa::Mappings.mappings[:sample] = nil
+  end
+
+  def test_handle_block_called_if_implemented
+    HotCocoa::Mappings.map sample: SampleClass do
+      def alloc_with_options opts
+        SampleClass.new
+      end
+      def handle_block inst
+        inst.instance_variable_set(:@cache, yield(inst))
+      end
+    end
+    object = HotCocoa.sample { |_| :cake_is_the_truth }
+    assert_equal :cake_is_the_truth, object.instance_variable_get(:@cache)
+  end
+
+  def test_block_is_executed_if_given
+    HotCocoa::Mappings.map sample: SampleClass do
+      def alloc_with_options opts
+        SampleClass.new
+      end
+    end
+    yielded = false
+    object  = HotCocoa.sample { |inst| yielded = inst }
+    assert_equal object, yielded
+  end
+
   def test_custom_methods_override_existing_methods
     HotCocoa::Mappings.map sample: SampleClass do
       def alloc_with_options opts
@@ -53,15 +94,7 @@ class TestMapper < MiniTest::Unit::TestCase
       end
     end
     object = HotCocoa.sample
-    assert object.some_method
-  end
-
-
-  private
-
-  def sample_mapper flush = false
-    @mapper = nil if flush
-    @mapper ||= Mapper.new(SampleClass)
+    assert_equal true, object.some_method
   end
 
 end

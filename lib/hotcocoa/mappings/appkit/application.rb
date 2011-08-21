@@ -4,9 +4,9 @@ HotCocoa::Mappings.map application: NSApplication do
     NSApplication.sharedApplication
   end
 
-  def handle_block application, &block
+  def handle_block application
     application.load_application_menu
-    block.call application
+    yield application
     application.run
   end
 

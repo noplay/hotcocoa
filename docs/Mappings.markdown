@@ -98,6 +98,28 @@ You should implement either `#init_with_options` or
 `#alloc_with_options`, but not both. If `#alloc_with_options` exists,
 it will be called and `#init_with_options` will be ignored.
 
+If you want a constructor to handle a block with extra behavior then
+you will also need to implement `#handle_block` for the mapping. Block
+handling is done after the mapped instance has been initialized and
+`#handle_block` will be given the instance as a parameter. For
+instance, HotCocoa uses this construct to encapsulate normal
+application setup:
+
+    HotCocoa::Mappings.map application: NSApplication do
+      def alloc_with_options opts
+        NSApplication.sharedApplication
+      end
+      def handle_block app
+        load_menus
+        yield application
+        application.run
+      end
+    end
+
+    HotCocoa.application do |app|
+      app.delegate = self
+    end
+
 ## Default Options (optional)
 
 You can provide a hash of default options in the definition of your
