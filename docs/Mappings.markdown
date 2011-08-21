@@ -33,7 +33,7 @@ class to be mapped.  Replace `name:` with the desired name of the method
 you want to be generated and made available to users of HotCocoa.  For
 example, the mapping definition for an `NSButton` might be:
 
-    HotCocoa::Mapping.map button: NSButton do
+    HotCocoa::Mappings.map button: NSButton do
       # mapping code...
     end
 
@@ -58,7 +58,7 @@ There are two methods, `#init_with_options` and `#alloc_with_options`,
 that you can implement to support object instantiation. Define these
 methods within the block that you pass to the `map` method.
 
-    HotCocoa::Mapping.map button: NSButton do
+    HotCocoa::Mappings.map button: NSButton do
       def init_with_options buttons, options
         button.initWithFrame options.delete(:frame)
       end
@@ -82,7 +82,7 @@ to the `NSButton` instance.
 
 The second method you can implement is:
 
-    HotCocoa::Mapping.map button: NSButton do
+    HotCocoa::Mappings.map button: NSButton do
       def alloc_with_options options
         NSButton.alloc.initWithFrame options.delete(:frame)
       end
@@ -131,7 +131,7 @@ key does not exist.
 Supplying your defaults is simple. In the example below, if you
 provide a `:frame`, it will be used instead of `CGRectZero`:
 
-    HotCocoa::Mapping.map button: NSButton do
+    HotCocoa::Mappings.map button: NSButton do
       defaults bezel: :rounded,
                frame: CGRectZero,
               layout: {}
@@ -158,7 +158,7 @@ the ability to use short symbol names and map them to the constant
 names that are scoped to the wrapped class. This is an example of
 mapping constants to represent button state:
 
-    HotCocoa::Mapping.map button: NSButton do
+    HotCocoa::Mappings.map button: NSButton do
       constant :state, {
         on:    NSOnState,
         off:   NSOffState,
@@ -204,7 +204,7 @@ Custom methods are simply modules that are included in the instance;
 they provide idiomatic Ruby methods for the mapped Objective-C class
 instance. Providing custom methods in your mapping is easy:
 
-    HotCocoa::Mapping.map button: NSButton do
+    HotCocoa::Mappings.map button: NSButton do
       custom_methods do
         def bezel= value
           setBezelStyle(value)
@@ -290,7 +290,7 @@ delegate method to the block parameters. For `NSWindow` the definition
 for delegating `windowWillClose`, which passes no parameters to the
 block, would be:
 
-    HotCocoa::Mapping.map window: NSWindow do
+    HotCocoa::Mappings.map window: NSWindow do
       delegating 'windowWillClose:', to: :will_close
     end
 
@@ -309,7 +309,7 @@ created, the object is set as the delegate (using `#setDelegate`).
 When a delegate needs to forward parameters to the block, the
 definition becomes a little more complex:
 
-    HotCocoa::Mapping.map window: NSWindow do
+    HotCocoa::Mappings.map window: NSWindow do
       delegating 'window:willPositionSheet:usingRect:', to: :will_position_sheet, parameters: [:willPositionSheet, :usingRect]
     end
 
@@ -326,7 +326,7 @@ first parameter). Using this method would look like:
 It's also possible to map a parameter, in cases where you have to
 invoke a more complex calling on the parameter:
 
-    HotCocoa::Mapping.map window: NSWindow do
+    HotCocoa::Mappings.map window: NSWindow do
       delegating 'windowDidExpose:', to: :did_expose, parameters: ["windowDidExpose.userInfo['NSExposedRect']"]
     end
 
