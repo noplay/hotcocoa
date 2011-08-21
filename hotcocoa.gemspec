@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name    = 'hotcocoa'
   s.version = HotCocoa::VERSION
 
-  s.summary       = 'Cococa mapping library for MacRuby'
+  s.summary       = 'Cocoa mapping library for MacRuby'
   s.description   =<<-EOS
 HotCocoa is a Cocoa mapping library for MacRuby.  It simplifies the use of complex Cocoa classes using DSL techniques.
   EOS
