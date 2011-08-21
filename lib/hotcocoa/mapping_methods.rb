@@ -15,6 +15,7 @@ module HotCocoa::MappingMethods
   # @overload defaults
   #   Get the hash of defaults
   #   @return [Hash,nil]
+  #
   # @overload defaults key1: value1, key2: value2, ...
   #   Set the hash of defaults
   #   @param [Hash]
@@ -64,6 +65,7 @@ module HotCocoa::MappingMethods
   # @overload custom_methods do ... end
   #   Create and cache a new module to mix into the mapped class
   #   @return [Module] return the module that caches the custom methods
+  #
   # @overload custom_methods
   #   @return [Module,nil] return the Module if it exists, otherwise nil
   def custom_methods &block
