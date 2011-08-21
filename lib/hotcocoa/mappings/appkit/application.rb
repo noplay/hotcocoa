@@ -1,13 +1,13 @@
 HotCocoa::Mappings.map application: NSApplication do
 
-  def alloc_with_options options
+  def alloc_with_options opts
     NSApplication.sharedApplication
   end
 
-  def handle_block application
-    application.load_application_menu
-    yield application
-    application.run
+  def handle_block app
+    app.load_application_menu
+    yield app
+    app.run
   end
 
   custom_methods do

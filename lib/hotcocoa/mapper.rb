@@ -96,14 +96,19 @@ class HotCocoa::Mappings::Mapper
     mod.module_eval &block
 
     @control_module = mod
-    inst = self # put self in a variable, because context of self changes inside the define_method block
+    # put self in a variable, because context of self changes inside the define_method block
+    inst = self
     HotCocoa.send :define_method, builder_method do |args = {}, &control_block|
       map = inst.remap_constants args
 
       inst.map_bindings = map.delete :map_bindings
+      default_empty_rect_used = (CGRectZero == map[:frame])
 
-      default_empty_rect_used = (map[:frame].__id__ == CGRectZero.__id__)
-      control = inst.respond_to?(:init_with_options) ? inst.init_with_options(inst.control_class.alloc, map) : inst.alloc_with_options(map)
+      control = if inst.respond_to? :init_with_options
+                  inst.init_with_options(inst.control_class.alloc, map)
+                else
+                  inst.alloc_with_options(map)
+                end
 
       inst.customize control
 
