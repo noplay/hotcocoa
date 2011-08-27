@@ -1,7 +1,12 @@
 require 'rubygems'
 gem     'minitest'
 require 'minitest/autorun'
-require 'minitest/pride'
+
+if ENV['BENCH']
+  require 'minitest/benchmark'
+else
+  require 'minitest/pride'
+end
 
 $LOAD_PATH.unshift File.join( File.dirname(__FILE__), '..', 'lib' )
 require 'hotcocoa'
@@ -9,6 +14,10 @@ require 'hotcocoa'
 class MiniTest::Unit::TestCase
   def run_run_loop time = 1.0
     NSRunLoop.currentRunLoop.runUntilDate( Time.now + time )
+  end
+
+  def self.bench_range
+    bench_exp 10, 10_000
   end
 end
 

@@ -6,4 +6,11 @@ class TestColorMappings < MiniTest::Unit::TestCase
     assert_equal NSColor.lightGrayColor, HotCocoa.color(name: 'lightGray')
   end
 
+  def bench_create_color
+    color = 'red'
+    assert_performance_linear do |n|
+      n.times { HotCocoa.color(name: color) }
+    end
+  end
+
 end

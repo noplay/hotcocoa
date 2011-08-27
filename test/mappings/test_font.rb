@@ -12,4 +12,10 @@ class TestFontMappings < MiniTest::Unit::TestCase
     assert_equal 10.0, HotCocoa.font(label: 10).size
   end
 
+  def bench_create_font
+    assert_performance_linear do |n|
+      n.times { HotCocoa.font(label: 10) }
+    end
+  end
+
 end
