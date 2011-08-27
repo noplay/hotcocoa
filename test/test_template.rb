@@ -1,11 +1,26 @@
 require 'fileutils'
 require 'hotcocoa/template'
 
-class TestHotCocoaTemplate < MiniTest::Unit::TestCase
+
+# feels weird to have a test class with only one test...
+class TestHotCocoaTemplateDir < MiniTest::Unit::TestCase
+
+  # important due to differences in compiled code
+  def test_template_directory_is_correct
+    what_git_thinks      = File.join(SOURCE_ROOT, 'template')
+    what_hotcocoa_thinks = HotCocoa::Template.template_directory
+    assert_equal what_git_thinks, what_hotcocoa_thinks
+  end
+
+end
+
+
+class TestHotCocoaTemplateMaker < MiniTest::Unit::TestCase
 
   def setup
     @dir = File.join(ENV['TMPDIR'], 'template_test')
-    HotCocoa::Template.copy_to @dir, app_name
+    @template = HotCocoa::Template.new @dir, app_name
+    @template.copy!
   end
 
   def teardown
@@ -18,12 +33,6 @@ class TestHotCocoaTemplate < MiniTest::Unit::TestCase
 
   def all_files_in dir
     Dir.glob(File.join(dir, '**/*'))
-  end
-
-  def test_source_directory_is_correct
-    what_git_thinks      = SOURCE_ROOT
-    what_hotcocoa_thinks = HotCocoa::Template.source_directory
-    assert_equal what_git_thinks, what_hotcocoa_thinks
   end
 
   def test_uses_app_name_for_appspec_file
