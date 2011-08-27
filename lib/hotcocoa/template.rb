@@ -53,7 +53,9 @@ class HotCocoa::Template
 
       else
         File.open(destination, 'w') do |out|
-          input = File.read(file)
+          is_icon_file = File.extname(file)[1..-1] == "icns"
+          format = is_icon_file ?  "BINARY" : "UTF-8"            
+          input =  File.open(file, "r:#{format}").read
           input.gsub! /__APPLICATION_NAME__/, app_name
           input.gsub! /__COMPANY_NAME__/, company_name
           out.write input
