@@ -55,7 +55,7 @@ end
 class TestMapperFeatures < MiniTest::Unit::TestCase
 
   def teardown
-    HotCocoa::Mappings.mappings[:sample] = nil
+    HotCocoa::Mappings.mappings.delete :sample
   end
 
   def test_handle_block_called_if_implemented

@@ -17,7 +17,7 @@ class TestMappingsMappings < MiniTest::Unit::TestCase
   include HotCocoa
 
   def teardown
-    Mappings.mappings[:klass] = nil
+    Mappings.mappings.delete :klass
   end
 
   def test_caches_a_mapper_with_given_arguments_to_map
