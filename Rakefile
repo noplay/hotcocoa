@@ -28,7 +28,7 @@ require 'rake/gempackagetask'
 spec = Gem::Specification.load('hotcocoa.gemspec')
 Rake::GemPackageTask.new(spec) { }
 
-require 'rubygems/installer'
+require 'rubygems/dependency_installer'
 desc 'Install hotcocoa'
 task :install => :gem do
   Gem::Installer.new("pkg/#{spec.file_name}").install
