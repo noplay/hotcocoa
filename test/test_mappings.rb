@@ -1,13 +1,36 @@
 # Originally imported from the MacRuby sources
 
 
-class TestMappingsCache < MiniTest::Unit::TestCase
+class TestMappings < MiniTest::Unit::TestCase
   include HotCocoa
 
   def test_keeps_a_cache_of_mappers_for_mappings
     assert_instance_of Hash, Mappings.mappings
     assert_instance_of Symbol, Mappings.mappings.keys.sample
     assert_instance_of Mappings::Mapper, Mappings.mappings.values.sample
+  end
+
+  def test_map_reload_loads_all_mappings
+    file = File.join(SOURCE_ROOT, 'lib/hotcocoa/mappings/appkit/test_mapping.rb')
+    File.open(file,'w') { |f| f.puts 'class MyReloadingTestClass; end' }
+
+    HotCocoa::Mappings.reload
+    assert defined?(:MyReloadingTestClass), 'mappings not loaded'
+  ensure
+    FileUtils.rm file
+  end
+
+  def test_map_loads_framework_on_demand
+    dir  = File.join(SOURCE_ROOT, 'lib/hotcocoa/mappings/opencl')
+    FileUtils.mkdir dir # this will fail if it already exists, which is a good safety
+
+    file = File.join(dir, 'crazy_mapping.rb')
+    File.open(file,'w') { |f| f.puts 'class MyLazyLoadingTestClass; end' }
+    framework 'OpenCL'
+
+    FileUtils.rm_rf dir
+
+    assert defined?(:MyLazyLoadingTestClass), 'mappings not loaded'
   end
 
 end
@@ -40,35 +63,6 @@ class TestMappingsMappings < MiniTest::Unit::TestCase
 
     assert_includes Mappings.mappings[:klass].control_module.
       instance_methods, :a_control_module_instance_method
-  end
-
-end
-
-
-class TestMappingsMap < MiniTest::Unit::TestCase
-  include HotCocoa
-
-  def test_reload_loads_all_mappings
-    file = File.join(SOURCE_ROOT, 'lib/hotcocoa/mappings/appkit/test_mapping.rb')
-    File.open(file,'w') { |f| f.puts 'class MyReloadingTestClass; end' }
-
-    HotCocoa::Mappings.reload
-    assert defined?(:MyReloadingTestClass), 'mappings not loaded'
-  ensure
-    FileUtils.rm file
-  end
-
-  def test_loads_framework_on_demand
-    dir  = File.join(SOURCE_ROOT, 'lib/hotcocoa/mappings/opencl')
-    FileUtils.mkdir dir # this will fail if it already exists, which is a good safety
-
-    file = File.join(dir, 'crazy_mapping.rb')
-    File.open(file,'w') { |f| f.puts 'class MyLazyLoadingTestClass; end' }
-    framework 'OpenCL'
-
-    FileUtils.rm_rf dir
-
-    assert defined?(:MyLazyLoadingTestClass), 'mappings not loaded'
   end
 
 end
