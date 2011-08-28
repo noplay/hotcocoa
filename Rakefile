@@ -34,6 +34,16 @@ task :install => :gem do
   Gem::Installer.new("pkg/#{spec.file_name}").install
 end
 
+# in reality this doesn't do the same dependency resolution that
+# bundler is capable of, but this should be good 99% of the time
+# and _way_ faster
+desc 'Setup dependencies without* Bundler'
+task :setup_dev do
+  (spec.runtime_dependencies + spec.development_dependencies).each do |dep|
+    Gem::DependencyInstaller.new.install(dep.name, dep.requirement)
+  end
+end
+
 desc 'Start up IRb with Hot Cocoa loaded'
 task :console do
   irb = ENV['RUBY_VERSION'] ? 'irb' : 'macirb'
