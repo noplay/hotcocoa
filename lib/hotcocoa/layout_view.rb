@@ -327,12 +327,12 @@ module HotCocoa
     end
 
     def setFrame frame
-      super
+      super(frame, &nil)
       relayout!
     end
 
     def setFrameSize size
-      super
+      super(size, &nil)
       relayout!
     end
 
