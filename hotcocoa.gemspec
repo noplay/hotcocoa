@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
     ['README.markdown', 'History.txt'] +
     Dir.glob('docs/**/*.markdown')
 
-  s.add_development_dependency 'minitest',  '~> 2.5.0'
+  s.add_development_dependency 'minitest',  '~> 2.5'
   s.add_development_dependency 'yard',      '~> 0.7.2'
   s.add_development_dependency 'redcarpet', '~> 1.17'
 end
