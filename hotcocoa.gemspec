@@ -16,8 +16,9 @@ Gem::Specification.new do |s|
   s.executables  << 'hotcocoa'
 
   s.files            =
-    ['Rakefile', '.yardopts'] +
-    Dir.glob('{lib,template,bin}/**/*')
+    ['Rakefile', '.yardopts', 'bin/hotcocoa'] +
+    Dir.glob('lib/**/*.rb')   +
+    Dir.glob('template/**/*')
 
   s.test_files       =
     Dir.glob('test/**/*.rb')
