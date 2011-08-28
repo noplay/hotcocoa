@@ -1,6 +1,15 @@
 module HotCocoa::Mappings
   # needs to be initialized
   @mappings = {}
+
+  ##
+  # This is a hack to work around a MacRuby issue with compiled files.
+  #
+  # Return the absolute path to `lib/hotcocoa`.
+  #
+  # @return [String]
+  file = $LOADED_FEATURES.find { |file| file.match /hotcocoa\/mappings\.rbo?$/ }
+  @path = File.expand_path(File.join(File.dirname(file), 'mappings'))
 end
 
 class << HotCocoa::Mappings
@@ -14,7 +23,7 @@ class << HotCocoa::Mappings
   ##
   # Load mappings for every loaded framework.
   def reload
-    $LOADED_FRAMEWORKS.each { |framework| load framework }
+    $LOADED_FRAMEWORKS.each do |framework| load framework end
   end
 
   ##
@@ -23,7 +32,7 @@ class << HotCocoa::Mappings
   # @param [String] framework
   def load framework
     framework = framework.downcase
-    dir       = File.join(File.dirname(__FILE__), 'mappings', framework)
+    dir       = File.join(@path, framework)
     if Dir.exists? dir
       Dir.glob(File.join(dir, '**/*.rb')).each do |mapping|
         require mapping.chomp! '.rb'
