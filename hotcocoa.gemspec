@@ -1,5 +1,4 @@
-$LOAD_PATH.unshift File.expand_path 'lib'
-require 'hotcocoa/version'
+require './lib/hotcocoa/version'
 
 Gem::Specification.new do |s|
   s.name    = 'hotcocoa'
