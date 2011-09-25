@@ -3,18 +3,7 @@ task :build   => :gem
 
 if MACRUBY_REVISION.match(/^git commit/)
   require 'rake/compiletask'
-  Rake::CompileTask.new do |t|
-    t.files   = FileList['lib/**/*.rb']
-    t.verbose = true
-  end
-
-  desc 'Clean MacRuby binaries'
-  task :clean do
-    FileList['lib/**/*.rbo'].each do |bin|
-      $stdout.puts "rm #{bin}"
-      rm bin
-    end
-  end
+  Rake::CompileTask.new
 end
 
 require 'rake/testtask'
