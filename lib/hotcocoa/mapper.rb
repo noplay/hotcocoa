@@ -37,6 +37,13 @@ class HotCocoa::Mappings::Mapper
     attr_reader :delegate_modules
   end
 
+  ##
+  # Performance hack. Put mutable objects that are constant into a
+  # constant to avoid having to `#dup`.
+  #
+  # @return [String]
+  SET = 'set'
+
   # they need to be initialized
   @bindings_modules = {}
   @delegate_modules = {}
@@ -117,7 +124,7 @@ class HotCocoa::Mappings::Mapper
           control.send "#{key}=", value
 
         elsif control.respond_to? key
-          new_key = (key.start_with?('set') ? key : "set#{key[0].capitalize}#{key[1..-1]}")
+          new_key = (key.start_with?(SET) ? key : "set#{key[0].capitalize}#{key[1..-1]}")
           if control.respond_to? new_key
             control.send new_key, value
 
