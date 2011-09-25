@@ -1,18 +1,21 @@
-=== 0.6.0 20xx-xx-xx
+=== 0.6.0 2011-10-xx
 
-* x major enhancement:
-  * True lazy loading for mappings (may break custom mappings!)
-  * Revamped application builder to work with MacRuby 0.11
-  * Began documenting the API
-  * Began regression testing
+* 8 enhancements:
+  * New application builder to work with MacRuby 0.11
+  * Application templates now use an appspec, similar to a gemspec
+  * Truer lazy loading for mappings (may break custom mappings!)
+  * API documention (67% coverage so far)
+  * Regression tests (< 67% coverage so far)
+  * Updating and porting of the tutorial documentation (~40% complete)
+  * HotCocoa now works when compiled
+  * HotCocoa is now leaner and meaner
 
-* x new mappings:
+* 3 new mappings:
   * NSNetService          => bonjour_service
   * NSNetServiceBrowser   => bonjour_browser
-  * NSURL                 => url
   * NSBezierPath          => line
 
-* x graphics improvements:
+* 2 graphics improvements:
   * Image class works with more image types
   * Image class can save images
 
