@@ -69,7 +69,7 @@ module Application
 
     def deploy_options
       options = []
-      spec.gems.each { |g| options << "--gem #{g.name}" }
+      spec.gems.each { |g| options << "--gem #{g}" }
       options << '--bs'        if spec.embed_bs?
       options << '--compile'   if spec.compile?
       options << '--no-stdlib' unless spec.stdlib # @todo use attribute properly
