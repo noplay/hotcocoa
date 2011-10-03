@@ -5,4 +5,32 @@ Application::Specification.new do |s|
   s.icon       = 'resources/HotCocoa.icns'
   s.resources  = Dir.glob('resources/**/*.*')
   s.sources    = Dir.glob('lib/**/*.rb')
+
+  # optional copyright
+  # s.copyright = "2011, Your Company"
+
+  # Path to any Core Data '.xcdatamodel' directories that need to be
+  # compiled and added to the app bundle
+  # s.data_models = ['path/to/datamodels']
+
+  # to avoid embedding the standard libs
+  # s.stdlib   = false
+  # alternatively, specify the modules that you wish to include
+  # s.stdlib   = ['base64', 'matrix', 'set']
+
+  # specify which gems you wish to be bundled with your application
+  # hotcocoa is automatically bundled and doesn't need to be specified here
+  # s.gems     = ['rest-client']
+
+  # uncomment if you wish to embed the BridgeSupport files during deployment
+  # useful if you need to deploy the app to OS X 10.6.
+  # s.embed_bs = true
+
+  # uncomment to always make a clean build of the app
+  # s.overwrite = true
+
+  # toggle whether the app is an daemon with UI or a regular app
+  # You can use this flag to hide the dock icon for the app; the
+  # default value is false so that apps will have a dock icon
+  # s.agent    = true
 end
