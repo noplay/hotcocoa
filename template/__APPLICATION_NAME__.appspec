@@ -48,9 +48,3 @@ Application::Specification.new do |s|
   # s.agent    = true
 end
 
-
-- (String) signature
-Four letter code that acts as a signature for the bundle.
-- (String) type
-Four letter code identifying the bundle type.
-- (String) version
