@@ -18,14 +18,6 @@ Application::Specification.new do |s|
   # optional short version (in contrast to the full version, the short version should not contain the build number)
   # s.short_version = "$MAJOR.$MINOR.$PATCHLEVEL"
 
-  # optional four letter code that acts as a signature for the bundle.
-  # defaults to '????', and most apps never set this value.
-  # s.signature = '????'
-
-  # four letter code identifying the bundle type
-  # defaults to 'APPL', which specifies that the bundle is an application.
-  # s.type = 'APPL'
-
   # to avoid embedding the standard libs
   # s.stdlib   = false
   # alternatively, specify the modules that you wish to include
