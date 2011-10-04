@@ -1,7 +1,13 @@
+# for more information about the fields that can be set on the specification, check out the rdoc:
+#   http://rdoc.info/github/ferrous26/hotcocoa/master/Application/Specification
+#
 Application::Specification.new do |s|
   s.name       = '__APPLICATION_NAME__'
   s.identifier = 'com.__COMPANY_NAME__.__APPLICATION_NAME__'
+
+  # The version of the app, usually including the build number.
   s.version    = '1.0'
+
   s.icon       = 'resources/HotCocoa.icns'
   s.resources  = Dir.glob('resources/**/*.*')
   s.sources    = Dir.glob('lib/**/*.rb')
@@ -9,9 +15,16 @@ Application::Specification.new do |s|
   # optional copyright
   # s.copyright = "2011, Your Company"
 
-  # Path to any Core Data '.xcdatamodel' directories that need to be
-  # compiled and added to the app bundle
-  # s.data_models = ['path/to/datamodels']
+  # optional short version (in contrast to the full version, the short version should not contain the build number)
+  # s.short_version = "$MAJOR.$MINOR.$PATCHLEVEL"
+
+  # optional four letter code that acts as a signature for the bundle.
+  # defaults to '????', and most apps never set this value.
+  # s.signature = '????'
+
+  # four letter code identifying the bundle type
+  # defaults to 'APPL', which specifies that the bundle is an application.
+  # s.type = 'APPL'
 
   # to avoid embedding the standard libs
   # s.stdlib   = false
@@ -34,3 +47,10 @@ Application::Specification.new do |s|
   # default value is false so that apps will have a dock icon
   # s.agent    = true
 end
+
+
+- (String) signature
+Four letter code that acts as a signature for the bundle.
+- (String) type
+Four letter code identifying the bundle type.
+- (String) version
