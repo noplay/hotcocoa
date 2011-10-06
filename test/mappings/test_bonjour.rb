@@ -76,4 +76,13 @@ class TestBonjourMappings < MiniTest::Unit::TestCase
     skip 'TODO'
   end
 
+  def bench_delegate_building
+    browser = bonjour_browser
+    assert_performance_linear do |n|
+      n.times do
+        browser.did_find_service { |_,_| }
+      end
+    end
+  end
+
 end
