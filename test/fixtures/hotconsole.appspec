@@ -6,4 +6,6 @@ HotCocoa::Application::Specification.new do |s|
   s.sources    = Dir.glob('lib/**/*.rb')
   s.resources  = Dir.glob('resources/**/*.*')
   s.signature  = 'girb'
+  s.embed_bs   = true
+  s.compile    = false
 end

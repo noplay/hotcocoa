@@ -27,8 +27,13 @@ class TestApplicationBuilder < MiniTest::Unit::TestCase
     assert options.include? '--compile'
     assert options.include? '--no-stdlib'
     refute options.include? '--bs'
+
+    builder = Builder.new hotconsole_spec
     options = builder.send :deploy_options
-    assert options.include? "--gem rest-client"
+    assert options.include? '--bs'
+    refute options.include? '--no-stdlib'
+    refute options.include? '--compile'
+    refute options.include? '--gem'
   end
 
 end
