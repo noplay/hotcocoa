@@ -6,90 +6,80 @@ require 'hotcocoa/application_builder'
 class TestConfiguration < MiniTest::Unit::TestCase
 
   Configuration = HotCocoa::ApplicationBuilder::Configuration
-  TEST_DIR      = File.join( ENV['TMPDIR'], 'test_app_builder' )
+  TEST_DIR      = File.join(ENV['TMPDIR'], 'test_app_builder')
 
   # Some HotCocoa build.yml files, borrowed from projects on Github
-  HOTCONSOLE = 'test/fixtures/hotconsole.yml'
-  CALCULATOR = 'test/fixtures/calculator.yml'
-  STOPWATCH  = 'test/fixtures/stopwatch.yml'
-  EMPTY_APP  = 'test/fixtures/empty.yml'
+  def hotconsole_config
+    @@hotconsole_config ||= Configuration.new 'test/fixtures/hotconsole.yml'
+  end
+  def calculator_config
+    @@calculator_config ||= Configuration.new 'test/fixtures/calculator.yml'
+  end
+  def stopwatch_config
+    @@stopwatch_config ||= Configuration.new 'test/fixtures/stopwatch.yml'
+  end
+  def empty_config
+    @@empty_config ||= Configuration.new 'test/fixtures/empty.yml'
+  end
 
   def setup;    FileUtils.mkdir TEST_DIR; end
   def teardown; FileUtils.rm_rf TEST_DIR; end
 
   def test_reads_attributes
-    conf = Configuration.new HOTCONSOLE
+    conf = hotconsole_config
     assert_equal 'HotConsole',                conf.name
     assert_equal '1.0',                       conf.version
     assert_equal 'resources/HotConsole.icns', conf.icon
     assert_equal ['resources/**/*.*'],        conf.resources
     assert_equal ['lib/**/*.rb'],             conf.sources
 
-    conf = Configuration.new CALCULATOR
+    conf = calculator_config
     assert_equal 'Calculator', conf.name
     assert_equal '2.0', conf.version
   end
 
   def test_version_defaults_to_1_if_not_set
-    conf = Configuration.new STOPWATCH
+    conf = stopwatch_config
     refute_nil conf.version
     assert_equal '1.0', conf.version
   end
 
   def test_sources_resources_and_data_models_are_initialized_to_an_empty_array_if_not_provided
-    conf = Configuration.new EMPTY_APP
+    conf = empty_config
     assert_empty conf.sources
     assert_empty conf.resources
     assert_empty conf.data_models
   end
 
   def test_overwirte_attribute
-    conf = Configuration.new EMPTY_APP
-    refute conf.overwrite?
-
-    conf = Configuration.new STOPWATCH
-    assert conf.overwrite?
+    refute empty_config.overwrite?
+    assert stopwatch_config.overwrite?
   end
 
   def test_agent_attribute
-    conf = Configuration.new EMPTY_APP
-    assert_equal '0', conf.agent
-
-    conf = Configuration.new STOPWATCH
-    assert_equal '1', conf.agent
+    assert_equal '0', empty_config.agent
+    assert_equal '1', stopwatch_config.agent
   end
 
   def test_stdlib_attribute
-    conf = Configuration.new HOTCONSOLE
-    assert_equal true, conf.stdlib
-
-    conf = Configuration.new STOPWATCH
-    assert_equal false, conf.stdlib
+    assert_equal true, hotconsole_config.stdlib
+    assert_equal false, stopwatch_config.stdlib
   end
 
   def test_type_attribute
-    conf = Configuration.new HOTCONSOLE
-    assert_equal 'APPL', conf.type
-
-    conf = Configuration.new EMPTY_APP
-    assert_equal 'BNDL', conf.type
+    assert_equal 'APPL', hotconsole_config.type
+    assert_equal 'BNDL', empty_config.type
   end
 
   def test_signature_attribute
-    conf = Configuration.new EMPTY_APP
-    assert_equal '????', conf.signature
-
-    conf = Configuration.new HOTCONSOLE
-    assert_equal 'girb', conf.signature
+    assert_equal '????', empty_config.signature
+    assert_equal 'girb', hotconsole_config.signature
   end
 
   def test_icon_exists?
-    conf = Configuration.new HOTCONSOLE
-    refute conf.icon_exists?
-
-    # works because this project uses the icon from a system app
-    conf = Configuration.new CALCULATOR
-    assert conf.icon_exists?
+    refute hotconsole_config.icon_exists?
+    # works on all Macs because this project uses the icon from a system app
+    assert calculator_config.icon_exists?
   end
 
 end
