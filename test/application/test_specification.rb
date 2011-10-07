@@ -1,25 +1,12 @@
-require 'hotcocoa/application/specification'
+require 'test/application/helper'
 
-class TestApplicationSpecification < MiniTest::Unit::TestCase
-  include Application
-
-  # Some HotCocoa appspec files, converted from build.yml files borrowed from projects on Github
-  HOTCONSOLE = 'test/fixtures/hotconsole.appspec'
-  STOPWATCH  = 'test/fixtures/stopwatch.appspec'
+class TestApplicationSpecification < TestApplicationModule
 
   def rescue_spec_error_for &block
     begin
       Specification.new &block
     rescue Specification::Error => e
       return e
-    end
-  end
-
-  def minimal_spec
-    Specification.new do |s|
-      s.name       = 'test'
-      s.identifier = 'com.test.test'
-      yield s if block_given?
     end
   end
 
@@ -259,7 +246,7 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
 
   # doubles as an integration test
   def test_load_evaluates_files_properly
-    spec = Application::Specification.load HOTCONSOLE
+    spec = hotconsole_spec
     assert_equal 'HotConsole',                     spec.name
     assert_equal 'com.vincentisambart.HotConsole', spec.identifier
     assert_equal '1.0',                            spec.version
@@ -267,7 +254,7 @@ class TestApplicationSpecification < MiniTest::Unit::TestCase
     assert_equal [],                               spec.resources
     assert_equal 'girb',                           spec.signature
 
-    spec = Application::Specification.load STOPWATCH
+    spec = stopwatch_spec
     assert_equal 'Stopwatch',                         spec.name
     assert_equal 'nz.co.kearse.stopwatch',            spec.identifier
     assert_equal Dir.glob('{lib,hotcocoa}*/**/*.rb'), spec.sources

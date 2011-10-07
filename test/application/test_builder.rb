@@ -1,39 +1,44 @@
-require 'hotcocoa/application/builder'
+require 'test/application/helper'
 
-class TestApplicationBuilder < MiniTest::Unit::TestCase
-  include Application
+class TestApplicationBuilder < TestApplicationModule
 
-  TEST_DIR = File.join(ENV['TMPDIR'], 'test_app_specification')
-
-  def hotconsole_spec
-    @@hotconsole_spec ||= Specification.load 'test/fixtures/hotconsole.appspec'
+  def hotconsole
+    @@hotconsole ||= Builder.new hotconsole_spec
   end
-  def stopwatch_spec
-    @@stopwatch_spec  ||= Specification.load 'test/fixtures/stopwatch.appspec'
+  def stopwatch
+    @@stopwatch  ||= Builder.new stopwatch_spec
   end
-
-  def setup;    FileUtils.mkdir TEST_DIR; end
-  def teardown; FileUtils.rm_rf TEST_DIR; end
 
   def test_caches_spec
-    builder = Builder.new stopwatch_spec
-    assert_equal stopwatch_spec, builder.spec
+    assert_equal stopwatch_spec, stopwatch.spec
   end
 
-  def test_deploy_options
-    builder = Builder.new stopwatch_spec
-    options = builder.send :deploy_options
-    assert options.include? '--gem rest-client'
-    assert options.include? '--compile'
-    assert options.include? '--no-stdlib'
-    refute options.include? '--bs'
+  def test_deploy_option_gems
+    assert_includes stopwatch.send(:deploy_options),  '--gem rest-client'
+    refute_includes hotconsole.send(:deploy_options), '--gem'
+  end
 
-    builder = Builder.new hotconsole_spec
-    options = builder.send :deploy_options
-    assert options.include? '--bs'
-    refute options.include? '--no-stdlib'
-    refute options.include? '--compile'
-    refute options.include? '--gem'
+  def test_deploy_option_compile
+    assert_includes stopwatch.send(:deploy_options),  '--compile'
+    refute_includes hotconsole.send(:deploy_options), '--compile'
+  end
+
+  def test_deploy_option_embed_bs
+    refute_includes stopwatch.send(:deploy_options),  '--bs'
+    assert_includes hotconsole.send(:deploy_options), '--bs'
+  end
+
+  def test_deploy_option_stdlib
+    assert_includes stopwatch.send(:deploy_options),  '--no-stdlib'
+    refute_includes hotconsole.send(:deploy_options), 'stdlib'
+
+    spec = minimal_spec do |s|
+      s.stdlib = ['matrix', 'base64']
+    end
+    options = Builder.new(spec).send :deploy_options
+    refute_includes options, '--no-stdlib'
+    assert_includes options, '--stdlib matrix'
+    assert_includes options, '--stdlib base64'
   end
 
 end
