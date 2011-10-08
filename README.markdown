@@ -32,21 +32,22 @@ wiki.
 From rubygems:
 
     sudo macgem install hotcocoa --pre
-    
+
 You need to add the `--pre` flag since HotCocoa 0.6 is not officially released yet.
 Or you can clone the repository on Github and install from there:
 
     git clone git://github.com/ferrous26/hotcocoa
     cd hotcocoa
     sudo macrake install
-    
+
 __Note__: If you are on Snow Leopard, you will also need the
 [Bridge Support Preview](http://www.macruby.org/files/BridgeSupport%20Preview%203.zip)
 in order to run HotCocoa. Read about it on the
 [MacRuby Blog](http://www.macruby.org/blog/2010/10/08/bridgesupport-preview.html).
 
-__Note 2__: You will also need the Mac OS X developer tools in order to deploy your
-apps.
+__Note 2__: You will also need the Mac OS X developer tools in order
+to build apps. Xcode is not required, but the compiler toolchain is
+needed.
 
 ## Documentation
 
