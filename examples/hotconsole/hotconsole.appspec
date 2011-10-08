@@ -1,0 +1,8 @@
+Application::Specification.new do |s|
+  s.name       = 'HotConsole'
+  s.identifier = 'com.vincentisambart.hotconsole'
+  s.version    = '1.0'
+  s.icon       = 'resources/HotConsole.icns'
+  s.resources  = Dir.glob('resources/**/*.*')
+  s.sources    = Dir.glob('lib/**/*.rb')
+end
