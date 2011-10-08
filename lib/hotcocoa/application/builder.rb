@@ -199,7 +199,9 @@ module Application
     end
 
     ##
-    # @todo something better than puts `gcc`
+    # @todo Need a better way of specifying the supported architectures,
+    #       hard coding makes HotCocoa susceptible to the same problem
+    #       as before.
     #
     # Create the standard bootstrap binary to launch a MacRuby app and place
     # it in the bundle.
@@ -215,7 +217,7 @@ module Application
         }
       end
       Dir.chdir(macos_root) do
-        puts `gcc main.m -o #{executable_file_name} -arch x86_64 -framework MacRuby -framework Foundation -fobjc-gc-only`
+        puts `#{RbConfig::CONFIG['CC'] main.m -o #{executable_file_name} -arch x86_64 -framework MacRuby -framework Foundation -fobjc-gc-only`
       end
       File.unlink(objective_c_source_file)
     end

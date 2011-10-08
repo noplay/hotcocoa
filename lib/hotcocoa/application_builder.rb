@@ -302,7 +302,6 @@ module HotCocoa
       puts `macruby_deploy --embed --gem hotcocoa #{options} #{bundle_root}`
     end
 
-    # @todo something better than puts `gcc`
     def build_executable
       File.open(objective_c_source_file, 'wb') do |f|
         f.write %{
@@ -315,7 +314,7 @@ module HotCocoa
         }
       end
       Dir.chdir(macos_root) do
-        puts `gcc main.m -o #{objective_c_executable_file} -arch x86_64 -framework MacRuby -framework Foundation -fobjc-gc-only`
+        puts `#{RbConfig::CONFIG['CC']} main.m -o #{objective_c_executable_file} -arch x86_64 -framework MacRuby -framework Foundation -fobjc-gc-only`
       end
       File.unlink(objective_c_source_file)
     end
