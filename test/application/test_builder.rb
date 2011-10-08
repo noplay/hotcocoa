@@ -13,6 +13,10 @@ class TestApplicationBuilder < TestApplicationModule
     assert_equal stopwatch_spec, stopwatch.spec
   end
 
+  # I don't think it is too important to test deployment as well
+  # as long as we make sure we are passing the correct options
+  # to `macruby_deploy`
+
   def test_deploy_option_gems
     assert_includes stopwatch.send(:deploy_options),  '--gem rest-client'
     refute_includes hotconsole.send(:deploy_options), '--gem'
