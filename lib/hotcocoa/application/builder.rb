@@ -217,7 +217,7 @@ module Application
         }
       end
       Dir.chdir(macos_root) do
-        puts `#{RbConfig::CONFIG['CC'] main.m -o #{executable_file_name} -arch x86_64 -framework MacRuby -framework Foundation -fobjc-gc-only`
+        puts `#{RbConfig::CONFIG['CC']} main.m -o #{executable_file_name} -arch x86_64 -framework MacRuby -framework Foundation -fobjc-gc-only`
       end
       File.unlink(objective_c_source_file)
     end
