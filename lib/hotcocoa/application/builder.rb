@@ -192,7 +192,7 @@ module Application
 
     ##
     # Wirte out the generated info plist for the bundle.
-    def write_info_plist
+    def write_info_plist_file
       File.open(info_plist_file, 'w') do |file|
         file.write info_plist
       end
