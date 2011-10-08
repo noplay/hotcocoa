@@ -244,8 +244,6 @@ module Application
     alias_method :embed_bs?, :embed_bs
 
     ##
-    # @todo Is this actually useful or can we get rid of it?
-    #
     # Whether or not to always make a clean build of the app.
     #
     # Defaults to false.
@@ -340,7 +338,6 @@ module Application
       @copyright = @copyright.to_s if @copyright
     end
 
-    # @todo Should a warning be given if not embedding the stdlib?
     def verify_stdlib
       # need to be careful here; the main components of hotcocoa do
       # not depend on the stdlib right now, but if that changes then
