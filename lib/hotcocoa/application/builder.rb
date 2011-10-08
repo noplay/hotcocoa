@@ -159,7 +159,9 @@ module Application
     # Generate the `PkgInfo` file for the bundle. Every bundle needs this
     # in order identify its type of bundle and signature.
     def write_pkg_info_file
-      File.open(pkg_info_file, 'wb') { |f| f.write "#{spec.type}#{spec.signature}" }
+      File.open(pkg_info_file, 'wb') do |file|
+        file.write "#{spec.type}#{spec.signature}"
+      end
     end
 
     ##
@@ -191,7 +193,9 @@ module Application
     ##
     # Wirte out the generated info plist for the bundle.
     def write_info_plist
-      File.open(info_plist_file, 'w') do |f| f.write info_plist end
+      File.open(info_plist_file, 'w') do |file|
+        file.write info_plist
+      end
     end
 
     ##
