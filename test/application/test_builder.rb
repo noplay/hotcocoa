@@ -41,6 +41,16 @@ class TestApplicationBuilder < TestApplicationModule
     assert_includes options, '--stdlib base64'
   end
 
+  def test_plist_only_uses_icon_if_it_can
+    plist = load_plist(hotconsole.send(:info_plist))
+    refute_includes plist, :CFBundleIconFile
+
+    spec = hotconsole_spec.dup
+    spec.icon = '/Applications/Calculator.app/Contents/Resources/Calculator.icns'
+    plist = load_plist(Builder.new(spec).send(:info_plist))
+    assert_includes plist, :CFBundleIconFile
+  end
+
   def test_plist_hash_from_spec_overrides_all
     spec = hotconsole_spec.dup
     spec.plist[:MyKey]            = true
