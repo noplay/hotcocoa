@@ -41,4 +41,17 @@ class TestApplicationBuilder < TestApplicationModule
     assert_includes options, '--stdlib base64'
   end
 
+  def test_plist_hash_from_spec_overrides_all
+    spec = hotconsole_spec.dup
+    spec.plist[:MyKey]            = true
+    spec.plist[:NSPrincipleClass] = 'Foo'
+    spec.plist[:CFBundleName]     = 'Cake'
+
+    plist = load_plist(Builder.new(spec).send(:info_plist))
+    assert_equal true,            plist[:MyKey             ]
+    assert_equal 'Foo',           plist[:NSPrincipleClass  ]
+    assert_equal 'Cake',          plist[:CFBundleName      ]
+    assert_equal spec.identifier, plist[:CFBundleIdentifier]
+  end
+
 end

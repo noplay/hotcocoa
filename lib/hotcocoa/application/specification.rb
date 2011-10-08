@@ -127,7 +127,7 @@ module Application
     # Empty by default.
     #
     # @return [Hash]
-    # attr_accessor :plist
+    attr_accessor :plist
 
     # @todo Support localization related plist keys natively
     # @todo CFBundleDevelopmentRegion (Recommended)
@@ -257,7 +257,7 @@ module Application
     # @endgroup
 
     DEFAULT_ATTRIBUTES = {
-      # plist:       {}, # @todo Finish this before release
+      plist:       {},
       sources:     [],
       resources:   [],
       data_models: [],
@@ -280,8 +280,6 @@ module Application
         raise Error, msg
       end
       yield self
-
-      # @todo go through plist and overwrite specific keys?
 
       # @todo should we verify at initialization or defer until building?
       verify!

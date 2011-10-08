@@ -166,9 +166,9 @@ module Application
     # @todo Development region needs to be configurable in the future. And
     #       so should the default class. They should still both have defaults.
     #
-    # Generate and write the `Info.plist` for the bundle using fields from the
+    # Generate and the `Info.plist` for the bundle using fields from the
     # cached app spec.
-    def write_info_plist_file
+    def info_plist
       # http://developer.apple.com/library/mac/#documentation/General/Reference/InfoPlistKeyReference/Articles/AboutInformationPropertyListFiles.html%23//apple_ref/doc/uid/TP40009254-SW1
       info = {
         CFBundleName:                  spec.name,
@@ -181,11 +181,17 @@ module Application
         CFBundleInfoDictionaryVersion: '6.0',
         NSPrincipalClass:              'NSApplication',
         LSUIElement:                   spec.agent,
-        LSMinimumSystemVersion:        '10.6.7', # should match MacRuby
+        LSMinimumSystemVersion:        '10.6.7', # @todo should match MacRuby
       }
       info[:CFBundleIconFile] = File.basename(spec.icon) if spec.icon_exists?
+      info.merge! spec.plist # should always be done last
+      info.to_plist
+    end
 
-      File.open(info_plist_file, 'w') { |f| f.write info.to_plist }
+    ##
+    # Wirte out the generated info plist for the bundle.
+    def write_info_plist
+      File.open(info_plist_file, 'w') do |f| f.write info_plist end
     end
 
     ##
