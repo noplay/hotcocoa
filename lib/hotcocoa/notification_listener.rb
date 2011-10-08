@@ -39,7 +39,7 @@ class HotCocoa::NotificationListener
 
   class << self
     ##
-    # List of all {HotCocoa::NotificationListeners}.
+    # List of all {HotCocoa::NotificationListener}s.
     #
     # @return [HotCocoa::NotificationListener]
     attr_reader :registered_listeners
@@ -66,22 +66,32 @@ class HotCocoa::NotificationListener
   #   notification
   # @yieldparam [String] notification the name of the notification received
   def initialize options = {}, &block
-    raise 'You must pass a block to act as the callback' unless block_given?
+    unless block_given?
+      raise ArgumentError, 'You must pass a block to act as the callback'
+    end
     @callback = block
 
     @name                = options[:named]
     @sender              = options[:sent_by]
     @suspension_behavior = DistributedBehaviors[options[:when_suspended] || :coalesce]
     @distributed         = (options[:distributed] == true)
-    NotificationListener.registered_listeners << self
+    self.class.registered_listeners << self
     observe
+  end
+
+  ##
+  # (see #stop_listening)
+  # @deprecated Use {#stop_listening} instead. This API is scheduled to
+  #             be removed in HotCocoa 0.7.
+  def stop_notifications options = {}
+    stop_listening options
   end
 
   ##
   # Stop the listener from listening to any future notifications. The
   # options available here are the same as the {#initialize} methods
   # `:named` and `:sent_by` options.
-  def stop_notifications options = {}
+  def stop_listening options = {}
     if options.has_key?(:named) || options.has_key?(:sent_by)
       notification_center.removeObserver self,
                                    name: options[:named],
@@ -89,6 +99,7 @@ class HotCocoa::NotificationListener
     else
       notification_center.removeObserver self
     end
+    self.class.registered_listeners.delete self
   end
 
   ##
