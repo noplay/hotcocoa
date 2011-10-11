@@ -1,0 +1,8 @@
+Application::Specification.new do |s|
+  s.name       = 'Demo'
+  s.identifier = 'com.hotcocoa.demoapp'
+  s.version    = '1.0'
+  s.icon       = 'resources/HotCocoa.icns'
+  s.resources  = Dir.glob('resources/**/*.*')
+  s.sources    = Dir.glob('lib/**/*.rb')
+end
