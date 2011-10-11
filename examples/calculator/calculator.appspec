@@ -1,0 +1,7 @@
+Application::Specification.new do |s|
+  s.name       = 'Calculator'
+  s.identifier = 'com.floehopper.calculator'
+  s.version    = '1.0'
+  s.icon       = '/Applications/Calculator.app/Contents/Resources/Calculator.icns'
+  s.sources    = Dir.glob('lib/**/*.rb')
+end

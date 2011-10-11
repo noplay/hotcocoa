@@ -1,5 +1,6 @@
-require 'rubygems'
-require 'hotcocoa/application_builder'
-require 'hotcocoa/standard_rake_tasks'
+APPSPEC = 'calculator.appspec'
 
-task :default => [:run]
+require 'rubygems'
+require 'hotcocoa/rake_tasks'
+
+task :default => :run
