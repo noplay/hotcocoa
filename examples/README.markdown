@@ -4,7 +4,7 @@ This directory contains a few demos of using the HotCocoa library.
 
 To learn more about HotCocoa see:
 
-  http://www.macruby.org/trac/wiki/HotCocoa
+  http://rdoc.info/github/ferrous26/hotcocoa/master/file/docs/Overview.markdown
 
 When you install HotCocoa you get a hotcocoa command which generates a
 project directory from a template.
