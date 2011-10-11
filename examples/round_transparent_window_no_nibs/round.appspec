@@ -1,0 +1,8 @@
+Application::Specification.new do |s|
+  s.name       = 'Round Transparent Window'
+  s.identifier = 'com.hotcocoa.round-transparent'
+  s.version    = '1.0'
+  s.icon       = 'resources/HotCocoa.icns'
+  s.resources  = Dir.glob('resources/**/*.*')
+  s.sources    = Dir.glob('lib/**/*.rb')
+end
