@@ -45,6 +45,21 @@ module Application
     
     protected
     def verify!
+      verify_name
+      verify_extensions
+      verify_role
+    end
+    
+    def verify_name
+      raise ArgumentError, "doc type name must not be empty" if @name.nil? or @name.empty?
+    end
+    
+    def verify_extensions
+      raise ArgumentError, "doc type extensions must be an array" unless @extensions.is_a?(Array)
+    end
+    
+    def verify_role
+      raise ArgumentError, "#{@role} is not a valid role. A doc type role must be one of [:editor, :viewer, :none]" unless VALID_ROLES.keys.include?(@role)
     end
   end
 end
