@@ -31,9 +31,8 @@ wiki.
 
 From rubygems:
 
-    sudo macgem install hotcocoa --pre
+    sudo macgem install hotcocoa
 
-You need to add the `--pre` flag since HotCocoa 0.6 is not officially released yet.
 Or you can clone the repository on Github and install from there:
 
     git clone git://github.com/ferrous26/hotcocoa
