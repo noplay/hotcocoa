@@ -83,7 +83,7 @@ module Application
     def deploy_options
       options = []
       spec.gems.each { |g| options << "--gem #{g}" }
-      options << '--bs'        if spec.embed_bs?
+      options << '--bs'        if spec.embed_bridgesupport?
       options << '--compile'   if spec.compile?
       options << '--no-stdlib' unless spec.stdlib
       if spec.stdlib.respond_to? :each

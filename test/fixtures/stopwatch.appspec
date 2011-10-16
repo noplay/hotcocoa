@@ -7,4 +7,5 @@ HotCocoa::Application::Specification.new do |s|
   s.overwrite  = true
   s.stdlib     = false
   s.gems       = [ 'rest-client' ]
+  s.embed_bridgesupport = false
 end

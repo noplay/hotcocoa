@@ -260,8 +260,9 @@ module Application
     # OS X 10.6.
     #
     # @return [Boolean]
-    attr_accessor :embed_bs
-    alias_method :embed_bs?, :embed_bs
+    attr_accessor :embed_bridgesupport
+    alias_method :embed_bridgesupport?, :embed_bridgesupport
+    alias_method :embed_bs=, :embed_bridgesupport=
 
     ##
     # Whether or not to always make a clean build of the app.
@@ -324,7 +325,7 @@ module Application
         agent:       false,
         compile:     true,
         overwrite:   false,
-        embed_bs:    false
+        embed_bridgesupport: true
       }
     end
 

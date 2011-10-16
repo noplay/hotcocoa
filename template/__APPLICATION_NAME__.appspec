@@ -12,6 +12,13 @@ Application::Specification.new do |s|
   s.resources  = Dir.glob('resources/**/*.*')
   s.sources    = Dir.glob('lib/**/*.rb')
 
+  # BridgeSupport is required if you need to run your app under OS X 10.6 (Snow Leopard)
+  # set this option to false if you do not wish to embed the BridgeSupport files during deployment
+  # (i.e. you are targeting Lion only)
+  # Information about BridgeSupport: http://www.macruby.org/documentation/tutorial.html
+  # Latest Preview of BridgeSupport: http://www.macruby.org/files/BridgeSupport%20Preview%203.zip
+  s.embed_bridgesupport = true
+
   # optional copyright
   # s.copyright = "2011, Your Company"
 
@@ -26,10 +33,6 @@ Application::Specification.new do |s|
   # specify which gems you wish to be bundled with your application
   # hotcocoa is automatically bundled and doesn't need to be specified here
   # s.gems     = ['rest-client']
-
-  # uncomment if you wish to embed the BridgeSupport files during deployment
-  # useful if you need to deploy the app to OS X 10.6.
-  # s.embed_bs = true
 
   # uncomment to always make a clean build of the app
   # s.overwrite = true
