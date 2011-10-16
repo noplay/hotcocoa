@@ -1,5 +1,3 @@
-APPSPEC = '__APPLICATION_NAME__.appspec'
-
 require 'rubygems'
 require 'hotcocoa/rake_tasks'
 

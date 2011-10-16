@@ -1,5 +1,3 @@
-APPSPEC = 'calculator.appspec'
-
 require 'rubygems'
 require 'hotcocoa/rake_tasks'
 
