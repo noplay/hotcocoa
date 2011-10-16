@@ -170,7 +170,7 @@ class HotCocoa::Mappings::Mapper
   # @return [Hash{Hash}]
   def inherited_constants
     constants = {}
-    each_control_ancestor do |ancestor|
+    control_class.hotcocoa_mappers.each do |ancestor|
       constants.merge! ancestor.control_module.constants_map
     end
     constants
@@ -178,7 +178,7 @@ class HotCocoa::Mappings::Mapper
 
   def inherited_delegate_methods
     delegate_methods = {}
-    each_control_ancestor do |ancestor|
+    control_class.hotcocoa_mappers.each do |ancestor|
       delegate_methods.merge! ancestor.control_module.delegate_map
     end
     delegate_methods
@@ -190,30 +190,11 @@ class HotCocoa::Mappings::Mapper
   #
   # @return [Array<Module>]
   def inherited_custom_methods
-    methods = []
-    each_control_ancestor do |ancestor|
+    control_class.hotcocoa_mappers.map! { |ancestor|
       if ancestor.control_module.custom_methods
-        methods << ancestor.control_module.custom_methods
+        ancestor.control_module.custom_methods
       end
-    end
-    methods
-  end
-
-  ##
-  # Iterates over the ancestor chain for the class being mapped and
-  # yields for each ancestor that also has a mapping.
-  #
-  # Classes are yielded from the descending order (from the super class
-  # to the sub class).
-  #
-  # @yield
-  # @yieldparam [Class] a class in the inheritance chain
-  def each_control_ancestor
-    control_class.ancestors.reverse.each do |ancestor|
-      HotCocoa::Mappings.mappings.values.each do |mapper|
-        yield mapper if mapper.control_class == ancestor
-      end
-    end
+    }.compact
   end
 
   ##
