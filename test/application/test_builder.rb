@@ -27,7 +27,7 @@ class TestApplicationBuilder < TestApplicationModule
     refute_includes hotconsole.send(:deploy_options), '--compile'
   end
 
-  def test_deploy_option_embed_bs
+  def test_deploy_option_embed_bridgesupport
     refute_includes stopwatch.send(:deploy_options),  '--bs'
     assert_includes hotconsole.send(:deploy_options), '--bs'
   end

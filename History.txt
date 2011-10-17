@@ -1,3 +1,8 @@
+=== 0.6.1 ????-??-??
+
+* Enhancements:
+  * Bridgesupport embedding enabled by default for new projects
+
 === 0.6.0 2011-10-14
 
 * 10 enhancements:

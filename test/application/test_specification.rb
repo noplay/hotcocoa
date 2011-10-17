@@ -215,14 +215,19 @@ class TestApplicationSpecification < TestApplicationModule
       Gem::Dependency.new('Salut', '>= 0', '< 2.0.0', :runtime)
   end
 
-  def test_embed_bs_has_a_default
+  def test_embed_bridgesupport_has_a_default
     spec = minimal_spec
-    assert_equal false, spec.embed_bs?
-    assert_equal false, spec.embed_bs
+    assert spec.embed_bridgesupport?
+    assert spec.embed_bridgesupport
 
-    spec = minimal_spec { |s| s.embed_bs = true }
-    assert_equal true, spec.embed_bs?
-    assert_equal true, spec.embed_bs
+    spec = minimal_spec { |s| s.embed_bridgesupport = false }
+    refute spec.embed_bridgesupport?
+    refute spec.embed_bridgesupport
+  end
+
+  def test_there_exists_an_embed_bs_alias_so_that_old_specs_continue_working
+    spec = minimal_spec { |s| s.embed_bs = false }
+    refute spec.embed_bridgesupport?
   end
 
   def test_overwrite_attribute_is_false_by_default
