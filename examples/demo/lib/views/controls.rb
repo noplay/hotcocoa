@@ -57,11 +57,11 @@ class ControlsView
   end
   
   def self.secure_text_field_view
-    secure_text_field(:echo => true, :frame => [20,20,200,25], :layout => {:expand => :width, :start => true, :align => :center})
+    secure_text_field(:echo => true, :frame => [20,20,200,25], :layout => {:expand => :width, :start => true, :align => :center}, :drawsBackground => false)
   end
 
   def self.text_field_view
-    text_field(:frame => [20,20,200,25], :layout => {:expand => :width, :start => true, :align => :center})
+    text_field(:frame => [20,20,200,25], :layout => {:expand => :width, :start => true, :align => :center}, :drawsBackground => false)
   end
   
   DemoApplication.register(self)
