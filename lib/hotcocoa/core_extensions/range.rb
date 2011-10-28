@@ -2,6 +2,9 @@
 # HotCocoa extensions to the Range class
 class Range
   ##
+  # @deprecated MacRuby 0.11+ includes `Range#relative_to`.
+  #             This API will be dropped in HotCocoa 0.8.
+  #
   # Create a Cocoa NSRange from a Ruby Range.
   #
   # Since NSRange does not support negative indexing, you _MUST_ include
