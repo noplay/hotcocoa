@@ -54,7 +54,8 @@ Documentation is a work in progress; some of the documentation is
 being ported from the MacRuby website and you can still view it there.
 
 The documentation currently does not include the mappings right now due to the
-way that mappings are implemented; a YARD plug-in will be needed for thatv
+way that mappings are implemented; a YARD plug-in or new YARD features
+will be needed (stay tuned).
 
 ## Contributing to HotCocoa
 
