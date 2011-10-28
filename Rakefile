@@ -1,10 +1,8 @@
 task :default => :build
 task :build   => :gem
 
-if MACRUBY_REVISION.match(/^git commit/)
-  require 'rake/compiletask'
-  Rake::CompileTask.new
-end
+require 'rake/compiletask'
+Rake::CompileTask.new
 
 require 'rake/testtask'
 Rake::TestTask.new do |t|
