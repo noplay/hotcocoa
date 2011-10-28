@@ -45,17 +45,8 @@ class NSMutableAttributedString
     HotCocoa::NSRangedProxyAttributedString.new(self, 0..-1).attributes
   end
 
-  ##
-  # @deprecated Who uses this? Removing this in HotCocoa 0.7 unless
-  #   there are reasonable objections
-  #
-  # Create a range proxy for an arbitrary portion of the receiver.
-  #
-  # @param [Range] r
-  # @return [HotCocoa::NSRangedProxyAttributedString]
-  def [] r
-    HotCocoa::NSRangedProxyAttributedString.new self, r
-  end
+  # @todo #[] feels like it should have some meaning, but I'm not sure it
+  #       can work nicely with the given API for NSAttributedString
 
   ##
   # Replace an arbitrary range of an attributed string with another string.
