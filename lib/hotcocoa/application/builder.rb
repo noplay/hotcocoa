@@ -51,6 +51,7 @@ module Application
       write_bundle_files
       copy_sources
       copy_resources
+      copy_frameworks
       compile_data_models
       copy_icon_file if spec.icon_exists?
       deploy if opts[:deploy]
@@ -119,6 +120,16 @@ module Application
         FileUtils.mkdir_p(File.dirname(destination)) unless File.exist?(File.dirname(destination))
         FileUtils.cp_r source, destination
       end
+    end
+
+    ##
+    # Copy the frameworks used by the application into the bundle
+    def copy_frameworks
+      third_party_frameworks = Dir[File.join(spec.frameworks_path, "*")]
+      third_party_frameworks.each do |framework|
+        FileUtils.rm_rf File.join(frameworks_root, File.basename(framework))
+      end
+      FileUtils.cp_r File.join(spec.frameworks_path, "."), frameworks_root if File.exists?(spec.frameworks_path)
     end
 
     ##

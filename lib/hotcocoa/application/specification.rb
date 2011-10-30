@@ -151,6 +151,13 @@ module Application
     attr_accessor :sources
 
     ##
+    # The directory which houses the application-specific frameworks that will be copied to the app bundle.
+    # Defaults to "frameworks"
+    #
+    # @return [String]
+    attr_accessor :frameworks_path
+
+    ##
     # Path to any Core Data `.xcdatamodel` directories that need to be
     # compiled and added to the app bundle.
     #
@@ -325,7 +332,8 @@ module Application
         agent:       false,
         compile:     true,
         overwrite:   false,
-        embed_bridgesupport: true
+        embed_bridgesupport: true,
+        frameworks_path: "./frameworks"
       }
     end
 

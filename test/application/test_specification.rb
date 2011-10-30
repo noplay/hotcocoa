@@ -262,6 +262,10 @@ class TestApplicationSpecification < TestApplicationModule
     assert_match /must pass a block/, exception.message
   end
 
+  def test_frameworks_path_set_by_default
+    assert_equal "./frameworks", minimal_spec.frameworks_path
+  end
+
   def test_icon_exists?
     refute minimal_spec.icon_exists?
 
