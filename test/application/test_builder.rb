@@ -84,7 +84,12 @@ class TestApplicationBuilder < TestApplicationModule
     spec = minimal_spec {|s| s.short_version = "12345"}
     assert_equal "12345", plist_for(spec)[:CFBundleShortVersionString]
   end
-  
+
+  def test_plist_copyright_generated_if_present
+    spec = minimal_spec {|s| s.copyright = "© 2011, Your Company"}
+    assert_equal "© 2011, Your Company", plist_for(spec)[:NSHumanReadableCopyright]
+  end
+
   protected
   def plist_for(spec)
     load_plist(Builder.new(spec).send(:info_plist))
