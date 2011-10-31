@@ -187,6 +187,7 @@ module Application
       }
       info[:CFBundleIconFile] = File.basename(spec.icon) if spec.icon_exists?
       info[:CFBundleDocumentTypes] = spec.doc_types.map(&:info_plist_representation) unless spec.doc_types.empty?
+      info[:CFBundleShortVersionString] = spec.short_version unless spec.short_version.nil?
       info.merge! spec.plist # should always be done last
       info.to_plist
     end

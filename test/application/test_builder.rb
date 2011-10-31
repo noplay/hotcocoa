@@ -51,8 +51,7 @@ class TestApplicationBuilder < TestApplicationModule
 
     spec = hotconsole_spec.dup
     spec.icon = '/Applications/Calculator.app/Contents/Resources/Calculator.icns'
-    plist = load_plist(Builder.new(spec).send(:info_plist))
-    assert_includes plist, :CFBundleIconFile
+    assert_includes plist_for(spec), :CFBundleIconFile
   end
 
   def test_plist_hash_from_spec_overrides_all
@@ -61,7 +60,7 @@ class TestApplicationBuilder < TestApplicationModule
     spec.plist[:NSPrincipleClass] = 'Foo'
     spec.plist[:CFBundleName]     = 'Cake'
 
-    plist = load_plist(Builder.new(spec).send(:info_plist))
+    plist = plist_for(spec)
     assert_equal true,            plist[:MyKey             ]
     assert_equal 'Foo',           plist[:NSPrincipleClass  ]
     assert_equal 'Cake',          plist[:CFBundleName      ]
@@ -78,7 +77,16 @@ class TestApplicationBuilder < TestApplicationModule
         doc_type.class      = "MyDocument"
       end
     end
-    plist = load_plist(Builder.new(spec).send(:info_plist))
-    assert_equal 1, plist[:CFBundleDocumentTypes].size
+    assert_equal 1, plist_for(spec)[:CFBundleDocumentTypes].size
+  end
+  
+  def test_plist_short_string_generated_if_present
+    spec = minimal_spec {|s| s.short_version = "12345"}
+    assert_equal "12345", plist_for(spec)[:CFBundleShortVersionString]
+  end
+  
+  protected
+  def plist_for(spec)
+    load_plist(Builder.new(spec).send(:info_plist))
   end
 end
