@@ -23,6 +23,7 @@ class MyView < NSView
   attr_accessor :number
 
   def drawRect(rect)
+    rect = bounds
     (color :red => 0.29, :green => 0.26, :blue => 0.55).set
     NSFrameRect(rect)
     (color :red => 0.51, :green => 0.45, :blue => 0.95).set
