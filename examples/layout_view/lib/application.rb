@@ -41,10 +41,10 @@ class MyView < NSView
 
 end
 
-def create_slider_layout(label, &block)
+def create_slider_layout(label, init_value = 0, &block)
   layout_view :mode => :horizontal, :frame => [0, 0, 0, 24], :layout => {:expand => :width} do |view|
     view << label(:text => label, :layout => {:align => :center})
-    s = slider :min => 0, :max => 50, :tic_marks => 20, :on_action => block, :layout => {:expand => :width, :align => :center}
+    s = slider :min => 0, :max => 50, :tic_marks => 20, :on_action => block, :layout => {:expand => :width, :align => :center}, :intValue => init_value
     s.setFrameSize([0, 24]) # TODO sizeToFit doesn't set the height for us
     view << s
   end
@@ -59,9 +59,9 @@ application :name => "Layout View" do |app|
 
     window :frame => [700, 100, 200, 500], :default_layout => {:start => false} do |pane|
 
-      pane.view << create_slider_layout('Spacing') { |x| win.view.spacing = x.to_i }
+      pane.view << create_slider_layout('Spacing', win.view.spacing) { |x| win.view.spacing = x.to_i }
 
-      pane.view << create_slider_layout('Margin') { |x| win.view.margin = x.to_i }
+      pane.view << create_slider_layout('Margin', win.view.margin) { |x| win.view.margin = x.to_i }
 
       pane.view << button(:title => "Vertical", :type => :switch, :state => :on) do |b|
         b.on_action do |b|
