@@ -9,26 +9,31 @@ end
 
 desc 'Build the application'
 task :build => :load_builder_from_appspec do
+  puts 'Building app bundle...'
   @builder.build
 end
 
 desc 'Build a deployable version of the application'
 task :deploy => :load_builder_from_appspec do
+  puts 'Making app bundle deployable...'
   @builder.build deploy: true
 end
 
 desc 'Build and execute the application'
 task :run => [:build] do
+  puts 'Running app...'
   @builder.run
 end
 
 desc 'Cleanup build files'
 task :clean => :load_builder_from_appspec do
+  puts 'Removing app bundle...'
   @builder.remove_bundle_root
 end
 
 desc 'Create the dmg archive from the application bundle'
 task :dmg => :deploy do
+  puts 'Packaging app bundle into a DMG...'
   app_name = @builder.spec.name
   rm_rf "#{app_name}.dmg"
   sh "hdiutil create #{app_name}.dmg -quiet -srcdir #{app_name}.app -format UDZO -imagekey zlib-level=9"
