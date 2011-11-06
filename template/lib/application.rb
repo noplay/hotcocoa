@@ -1,4 +1,13 @@
-require 'rubygems' # disable this for a deployed application
+framework 'Cocoa'
+framework 'MacRuby'
+
+def deployed?
+  !NSBundle.allFrameworks.find { |x|
+    x.bundleIdentifier == 'org.macruby' &&
+    x.bundlePath.match(/^\/Library\/Frameworks/)
+  }
+end
+require 'rubygems' unless deployed?
 require 'hotcocoa'
 
 class __APPLICATION_NAME__
