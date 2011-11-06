@@ -90,6 +90,7 @@ class HotCocoa::NSRangedProxyAttributeHash
   def attribute_for_key key
     ATTRIBUTE_KEYS[key] || key
   end
+
 end
 
 
@@ -125,4 +126,5 @@ class HotCocoa::NSRangedProxyAttributedString
   def attributes
     HotCocoa::NSRangedProxyAttributeHash.new self
   end
+
 end

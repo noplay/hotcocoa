@@ -50,17 +50,17 @@ HotCocoa::Mappings.map table_view: NSTableView do
     end
 
     def reload
-       reloadData
-     end
+      reloadData
+    end
 
-     def grid_style= value
-       setGridStyleMask value
-     end
+    def grid_style= value
+      setGridStyleMask value
+    end
 
     def on_double_action= behavior
       if target && (
-          target.instance_variable_get(:@action_behavior) ||
-            target.instance_variable_get(:@double_action_behavior))
+                    target.instance_variable_get(:@action_behavior) ||
+                    target.instance_variable_get(:@double_action_behavior))
         @object.instance_variable_set :@double_action_behavior, behavior
         @object = target
 
