@@ -3,18 +3,6 @@
 class NSMutableAttributedString
 
   ##
-  # @todo Should this be declared on NSAttributedString instead
-  #
-  # Make a new attributed string with the string of the receiver and
-  # the attributes passed as arguments.
-  #
-  # @param [Hash]
-  # @return [NSMutableAttributedString]
-  def with_attributes attributes = {}
-    string.with_attributes attributes
-  end
-
-  ##
   # Just like `String#<<`
   def << s
     case s
@@ -24,29 +12,6 @@ class NSMutableAttributedString
       appendAttributedString s
     end
   end
-
-  ##
-  # @todo Should this be declared on NSAttributedString instead
-  #
-  # Just like `String#+`
-  def + s
-    attributed_string = mutableCopy
-    attributed_string << s
-    attributed_string
-  end
-
-  ##
-  # @todo Should this be declared on NSAttributedString instead
-  #
-  # Hash of attributes used in the attributed string.
-  #
-  # @return [HotCocoa::NSRangedProxyAttributeHash]
-  def attributes
-    HotCocoa::NSRangedProxyAttributedString.new(self, 0..-1).attributes
-  end
-
-  # @todo #[] feels like it should have some meaning, but I'm not sure it
-  #       can work nicely with the given API for NSAttributedString
 
   ##
   # Replace an arbitrary range of an attributed string with another string.
