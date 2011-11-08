@@ -48,10 +48,10 @@ class HotCocoa::NSRangedProxyAttributeHash
   def []= k, v
     k = attribute_for_key k
     @proxy.string.removeAttribute k,
-                           range: @proxy.range.to_NSRange(@proxy.string.length)
+                           range: @proxy.range.relative_to(@proxy.string.length)
     @proxy.string.addAttribute k,
                         value: v,
-                        range: @proxy.range.to_NSRange(@proxy.string.length)
+                        range: @proxy.range.relative_to(@proxy.string.length)
   end
 
   ##
