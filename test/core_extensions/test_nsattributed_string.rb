@@ -47,4 +47,12 @@ class TestNSAttributedStringExt < MiniTest::Unit::TestCase
     assert_equal attrs.sort, string.attributes.to_hash.sort
   end
 
+  def test_range_access
+    string = attr_string 'this is a long test string'
+    assert_equal 'this i',                  string[0..5].string
+    assert_equal 'his is a',                string[1..8].string
+    assert_equal 'is a long test string',   string[5..-1].string
+    assert_equal 'is is a long test strin', string[2...-1].string
+  end
+
 end
