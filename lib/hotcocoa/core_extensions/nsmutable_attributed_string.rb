@@ -21,9 +21,9 @@ class NSMutableAttributedString
   def []= r, s
     case s
     when String
-      replaceCharactersInRange r.to_NSRange(length), withString: s
+      replaceCharactersInRange r.relative_to(length), withString: s
     else
-      replaceCharactersInRange r.to_NSRange(length), withAttributedString: s
+      replaceCharactersInRange r.relative_to(length), withAttributedString: s
     end
   end
 
