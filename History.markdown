@@ -8,6 +8,8 @@
   + Deprecated Range#to_NSRange in favour of Range#relative_to
   + Deprecated Numeric#negative?
   + Moved some NSMutableAttributedString extensions to NSAttributedString
+  + Removed old layout manager in favour of new manager built on top of Cocoa Autolayout
+  + Requires Mac OS X Lion or newer
   + Requires MacRuby 0.11+
 
 ## 0.6.0 2011-10-14

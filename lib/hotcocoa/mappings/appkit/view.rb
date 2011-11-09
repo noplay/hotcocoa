@@ -28,10 +28,6 @@ HotCocoa::Mappings.map view: NSView do
       setAutoresizingMask value
     end
 
-    # @todo We can use alias_method instead. How, you ask? With hacks
-    #       of course. Give the module created by custom_methods an
-    #       implementation of Module#included that iterates over a list
-    #       of methods to alias.
     def << view
       addSubview view
     end
@@ -42,6 +38,17 @@ HotCocoa::Mappings.map view: NSView do
     end
 
     attr_reader :layout
+
+
+    attr_accessor :constraints
+    alias_method :constraint, :constraints
+    alias_method :constraint=, :constraints=
+
+    def constrain options
+      @constraints = HotCocoa::LayoutConstraints.new self, options
+      self.superview.addConstraints @constraints.constraints
+    end
+
 
     def on_notification options = {}, &block
       options[:sent_by] = self
