@@ -231,8 +231,15 @@ module Application
     def write_ruby_main
       File.open(main_ruby_source_file, 'wb') do |f|
         f.write <<-EOF
-    # Borrowed from the MacRuby sources on April 18, 2011
     framework 'Cocoa'
+    framework 'MacRuby'
+
+    def deployed?
+      !NSBundle.allFrameworks.find { |x|
+        x.bundleIdentifier == 'org.macruby' &&
+        x.bundlePath.match(/^\\/Library\\/Frameworks/)
+      }
+    end
 
     # Loading all the Ruby project files.
     main = File.basename(__FILE__, File.extname(__FILE__))

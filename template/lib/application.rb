@@ -1,12 +1,3 @@
-framework 'Cocoa'
-framework 'MacRuby'
-
-def deployed?
-  !NSBundle.allFrameworks.find { |x|
-    x.bundleIdentifier == 'org.macruby' &&
-    x.bundlePath.match(/^\/Library\/Frameworks/)
-  }
-end
 require 'rubygems' unless deployed?
 require 'hotcocoa'
 
