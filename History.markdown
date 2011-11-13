@@ -6,6 +6,7 @@
   + Removed old application builder
   + Bridgesupport embedding enabled by default for new projects
   + Deprecated Range#to_NSRange in favour of Range#relative_to
+  + Deprecated Numeric#negative?
   + Moved some NSMutableAttributedString extensions to NSAttributedString
   + Requires MacRuby 0.11+
 
