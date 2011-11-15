@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
     Dir.glob('test/**/*.rb')
 
   s.extra_rdoc_files =
-    ['README.markdown', 'History.txt'] +
+    ['README.markdown', 'History.markdown'] +
     Dir.glob('docs/**/*.markdown')
 
   s.add_development_dependency 'minitest',  '~> 2.5'
