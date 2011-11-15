@@ -6,7 +6,7 @@
 --readme README.markdown
 lib/**/*.rb
 -
-History.txt
+History.markdown
 docs/Contributors.markdown
 docs/Overview.markdown
 docs/Resources.markdown
