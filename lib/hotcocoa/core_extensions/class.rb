@@ -9,7 +9,7 @@ class Class
   #
   # Returns the list of relevant HotCocoa mappers for the given class.
   # The classes are ordered in descending order (mapper for the
-  # super-class to the mapper for the sub-class).
+  # root class to the mapper for the parent class).
   #
   # @return [Array<HotCocoa::Mappings::Mapper>]
   def hotcocoa_mappers
