@@ -1,4 +1,4 @@
-## Introduction
+## Introduction to HotCocoa's Mappings
 
 A HotCocoa mapping defines a structure that sits on top of a
 particular Objective-C class and simplifies its usage in MacRuby.

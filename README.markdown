@@ -1,17 +1,54 @@
 # hotcocoa
 
-* [http://github.com/ferrous26/hotcocoa](http://github.com/ferrous26/hotcocoa)
-* [Documentation](http://rdoc.info/github/ferrous26/hotcocoa/master/frames)
-
 ## Description
 
 HotCocoa is a thin, idiomatic Ruby layer that sits above Cocoa and
 other frameworks. The goal of the project is to simplify the process of creating
-and configuring Cocoa objects used when building native Mac apps. To get more
-information on HotCocoa (including tutorials) see
-[http://macruby.org](http://macruby.org).
+and configuring Cocoa objects used when building native Mac apps.
 
-## Note
+## Using
+
+### Installation
+
+From rubygems:
+
+    sudo macgem install hotcocoa
+
+Or to get the bleeding edge, you can clone the repository on Github and install from there:
+
+    git clone git://github.com/ferrous26/hotcocoa
+    cd hotcocoa
+    sudo macrake install
+
+__Note__: You will need the Mac OS X developer tools in order
+to build apps. Xcode is not required, but the compiler toolchain is
+needed.
+
+__Note 2__: If you are on Snow Leopard, you will also need the
+[Bridge Support Preview](http://www.macruby.org/files/BridgeSupport%20Preview%203.zip)
+in order to run HotCocoa. Read about it on the
+[MacRuby Blog](http://www.macruby.org/blog/2010/10/08/bridgesupport-preview.html).
+
+### Documentation
+
+The documentation can be found on [rdoc.info](http://rdoc.info/github/ferrous26/hotcocoa/master/frames).
+
+The most important pages are:
+
+* {file:docs/Overview.markdown the overview}
+* {file:docs/Tutorial.markdown a tutorial}
+* {file:docs/Mappings.markdown a guide to the mappings}
+* {file:docs/Troubleshooting.markdown troubleshooting}
+
+The documentation currently does not cover the shipped mappings right now due to the
+way that mappings are implemented; a YARD plug-in or new YARD features
+will be needed (stay tuned).
+
+### Examples
+
+Have a look in the [examples folder](https://github.com/ferrous26/hotcocoa/tree/master/examples) to see some sample apps which use HotCocoa.
+
+## Contributing
 
 HotCocoa has ambitious goals that are difficult to accomplish with the input of
 only a few people. Feedback is the easiest way to contribute and goes a long way
@@ -23,40 +60,7 @@ will also be coming in the not too distant future. If you find issues with
 HotCocoa, don't hesitate to open tickets on Github (or try to fix it yourself and
 send in the patch :)).
 
-There are a list of
-[gotchas](https://github.com/ferrous26/hotcocoa/wiki/Gotchas) in the
-wiki.
-
-## Install
-
-From rubygems:
-
-    sudo macgem install hotcocoa
-
-Or you can clone the repository on Github and install from there:
-
-    git clone git://github.com/ferrous26/hotcocoa
-    cd hotcocoa
-    sudo macrake install
-
-__Note__: If you are on Snow Leopard, you will also need the
-[Bridge Support Preview](http://www.macruby.org/files/BridgeSupport%20Preview%203.zip)
-in order to run HotCocoa. Read about it on the
-[MacRuby Blog](http://www.macruby.org/blog/2010/10/08/bridgesupport-preview.html).
-
-__Note 2__: You will also need the Mac OS X developer tools in order
-to build apps. Xcode is not required, but the compiler toolchain is
-needed.
-
-## Documentation
-
-Documentation is a work in progress; some of the documentation is
-being ported from the MacRuby website and you can still view it there.
-
-The documentation currently does not include the mappings right now due to the
-way that mappings are implemented; a YARD plug-in will be needed for thatv
-
-## Contributing to HotCocoa
+### Submitting patches
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
