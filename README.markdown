@@ -1,6 +1,4 @@
-# hotcocoa
-
-## Description
+# HotCocoa
 
 HotCocoa is a thin, idiomatic Ruby layer that sits above Cocoa and
 other frameworks. The goal of the project is to simplify the process of creating
@@ -35,10 +33,10 @@ The documentation can be found on [rdoc.info](http://rdoc.info/github/ferrous26/
 
 The most important pages are:
 
-* {file:docs/Overview.markdown the overview}
-* {file:docs/Tutorial.markdown a tutorial}
-* {file:docs/Mappings.markdown a guide to the mappings}
-* {file:docs/Troubleshooting.markdown troubleshooting}
+* [the overview](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Resources.markdown)
+* [a tutorial](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Tutorial.markdown)
+* [a guide to the mappings](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Mappings.markdown)
+* [troubleshooting](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Troubleshooting.markdown)
 
 The documentation currently does not cover the shipped mappings right now due to the
 way that mappings are implemented; a YARD plug-in or new YARD features
