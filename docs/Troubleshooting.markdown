@@ -4,9 +4,8 @@
 
 If the app crashes with the following error:
 
-```bash
-LSOpenURLsWithRole() failed with error -10810 for the file ...
-```
+    LSOpenURLsWithRole() failed with error -10810 for the file ...
+
 This is a very general error and can be caused by a number of things. Known root causes are:
 
 1. Missing [bridge support](http://macruby.org/blog/2010/10/08/bridgesupport-preview.html) files (for Snow Leopard users)
