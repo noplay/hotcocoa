@@ -1,4 +1,86 @@
-## Introduction to HotCocoa's Mappings
+# HotCocoa Manual
+
+HotCocoa is a thin, idiomatic Ruby layer that sits above Cocoa and other frameworks. The goal of the project is to simplify the process of creating
+and configuring Cocoa objects used when building native Mac apps.
+
+## Creating your first app
+
+### Prerequisites
+
+1. You will need the Mac OS X developer tools in order
+to build apps. Xcode is not required, but the compiler toolchain is
+needed.
+
+2. Mac OS X 10.6+. If you are on Snow Leopard, you will also need the
+[Bridge Support Preview v3](http://www.macruby.org/files/BridgeSupport%20Preview%203.zip)
+in order to run HotCocoa. Read about it on the
+[MacRuby Blog](http://www.macruby.org/blog/2010/10/08/bridgesupport-preview.html). Lion users do not need to install this.
+
+### Getting up and running
+
+Install hotcocoa from `rubygems.org`:
+
+    $ sudo macgem install hotcocoa
+
+Generate the app scaffolding:
+
+    $ hotcocoa my_first_app
+
+Start the app:
+
+    $ cd my_first_app
+    $ macrake run
+
+## Mappings: an alternative to IB
+
+### Overview
+
+If you've done any amount of programming on Mac OS X, you know that
+the API can be quite verbose. Even with MacRuby's wonderful keyword
+arguments, it can be daunting to enter this...
+
+    win = NSWindow.alloc.initWithContentRect [10,20,300,300],
+      styleMask: (NSTitledWindowMask         |
+                  NSClosableWindowMask       |
+                  NSMiniaturizableWindowMask |
+                  NSResizableWindowMask)
+
+...every time you want to create and configure a new `NSWindow` instance!
+
+This is the reason most developers use [Interface Builder](http://en.wikipedia.org/wiki/Interface_Builder)
+to configure interface components.
+The purpose of HotCocoa is to allow you to use the flexible syntax of
+Ruby and its dynamic nature to simplify programmatically constructing
+user interfaces on Mac OS X without an Interface Builder.
+
+With HotCocoa, creating the `NSWindow` instance above is as simple as:
+
+    win = window frame: [10,20,300,300]
+
+HotCocoa achieves this feat by creating Mappings over the most common
+Classes and Constants used on Mac OS X. Those mappings create
+constructor methods on the HotCocoa module (like the "window" method
+above). Each constructor method accepts an optional block which yields
+the created instance (more on that in the
+{file:docs/Tutorial.markdown HotCocoa Tutorial}). Mappings also
+decorate the standard Objective-C API with nice Ruby APIs for
+common operations. The important thing to realize is that the
+constructor methods return real instances of these common classes, not
+high-level abstractions. So, you can call any Objective-C method
+available on those objects.
+
+In HotCocoa, Mappings provide the following:
+
+* Defaults: Smart default constructor parameters (like the styles in
+  window) to minimize the parameters you have to pass in.
+* Constants: Mapping of constants to Ruby symbols to minimize the text
+  and maximize the readability of HotCocoa applications.
+* Constructors: Building the instances of the mapped classes using the
+  correct class-specific APIs.
+* Custom Methods: Ruby-friendly API for commonly used methods (like
+  `#<<` for `#addSubview` on `NSView` subclasses).
+* Delegate Methods: Simplified Ruby-friendly methods for delegating
+  instances that use Ruby blocks
 
 A HotCocoa mapping defines a structure that sits on top of a
 particular Objective-C class and simplifies its usage in MacRuby.
@@ -19,7 +101,7 @@ your own mappings for classes by following the examples below.  Place
 mappings in files of your own, loading them after you load the
 `hotcocoa` library.
 
-## Basic Mapping Syntax
+### Basic Mapping Syntax
 
 The basic syntax for defining a mapping is:
 
@@ -52,7 +134,7 @@ provides several "different" types of buttons in its Object Library,
 but they are all instances of `NSButton` that just have a different
 default configuration.
 
-## Object Instantiation Method (required)
+### Object Instantiation Method (required)
 
 There are two methods, `#init_with_options` and `#alloc_with_options`,
 that you can implement to support object instantiation. Define these
@@ -120,7 +202,7 @@ application setup:
       app.delegate = self
     end
 
-## Default Options (optional)
+### Default Options (optional)
 
 You can provide a hash of default options in the definition of your
 mapping. This is very useful for many Cocoa classes, because there are
@@ -150,7 +232,7 @@ layout is `nil`, the component is not included when the `layout_view`
 computes the layout for the components. All of the UI mappings that ship with
 HotCocoa provide an empty hash as a default `:layout`.
 
-## Constant Mapping (optional, inherited)
+### Constant Mapping (optional, inherited)
 
 Because constant names need to be globally unique in Objective-C, they
 can get very long. What the constant mapping provides in HotCocoa is
@@ -198,7 +280,7 @@ is equivalent to:
             NSMiniaturizableWindowMask |
             NSResizableWindowMask
 
-## Custom Methods (optional, inherited)
+### Custom Methods (optional, inherited)
 
 Custom methods are simply modules that are included in the instance;
 they provide idiomatic Ruby methods for the mapped Objective-C class
@@ -222,7 +304,7 @@ general principle is to customize where this provides something
 better, not just syntactically better. Custom methods, like constant
 mappings, are inherited by subclasses.
 
-## Constant Mappings and Custom Methods
+### Constant Mappings and Custom Methods
 
 In the last example, the `#bezel=` method serves as a corresponding
 method name to the constant map for bezel style:
@@ -255,7 +337,7 @@ constant mappings and custom methods work together to provide a vastly
 better syntax for using constants in your code and simplifying the
 code needed for an `#init_with_options` method.
 
-## Delegate Method Mapping (optional)
+### Delegate Method Mapping (optional)
 
 Delegate method mapping is a little more complex then the prior
 sections. Delegate methods are used pervasively in Cocoa to facilitate
@@ -341,7 +423,7 @@ the `NSExposedRect` rectangle, and pass it as a parameter to the
 Each method for a delegate has to be mapped with an individual
 delegating call.
 
-## When To Make A Mapping
+### When To Make A Mapping
 
 The best candidates for a new HotCocoa mappings are classes that
 require a lot of configuration. Though sometimes it is convenient to
@@ -350,3 +432,44 @@ HotCocoa provides, such as block-based delegation.
 
 If you have mappings that you would like to share, feel free to open a
 pull request on [Github](http://github.com/ferrous26/hotcocoa).
+
+## Appspecs and build tasks: building your app without XCode
+
+### The appspec
+
+@todo
+
+### Rake build tasks
+
+@todo
+
+## Example applications
+
+@todo
+
+|                                      |                              |
+|:-------------------------------------|:-----------------------------|
+| calculator                           | A simple calculator example. |
+| demo                                 | Demo of many hotcocoa wrappers. |
+| layout\_view                         | Demo of using the layout view system. |
+| round\_transparent_window            | Port of an Apple sample showing how to use hotcocoa with a nib files. |
+| round\_transparent\_window\_no\_nibs | Same as round\_transparent\_window but without using any nibs. |
+| download\_and\_progress\_indicator   | Demo of downloading data, progress indicator and scroll view containing a text view. |
+| hotconsole                           | An IRB-like console using WebKit. |
+
+
+## Troubleshooting
+
+### App crashes upon start up
+
+If the app crashes with the following error:
+
+    LSOpenURLsWithRole() failed with error -10810 for the file ...
+
+This is a very general error and can be caused by a number of things. Known root causes are:
+
+1. Missing [bridge support](http://macruby.org/blog/2010/10/08/bridgesupport-preview.html) files (for Snow Leopard users)
+2. Bug in the app you are launching
+3. Bug in HotCocoa
+
+Sometimes debug information will be available in the Console (/Applications/Utilities/Console.app), so you should check in there first. Failing that, you will need to rely on your general debugging skills to find the reason.

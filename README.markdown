@@ -8,7 +8,7 @@ and configuring Cocoa objects used when building native Mac apps.
 
 ### Installation
 
-From rubygems:
+From `rubygems.org`:
 
     $ sudo macgem install hotcocoa
 
@@ -23,23 +23,17 @@ to build apps. Xcode is not required, but the compiler toolchain is
 needed.
 
 __Note 2__: If you are on Snow Leopard, you will also need the
-[Bridge Support Preview](http://www.macruby.org/files/BridgeSupport%20Preview%203.zip)
+[Bridge Support Preview v3](http://www.macruby.org/files/BridgeSupport%20Preview%203.zip)
 in order to run HotCocoa. Read about it on the
 [MacRuby Blog](http://www.macruby.org/blog/2010/10/08/bridgesupport-preview.html).
 
 ### Documentation
 
-The documentation can be found on [rdoc.info](http://rdoc.info/github/HotCocoa/hotcocoa/master/frames).
+Check out the [manual](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Manual.markdown) and 
+the developer documentation on [rdoc.info](http://rdoc.info/github/ferrous26/hotcocoa/master/frames).
 
-The most important pages are:
-
-* [the overview](http://rubydoc.info/github/HotCocoa/hotcocoa/master/file/docs/Overview.markdown)
-* [a guide to the mappings](http://rubydoc.info/github/HotCocoa/hotcocoa/master/file/docs/Mappings.markdown)
-* [troubleshooting](http://rubydoc.info/github/HotCocoa/hotcocoa/master/file/docs/Troubleshooting.markdown)
-
-The documentation currently does not cover the shipped mappings right now due to the
-way that mappings are implemented; a YARD plug-in or new YARD features
-will be needed (stay tuned).
+The mappings that are shipped with `hotcocoa` are currently not documented, due to the
+way that mappings are implemented; a YARD plug-in or new YARD features will be needed (stay tuned).
 
 ### Examples
 
