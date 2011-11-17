@@ -34,7 +34,6 @@ The documentation can be found on [rdoc.info](http://rdoc.info/github/ferrous26/
 The most important pages are:
 
 * [the overview](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Overview.markdown)
-* [a tutorial](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Tutorial.markdown)
 * [a guide to the mappings](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Mappings.markdown)
 * [troubleshooting](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Troubleshooting.markdown)
 
