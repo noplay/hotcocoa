@@ -10,13 +10,13 @@ and configuring Cocoa objects used when building native Mac apps.
 
 From rubygems:
 
-    sudo macgem install hotcocoa
+    $ sudo macgem install hotcocoa
 
 Or to get the bleeding edge, you can clone the repository on Github and install from there:
 
-    git clone git://github.com/ferrous26/hotcocoa
-    cd hotcocoa
-    sudo macrake install
+    $ git clone git://github.com/ferrous26/hotcocoa
+    $ cd hotcocoa
+    $ sudo macrake install
 
 __Note__: You will need the Mac OS X developer tools in order
 to build apps. Xcode is not required, but the compiler toolchain is
