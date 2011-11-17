@@ -7,4 +7,9 @@
 lib/**/*.rb
 -
 History.markdown
-'docs/*.markdown'
+docs/Tutorial.markdown
+docs/Contributors.markdown
+docs/Mappings.markdown
+docs/Overview.markdown
+docs/Resources.markdown
+docs/Troubleshooting.markdown
