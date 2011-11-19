@@ -21,5 +21,6 @@ moved to Github.
 * [Patrick](https://github.com/hellopatrick)
 * [Watson](https://github.com/watson1978)
 * [Mark Rada](https://github.com/ferrous26)
+* [Jake Benilov](https://github.com/benilovj)
 
 If we forgot your name, let us know and we will add it.
