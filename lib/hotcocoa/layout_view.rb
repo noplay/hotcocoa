@@ -203,8 +203,8 @@ module HotCocoa
     end
 
     def update_layout_views!
-      @view.superview.views_updated! if in_layout_view?
-      @defaults_view.views_updated! if @defaults_view
+      @view.superview.relayout! if in_layout_view?
+      @defaults_view.relayout!  if @defaults_view
     end
 
     private
@@ -214,36 +214,62 @@ module HotCocoa
     end
   end
 
+  ##
+  # @todo Why aren't we mixing in {HotCocoa::Behaviors}?
+  #
+  # HotCocoa layout managing class. This class is responsible for keeping
+  # track of your UI layout, including adding, removing, and updating
+  # subviews.
   class LayoutView < NSView
-    attr_accessor :frame_color
 
+    ##
+    # Set some default values and call the super class initializer.
+    #
+    # @param [CGRect, Array<Number, Number, Number, Number>]
     def initWithFrame frame
       super
-      @mode = :vertical
-      @spacing = 10.0
-      @margin = 10.0
+      @mode    = :vertical
+      @spacing = 10
+      @margin  = 10
       self
     end
 
+    # @return [NSColor]
+    attr_accessor :frame_color
+
+    ##
+    # Whether or not the layout mode is vertical.
     def vertical?
       @mode == :vertical
     end
 
+    ##
+    # Whether or not the layout mode is horizontal.
     def horizontal?
       @mode == :horizonal
     end
 
-    def mode= mode
-      unless [:horizontal, :vertical].include?(mode)
-        raise ArgumentError, "invalid mode value #{mode}"
+    ##
+    # Set the layout mode. The default value is `:vertical`, you can
+    # change it to be `:horizontal` if you want.
+    #
+    # @param [Symbol]
+    def mode= new_mode
+      unless [:horizontal, :vertical].include?(new_mode)
+        raise ArgumentError, "invalid mode value #{new_mode}"
       end
 
-      if mode != @mode
-        @mode = mode
+      if new_mode != @mode
+        @mode = new_mode
         relayout!
       end
     end
 
+    ##
+    # Set the default layout options. The options should follow the format
+    # that would be given to {HotCocoa::LayoutOptions}.
+    #
+    # @param [Hash]
     def default_layout= options
       options[:defaults_view] = self
       @default_layout = LayoutOptions.new(nil, options)
@@ -251,74 +277,73 @@ module HotCocoa
     end
 
     def default_layout
-      @default_layout ||= LayoutOptions.new(nil, :defaults_view => self)
+      @default_layout ||= LayoutOptions.new(nil, defaults_view: self)
     end
 
-    def spacing
-      @spacing
-    end
+    # @return [Fixnum]
+    attr_reader :spacing
 
-    def spacing= spacing
-      if spacing != @spacing
-        @spacing = spacing.to_i
+    ##
+    # Change the spacing between subviews.
+    #
+    # @param [Number]
+    def spacing= new_spacing
+      if new_spacing != @spacing
+        @spacing = new_spacing.to_i
         relayout!
       end
     end
 
-    def frame= frame
-      setFrame(frame)
-    end
+    # @return [Fixnum]
+    attr_reader :margin
 
-    def size= size
-      setFrameSize(size)
-    end
-
-    def margin
-      @margin
-    end
-
-    def margin= margin
-      if margin != @margin
-        @margin = margin.to_i
+    ##
+    # Change the margin size for the view.
+    #
+    # @param [Fixnum]
+    def margin= new_margin
+      if new_margin != @margin
+        @margin = new_margin.to_i
         relayout!
       end
     end
 
-    def << view
-      addSubview(view)
-    end
-
-    def remove subview, options = {}
-      raise ArgumentError, "#{subview} is not a subview of #{self} and cannot be removed." unless subview.superview == self
-      options[:needs_display] == false ? subview.removeFromSuperviewWithoutNeedingDisplay : subview.removeFromSuperview
-    end
-
-    def addSubview(view)
+    ##
+    # Add a new subview to the layout view.
+    #
+    # @param [NSView]
+    def addSubview view
       super
-      if view.respond_to?(:layout)
+      if view.respond_to? :layout
         relayout!
       else
         raise ArgumentError, "view #{view} does not support the #layout method"
       end
     end
+    alias_method :<<, :addSubview
 
-    def views_updated!
-      relayout!
-    end
-
+    ##
+    # Remove a subview from the layout.
+    #
+    # @param [NSView]
     def remove_view view
-      unless subviews.include?(view)
+      unless subviews.include? view
         raise ArgumentError, "view #{view} not a subview of this LayoutView"
       end
       view.removeFromSuperview
       relayout!
     end
+    alias_method :remove, :remove_view
 
+    ##
+    # Remove all the subviews from the layout view.
     def remove_all_views
       subviews.each { |view| view.removeFromSuperview }
       relayout!
     end
 
+    ##
+    # This is a callback, you don't need to worry about it.
     def drawRect frame
       if frame_color
         frame_color.set
@@ -326,59 +351,37 @@ module HotCocoa
       end
     end
 
+    ##
+    # This is a callback, you don't need to worry about it.
     def setFrame frame
       super(frame, &nil)
       relayout!
     end
+    alias_method :frame=, :setFrame
 
+    ##
+    # This is a callback, you don't need to worry about it.
     def setFrameSize size
       super(size, &nil)
       relayout!
     end
+    alias_method :size=, :setFrameSize
 
-    private
-
-    def calc_expandable_size end_dimension
-      expandable_size = end_dimension
-      expandable_views = 0
-
-      subviews.each do |view|
-        next unless can_layout?(view)
-
-        if vertical?
-          size = view.frameSize.height
-          expand = view.layout.expand_height?
-          padding = view.layout.top_padding + view.layout.bottom_padding
-        else
-          size = view.frameSize.width
-          expand = view.layout.expand_width?
-          padding = view.layout.left_padding + view.layout.right_padding
-        end
-
-        if expand
-          expandable_views += 1
-        else
-          expandable_size -= size
-          expandable_size -= @spacing
-        end
-
-        expandable_size -= padding
-      end
-
-      expandable_size /= expandable_views
-      expandable_size
-    end
-
+    ##
+    # @todo This method could be optimized quite a bit, I think.
+    #
+    # Figure out how to layout all the subviews. This is the meat of the
+    # class.
     def relayout!
-      view_size = frameSize
-      end_dimension = vertical? ? view_size.height : view_size.width
+      view_size      = frameSize
+      end_dimension  = vertical? ? view_size.height : view_size.width
       end_dimension -= (@margin * 2)
-      dimension = @margin
+      dimension      = @margin
 
       expandable_size = calc_expandable_size(end_dimension)
 
       subviews.each do |view|
-        next unless can_layout?(view)
+        next unless can_layout? view
 
         options = view.layout
         subview_size = view.frameSize
@@ -386,27 +389,27 @@ module HotCocoa
         subview_dimension = vertical? ? subview_size.height : subview_size.width
 
         if vertical?
-          primary_dimension = 'height'
-          secondary_dimension = 'width'
-          primary_axis = 'x'
-          secondary_axis = 'y'
-          expand_primary = 'expand_height?'
-          expand_secondary = 'expand_width?'
-          padding_first = 'left_padding'
-          padding_second = 'right_padding'
-          padding_third = 'bottom_padding'
-          padding_fourth = 'top_padding'
+          primary_dimension   = HEIGHT
+          secondary_dimension = WIDTH
+          primary_axis        = X
+          secondary_axis      = Y
+          expand_primary      = EXPAND_HEIGHT
+          expand_secondary    = EXPAND_WIDTH
+          padding_first       = LEFT_PADDING
+          padding_second      = RIGHT_PADDING
+          padding_third       = BOTTOM_PADDING
+          padding_fourth      = TOP_PADDING
         else
-          primary_dimension = 'width'
-          secondary_dimension = 'height'
-          primary_axis = 'y'
-          secondary_axis = 'x'
-          expand_primary = 'expand_width?'
-          expand_secondary = 'expand_height?'
-          padding_first = 'top_padding'
-          padding_second = 'bottom_padding'
-          padding_third = 'left_padding'
-          padding_fourth = 'right_padding'
+          primary_dimension   = WIDTH
+          secondary_dimension = HEIGHT
+          primary_axis        = Y
+          secondary_axis      = X
+          expand_primary      = EXPAND_WIDTH
+          expand_secondary    = EXPAND_HEIGHT
+          padding_first       = TOP_PADDING
+          padding_second      = BOTTOM_PADDING
+          padding_third       = LEFT_PADDING
+          padding_fourth      = RIGHT_PADDING
         end
 
         view_frame.origin.send("#{primary_axis}=", @margin)
@@ -419,14 +422,13 @@ module HotCocoa
 
         if options.send(expand_secondary)
           view_frame.size.send("#{secondary_dimension}=",
-                  view_size.send("#{secondary_dimension}") - (2 * @margin) -
+                  view_size.send(secondary_dimension) - (2 * @margin) -
                                     options.send(padding_first) - options.send(padding_second))
         else
 
           case options.align
           when :left, :bottom
             # Nothing to do
-
           when :center
             view_frame.origin.send("#{primary_axis}=", (view_size.send(secondary_dimension) / 2.0) - (subview_size.send(secondary_dimension) / 2.0))
 
@@ -456,8 +458,72 @@ module HotCocoa
       end
     end
 
+
+    private
+
+    # @private
+    HEIGHT         = 'height'
+    # @private
+    WIDTH          = 'width'
+    # @private
+    X              = 'x'
+    # @private
+    Y              = 'y'
+    # @private
+    EXPAND_HEIGHT  = 'expand_height?'
+    # @private
+    EXPAND_WIDTH   = 'expand_width?'
+    # @private
+    LEFT_PADDING   = 'left_padding'
+    # @private
+    RIGHT_PADDING  = 'right_padding'
+    # @private
+    BOTTOM_PADDING = 'bottom_padding'
+    # @private
+    TOP_PADDING    = 'top_padding'
+
+    ##
+    # Calculate the maximum size that a subview can take up in the layout.
+    def calc_expandable_size end_dimension
+      expandable_size  = end_dimension
+      expandable_views = 0
+
+      subviews.each do |view|
+        next unless can_layout? view
+
+        if vertical?
+          size    = view.frameSize.height
+          expand  = view.layout.expand_height?
+          padding = view.layout.top_padding + view.layout.bottom_padding
+        else
+          size    = view.frameSize.width
+          expand  = view.layout.expand_width?
+          padding = view.layout.left_padding + view.layout.right_padding
+        end
+
+        if expand
+          expandable_views += 1
+        else
+          expandable_size  -= size
+          expandable_size  -= @spacing
+        end
+
+        expandable_size -= padding
+      end
+
+      expandable_size /= expandable_views
+      expandable_size
+    end
+
+    ##
+    # @note NSView defines `#layout` in Lion for AutoLayout, and so this
+    #       will almost always return true on Lion, even if it should
+    #       not. THIS IS A BUG.
+    #
+    # Whether or not the view can be used
     def can_layout? view
       view.respond_to?(:layout) && !view.layout.nil?
     end
+
   end
 end
