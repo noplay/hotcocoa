@@ -9,6 +9,9 @@
   + Deprecated Numeric#negative?
   + Moved some NSMutableAttributedString extensions to NSAttributedString
   + Requires MacRuby 0.11+
+  + Revamped the documentation
+* New mappings:
+  + matrix => NSMatrix
 
 ## 0.6.0 2011-10-14
 
