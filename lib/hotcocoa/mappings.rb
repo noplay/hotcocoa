@@ -1,3 +1,5 @@
+require 'hotcocoa/core_extensions/kernel'
+
 module HotCocoa::Mappings
   # needs to be initialized
   @mappings = {}

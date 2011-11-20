@@ -9,17 +9,8 @@ module HotCocoa; end
 
 require 'hotcocoa/version'
 
-# Load extensions to Ruby core classes
-require 'hotcocoa/core_extensions/object'
-require 'hotcocoa/core_extensions/kernel'
 require 'hotcocoa/core_extensions/nsurl'
 require 'hotcocoa/core_extensions/nsarray'
-require 'hotcocoa/core_extensions/numeric'
-require 'hotcocoa/core_extensions/range'
-require 'hotcocoa/core_extensions/nsstring'
-require 'hotcocoa/core_extensions/nsattributed_string'
-require 'hotcocoa/core_extensions/nsmutable_attributed_string'
-require 'hotcocoa/core_extensions/class'
 
 # Load general HotCocoa stuff
 require 'hotcocoa/mappings'
@@ -28,7 +19,6 @@ require 'hotcocoa/behaviors'
 require 'hotcocoa/mapping_methods'
 require 'hotcocoa/mapper'
 require 'hotcocoa/layout_view'
-require 'hotcocoa/delegate_builder'
 require 'hotcocoa/notification_listener'
 require 'hotcocoa/attributed_string_helpers'
 require 'hotcocoa/kvo_accessors'

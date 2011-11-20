@@ -1,3 +1,7 @@
+require 'hotcocoa/core_extensions/nsstring'
+require 'hotcocoa/core_extensions/nsattributed_string'
+require 'hotcocoa/core_extensions/nsmutable_attributed_string'
+
 ##
 # Similar to a Ruby Hash, except specialized for dealing with a hash
 # of attributes for NSAttributedString objects.

@@ -1,3 +1,5 @@
+require 'hotcocoa/core_extensions/range'
+
 class TestRangeToNSRange < MiniTest::Unit::TestCase
 
   def test_raises_error

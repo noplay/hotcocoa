@@ -1,3 +1,7 @@
+require 'hotcocoa/core_extensions/nsstring'
+require 'hotcocoa/core_extensions/class'
+require 'hotcocoa/delegate_builder'
+
 ##
 # Does most of the heavy lifiting when it comes to HotCocoa mappings.
 class HotCocoa::Mappings::Mapper

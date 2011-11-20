@@ -1,5 +1,7 @@
 # Originally imported from MacRuby sources
 
+require 'hotcocoa/core_extensions/object'
+
 module TestNamespaceForConstLookup
   def self.const_missing(const)
     @missing_const = const

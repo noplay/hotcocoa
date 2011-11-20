@@ -1,3 +1,5 @@
+require 'hotcocoa/core_extensions/numeric'
+
 class TestNumericExt < MiniTest::Unit::TestCase
 
   def test_negative?

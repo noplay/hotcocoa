@@ -1,3 +1,5 @@
+require 'hotcocoa/core_extensions/numeric'
+
 ##
 # HotCocoa extensions to the Range class
 class Range
