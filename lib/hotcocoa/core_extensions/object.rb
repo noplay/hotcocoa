@@ -5,6 +5,9 @@
 class Object
 
   ##
+  # @deprecated This method is no longer used by HotCocoa. It will remain
+  #             in the HotCocoa source for at least version 0.7
+  #
   # Object.full_const_get was taken from the ‘extlib’ project:
   # http://github.com/sam/extlib which is released under a MIT License and
   # copyrighted by Sam Smoot (2008).

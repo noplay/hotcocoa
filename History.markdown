@@ -7,6 +7,7 @@
   + Bridgesupport embedding enabled by default for new projects
   + Deprecated Range#to_NSRange in favour of Range#relative_to
   + Deprecated Numeric#negative?
+  + Deprecated Object#full_const_get
   + Moved some NSMutableAttributedString extensions to NSAttributedString
   + Requires MacRuby 0.11+
   + Revamped the documentation
