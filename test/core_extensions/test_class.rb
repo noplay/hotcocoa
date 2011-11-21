@@ -5,7 +5,7 @@ class TestClassExt < MiniTest::Unit::TestCase
   end
 
   def test_mappers_empty_for_non_mapped_class
-    assert_empty NSURL.hotcocoa_mappers
+    assert_empty NSObject.hotcocoa_mappers
   end
 
   def test_mappers_correct_order
