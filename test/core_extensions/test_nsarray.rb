@@ -1,3 +1,5 @@
+require 'hotcocoa/core_extensions/nsarray'
+
 class TestNSArrayExt < MiniTest::Unit::TestCase
 
   def test_convenience_accessors

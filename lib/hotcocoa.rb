@@ -9,8 +9,6 @@ module HotCocoa; end
 
 require 'hotcocoa/version'
 
-require 'hotcocoa/core_extensions/nsarray'
-
 # Load general HotCocoa stuff
 require 'hotcocoa/mappings'
 require 'hotcocoa/target_action_convenience'

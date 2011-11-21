@@ -8,6 +8,8 @@
   + Deprecated Range#to_NSRange in favour of Range#relative_to
   + Deprecated Numeric#negative?
   + Deprecated Object#full_const_get
+  + Deprecated NSArray#second
+  + Deprecated NSArray#third
   + Moved some NSMutableAttributedString extensions to NSAttributedString
   + Requires MacRuby 0.11+
   + Revamped the documentation
