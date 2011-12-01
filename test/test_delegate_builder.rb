@@ -39,6 +39,16 @@ class TestDelegateMethodBuilder < MiniTest::Unit::TestCase
     assert_equal 0, @target.abc(nil, param1: 1, param2: 0)
   end
 
+  def test_that_trying_to_define_delegate_method_with_invalid_parameters_yields_a_sensible_error
+    begin
+      HotCocoa::DelegateMethodBuilder.new(@target).add_delegated_method(nil, "abc:param1:param2:", :another_param)
+    rescue RuntimeError => e
+      assert_match /'another_param' is not a valid parameter of method 'abc:param1:param2:'/, e.message
+      return
+    end
+    flunk "no error thrown!"
+  end
+
   def test_parameterize_selector_name
     delegate_builder = HotCocoa::DelegateMethodBuilder.new(nil)
     assert_equal "myDelegateMethod", delegate_builder.parameterize_selector_name("myDelegateMethod")

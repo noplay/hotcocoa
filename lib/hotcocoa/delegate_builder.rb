@@ -117,6 +117,7 @@ module HotCocoa
         if (dot = parameter.index('.'))
           result << "p#{selector_params.index(parameter[0...dot]) + 1}#{parameter[dot..-1]}"
         else
+          raise "Error in delegate mapping: '#{parameter}' is not a valid parameter of method '#{selector_name}'" if selector_params.index(parameter).nil?
           result << "p#{selector_params.index(parameter) +  1}"
         end
       end
