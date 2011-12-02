@@ -15,6 +15,8 @@
   + Revamped the documentation
 * New mappings:
   + matrix => NSMatrix
+* Extended mappings:
+  + split_view
 
 ## 0.6.0 2011-10-14
 
