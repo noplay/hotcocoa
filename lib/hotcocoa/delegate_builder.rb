@@ -38,7 +38,7 @@ module HotCocoa
     def add_delegated_method block, selector_name, *parameters
       clear_delegate if required_methods.empty?
 
-      DelegateMethodBuilder.new(@delegate).add_delegated_method block, selector_name, *parameters
+      delegate_method_builder.add_delegated_method block, selector_name, *parameters
 
       required_methods.delete(selector_name)
       set_delegate if required_methods.empty?
@@ -63,6 +63,10 @@ module HotCocoa
     # Set the delegate for {#control} to {#delegate}
     def set_delegate
       control.setDelegate(delegate)
+    end
+
+    def delegate_method_builder
+      @delegate_method_builder ||= DelegateMethodBuilder.new(@delegate)
     end
 
   end
