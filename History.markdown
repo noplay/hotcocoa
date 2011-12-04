@@ -7,6 +7,7 @@
   * Ensure that the short version is set in an app bundles Info.plist
   * Begin overhauling the documentation
   * Better error handling for the DelegateBuilder
+  * Document and refactor layout manager internals
 
 * Fixes:
   * Fixed some UI glitches with the Demo app
