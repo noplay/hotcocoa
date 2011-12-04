@@ -92,7 +92,8 @@ class HotCocoa::Mappings::Mapper
   end
 
   ##
-  # Create the constructor named `builder_method` for HotCocoa.
+  # Create the constructor named `builder_method` for the HotCocoa
+  # module.
   #
   # @param [Symbol] builder_method
   # @yield

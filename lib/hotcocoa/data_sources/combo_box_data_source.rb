@@ -31,6 +31,7 @@ class HotCocoa::ComboBoxDataSource
     data.length
   end
 
+
   private
 
   def string_value_of_index i
@@ -41,4 +42,5 @@ class HotCocoa::ComboBoxDataSource
       item.to_s
     end
   end
+
 end
