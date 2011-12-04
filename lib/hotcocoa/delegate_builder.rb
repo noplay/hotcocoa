@@ -125,7 +125,6 @@ module HotCocoa
 
     def parameter_values_for_mapping selector_name, parameters
       return if parameters.empty?
-      parameters = parameters.map(&:to_s)
 
       result = []
       selector_params = selector_name.split(':')
