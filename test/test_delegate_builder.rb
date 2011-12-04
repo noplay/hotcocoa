@@ -49,16 +49,15 @@ class TestDelegateMethodBuilder < MiniTest::Unit::TestCase
     flunk "no error thrown!"
   end
 
-  def test_parameterize_selector_name
+  def test_needed_parameter_indices_with_string_parameters
     delegate_builder = HotCocoa::DelegateMethodBuilder.new(nil)
-    assert_equal "myDelegateMethod", delegate_builder.parameterize_selector_name("myDelegateMethod")
-    assert_equal "myDelegateMethod p1,withArgument:p2", delegate_builder.parameterize_selector_name("myDelegateMethod:withArgument:")
+    assert_equal [], delegate_builder.needed_parameter_indices("myDelegateMethod:p1:p2:", [])
+    assert_equal [1,2], delegate_builder.needed_parameter_indices("myDelegateMethod:p1:p2:", ["p1", "p2"])
+    assert_equal [2], delegate_builder.needed_parameter_indices("myDelegateMethod:p1:p2:", ["p2"])
   end
 
-  def test_parameter_values_for_mapping
+  def test_needed_parameter_indices_with_symbol_parameters
     delegate_builder = HotCocoa::DelegateMethodBuilder.new(nil)
-    assert delegate_builder.parameter_values_for_mapping("myDelegateMethod", []).nil?
-    assert_equal "p2, p3", delegate_builder.parameter_values_for_mapping("myDelegateMethod:p1:p2:", ["p1", "p2"])
-    assert_equal "p1.userInfo['NSExposedRect']", delegate_builder.parameter_values_for_mapping("windowDidExpose:", ["windowDidExpose.userInfo['NSExposedRect']"])
+    assert_equal [1,2], delegate_builder.needed_parameter_indices("myDelegateMethod:p1:p2:", [:p1, :p2])
   end
 end

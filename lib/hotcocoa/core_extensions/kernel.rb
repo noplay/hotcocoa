@@ -64,4 +64,7 @@ module Kernel
     error[0] ? raise(Exception, error[0]) : data.to_str
   end
 
+  def metaclass
+    class << self; self; end
+  end
 end
