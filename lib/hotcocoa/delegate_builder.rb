@@ -1,25 +1,36 @@
-##
-# Builds a delegate for a control at runtime by creating a generic object
-# and adding singleton methods for each given delegate method; it then
-# tells the control to delegate to that created object.
 module HotCocoa
+
+  ##
+  # Builds a delegate for a control at runtime by creating a generic object
+  # and adding singleton methods for each given delegate method; it then
+  # tells the control to delegate to that created object.
   class DelegateBuilder
-    # @return The object that needs a delegate
+
+    ##
+    # The object that needs a delegate
+    #
+    # @return
     attr_reader :control
 
-    # @return [Array<>] Delegate methods which are assumed to be implemented
-    #    and therefore __MUST__ be given at least a stub
+    ##
+    # Delegate methods which are assumed to be implemented and therefore
+    # __MUST__ be given at least a stub
+    #
+    # @return [Array<SEL,String>]
     attr_reader :required_methods
 
-    # @return [Object] The delegate object
+    ##
+    # The delegate object
+    #
+    # @return [Object]
     attr_reader :delegate
 
     # @param control the object which needs a delegate
-    # @param [Array<String>] required_methods
+    # @param [Array<SEL,String>] required_methods
     def initialize control, required_methods
-      @control = control
+      @control          = control
       @required_methods = required_methods
-      @delegate = Object.new
+      @delegate         = Object.new
     end
 
     ##
@@ -39,7 +50,9 @@ module HotCocoa
       end
     end
 
+
     private
+
     ##
     # Reset the delegate for {#control} to `nil`.
     def clear_delegate
@@ -51,10 +64,13 @@ module HotCocoa
     def set_delegate
       control.setDelegate(delegate)
     end
+
   end
 
+
   class DelegateMethodBuilder
-    def initialize(target)
+
+    def initialize target
       @target = target
     end
 
@@ -82,7 +98,7 @@ module HotCocoa
     # currently being built.
     #
     # @return [String]
-    def block_instance_variable_for(selector_name)
+    def block_instance_variable_for selector_name
       "@block_#{selector_name.gsub(':', "_")}"
     end
 
@@ -109,7 +125,6 @@ module HotCocoa
 
     def parameter_values_for_mapping selector_name, parameters
       return if parameters.empty?
-      parameters = parameters.map(&:to_s)
 
       result = []
       selector_params = selector_name.split(':')
@@ -117,11 +132,14 @@ module HotCocoa
         if (dot = parameter.index('.'))
           result << "p#{selector_params.index(parameter[0...dot]) + 1}#{parameter[dot..-1]}"
         else
+          parameter = parameter.to_s
           raise "Error in delegate mapping: '#{parameter}' is not a valid parameter of method '#{selector_name}'" if selector_params.index(parameter).nil?
           result << "p#{selector_params.index(parameter) +  1}"
         end
       end
       result.join(', ')
     end
+
   end
+
 end
