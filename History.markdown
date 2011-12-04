@@ -1,13 +1,17 @@
 # Release History
 
-## 0.7.0 ????-??-??
+## 0.6.1 2011-12-4
 
 * Enhancements:
-  + Removed old application builder
-  + Bridgesupport embedding enabled by default for new projects
-  + Deprecated Range#to_NSRange in favour of Range#relative_to
-  + Moved some NSMutableAttributedString extensions to NSAttributedString
-  + Requires MacRuby 0.11+
+  * Bridgesupport embedding now enabled by default for new projects
+  * Ensure that the short version is set in an app bundles Info.plist
+  * Begin overhauling the documentation
+  * Better error handling for the DelegateBuilder
+
+* Fixes:
+  * Fixed some UI glitches with the Demo app
+  * The application builder now sets the copyright string in an app bundles Info.plist
+  * DelegateBuilder no longer crashes when parameters were given as Symbols
 
 ## 0.6.0 2011-10-14
 
