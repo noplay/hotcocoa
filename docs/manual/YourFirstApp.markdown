@@ -24,7 +24,7 @@ Generate the app scaffolding:
 Start the app:
 
     $ cd my_first_app
-    $ macrake deploy run
+    $ macrake run
 
 ## The anatomy of a HotCocoa application
 
