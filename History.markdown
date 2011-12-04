@@ -4,7 +4,6 @@
 
 * Enhancements:
   + Removed old application builder
-  + Bridgesupport embedding enabled by default for new projects
   + Deprecated Range#to_NSRange in favour of Range#relative_to
   + Deprecated Numeric#negative?
   + Deprecated Object#full_const_get
@@ -17,6 +16,20 @@
   + matrix => NSMatrix
 * Extended mappings:
   + split_view
+
+## 0.6.1 2011-12-4
+
+* Enhancements:
+  * Bridgesupport embedding now enabled by default for new projects
+  * Ensure that the short version is set in an app bundles Info.plist
+  * Begin overhauling the documentation
+  * Better error handling for the DelegateBuilder
+  * Document and refactor layout manager internals
+
+* Fixes:
+  * Fixed some UI glitches with the Demo app
+  * The application builder now sets the copyright string in an app bundles Info.plist
+  * DelegateBuilder no longer crashes when parameters were given as Symbols
 
 ## 0.6.0 2011-10-14
 
