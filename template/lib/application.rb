@@ -7,7 +7,7 @@ class __APPLICATION_NAME__
   def start
     application name: '__APPLICATION_NAME__' do |app|
       app.delegate = self
-      window frame: [100, 100, 500, 500], title: '__APPLICATION_NAME__' do |win|
+      window frame: [100, 100, 500, 500], title: app.name do |win|
         win << label(text: 'Hello from HotCocoa', layout: {start: false})
         win.will_close { exit }
       end
