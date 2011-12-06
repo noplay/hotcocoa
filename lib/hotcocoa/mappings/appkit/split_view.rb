@@ -1,6 +1,12 @@
 HotCocoa::Mappings.map split_view: NSSplitView do
 
-  defaults layout: {}
+  defaults layout: {}, divider_style: :thick
+
+  constant :divider_style, {
+    thick:         NSSplitViewDividerStyleThick,
+    thin:          NSSplitViewDividerStyleThin,
+    pane_splitter: NSSplitViewDividerStylePaneSplitter
+  }
 
   def init_with_options split_view, options
     split_view.initWithFrame options.delete :frame

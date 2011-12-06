@@ -2,6 +2,12 @@ class TestSplitViewMappings < MiniTest::Unit::TestCase
   def test_defaults
     split_view = HotCocoa.split_view(frame: [0,0,10,10])
     assert_equal NSMakeRect(0,0,10,10), split_view.frame
+    assert_equal NSSplitViewDividerStyleThick, split_view.dividerStyle
+  end
+
+  def test_divider_style_settings
+    split_view = HotCocoa.split_view(frame: [0,0,10,10], divider_style: :thin)
+    assert_equal NSSplitViewDividerStyleThin, split_view.dividerStyle
   end
 
   def test_delegate_methods_for_managing_subviews
