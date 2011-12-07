@@ -51,7 +51,7 @@ module HotCocoa
       @view           = view
       @start          = options[:start]
       @expand         = options[:expand]
-      @padding        = options[:padding]
+      @padding        = options[:padding] || 0
       @left_padding   = @padding || options[:left_padding]
       @right_padding  = @padding || options[:right_padding]
       @top_padding    = @padding || options[:top_padding]
@@ -189,9 +189,12 @@ module HotCocoa
       update_layout_views!
     end
 
-    def padding
-      @padding || 0.0
-    end
+    ##
+    # Number of pixels of padding to add to each side of the view, unless
+    # otherwies overridden by setting `left_padding`, `right_padding`, etc.
+    #
+    # @return [Number]
+    attr_reader :padding
 
     def inspect
       "#<#{self.class} " +
