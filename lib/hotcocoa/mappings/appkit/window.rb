@@ -60,6 +60,7 @@ HotCocoa::Mappings.map window: NSWindow do
       window.contentView.default_layout = default_layout
     elsif options[:view] == :nolayout
       options.delete :view
+    # else you have your own plans for managing the layout
     end
 
     window

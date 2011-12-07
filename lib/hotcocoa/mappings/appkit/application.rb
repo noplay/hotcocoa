@@ -12,7 +12,7 @@ HotCocoa::Mappings.map application: NSApplication do
 
   custom_methods do
     # @todo Should we really be hardcoded to require lib/menu and should
-    #       it done here?
+    #       it be done here?
     def load_application_menu
       require 'lib/menu' # hmmm...
 

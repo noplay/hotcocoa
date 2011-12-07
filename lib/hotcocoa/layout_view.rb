@@ -1,7 +1,17 @@
 module HotCocoa
+
+  ##
+  # Stores the layout configuration for an object (e.g. a button).
   class LayoutOptions
+
+    ##
+    # List of valid values for the {#expand} parameter.
     VALID_EXPANSIONS = [nil, :height, :width, [:height, :width], [:width, :height]]
 
+    ##
+    # The layout view to which this configuration belongs.
+    #
+    # @return [HotCocoa::LayoutView]
     attr_accessor :defaults_view
 
     # @return [NSView]
@@ -46,7 +56,8 @@ module HotCocoa
     #   * `:bottom`
     #   For vertical layouts, align bottom
     #
-    # @option options [NSView] :defaults_view not sure yet...
+    # @option options [NSView] :defaults_view The layout to which this
+    #   configuration belongs
     def initialize view, options = {}
       @view           = view
       @start          = options[:start]
@@ -60,12 +71,20 @@ module HotCocoa
       @defaults_view  = options[:defaults_view]
     end
 
+    ##
+    # Set if this view should be relative to the start or end of the
+    # packing view.
+    #
+    # @param [Boolean]
     def start= value
       return if value == @start
       @start = value
       update_layout_views!
     end
 
+    ##
+    # Whether or not to layout the view relative to the top of the
+    # packing view.
     def start?
       return @start unless @start.nil?
       if in_layout_view?
@@ -75,6 +94,13 @@ module HotCocoa
       end
     end
 
+    ##
+    # Set whether or not the view should expand in either width or
+    # height to fill in unused space in the view.
+    #
+    # The available values are those from {VALID_EXPANSIONS}.
+    #
+    # @param [Symbol, Array(Symbol,Symbol)]
     def expand= value
       return if value == @expand
       unless VALID_EXPANSIONS.include?(value)
@@ -84,6 +110,13 @@ module HotCocoa
       update_layout_views!
     end
 
+    ##
+    # Returns how a view should expand in its packing view.
+    #
+    # If there is nothing set for the expansion, then this
+    # method will return `false`.
+    #
+    # @return [Symbol, Array(Symbol,Symbol), Boolean]
     def expand
       return @expand unless @expand.nil?
       if in_layout_view?
@@ -93,16 +126,25 @@ module HotCocoa
       end
     end
 
+    ##
+    # Whether or not to expand the view width-wise.
     def expand_width?
       e = self.expand
       e == :width || (e.respond_to?(:include?) && e.include?(:width))
     end
 
+    ##
+    # Whether or not to expand the view height-wise.
     def expand_height?
       e = self.expand
       e == :height || (e.respond_to?(:include?) && e.include?(:height))
     end
 
+    ##
+    # Set the amount of padding, in pixels, to add to the left of the
+    # view
+    #
+    # @param [Number]
     def left_padding= value
       return if value == @left_padding
       @left_padding = value
@@ -110,6 +152,10 @@ module HotCocoa
       update_layout_views!
     end
 
+    ##
+    # Return how much padding should be added to the left of the view.
+    #
+    # @return [Number]
     def left_padding
       return @left_padding unless @left_padding.nil?
       if in_layout_view?
@@ -119,6 +165,10 @@ module HotCocoa
       end
     end
 
+    ##
+    # Return how much padding, in pixels, should be added to the right
+    # of the view.
+    #
     def right_padding= value
       return if value == @right_padding
       @right_padding = value
@@ -126,6 +176,10 @@ module HotCocoa
       update_layout_views!
     end
 
+    ##
+    # Return how much padding should be added to the right of the view.
+    #
+    # @return [Number]
     def right_padding
       return @right_padding unless @right_padding.nil?
       if in_layout_view?
@@ -135,6 +189,11 @@ module HotCocoa
       end
     end
 
+    ##
+    # Set how much padding, in pixels, should be added to the top
+    # of the view.
+    #
+    # @param [Number]
     def top_padding= value
       return if value == @top_padding
       @top_padding = value
@@ -142,6 +201,10 @@ module HotCocoa
       update_layout_views!
     end
 
+    ##
+    # Return how much padding should be added to the top of the view.
+    #
+    # @return [Number]
     def top_padding
       return @top_padding unless @top_padding.nil?
       if in_layout_view?
@@ -151,6 +214,11 @@ module HotCocoa
       end
     end
 
+    ##
+    # Set how much padding, in pixels, should be added to the bottom
+    # of the view.
+    #
+    # @param [Number]
     def bottom_padding= value
       return if value == @bottom_padding
       @bottom_padding = value
@@ -158,6 +226,10 @@ module HotCocoa
       update_layout_views!
     end
 
+    ##
+    # Return how much padding should be added to the buttom of the view.
+    #
+    # @return [Number]
     def bottom_padding
       return @bottom_padding unless @bottom_padding.nil?
       if in_layout_view?
@@ -167,6 +239,24 @@ module HotCocoa
       end
     end
 
+    ##
+    # Set which way the view should be aligned in the packing view.
+    #
+    # Possible values are documented in {#initialize}.
+    #
+    # @param [Symbol]
+    def align= value
+      return if value == @align
+      @align = value
+      update_layout_views!
+    end
+
+    ##
+    # Returns which way that a view should be aligned.
+    #
+    # Possible values are documented in {#initialize}.
+    #
+    # @return [Symbol]
     def align
       return @align unless @align.nil?
       if in_layout_view?
@@ -176,12 +266,10 @@ module HotCocoa
       end
     end
 
-    def align= value
-      return if value == @align
-      @align = value
-      update_layout_views!
-    end
-
+    ##
+    # Set the default padding, in pixels, to use for each side of the view.
+    #
+    # @param [Number]
     def padding= value
       return if value == @padding
       @right_padding = @left_padding = @top_padding = @bottom_padding = value
@@ -196,6 +284,10 @@ module HotCocoa
     # @return [Number]
     attr_reader :padding
 
+    ##
+    # "Pretty" string version of the configuration.
+    #
+    # @return [String]
     def inspect
       "#<#{self.class} " +
         "start=#{start?}, " +
@@ -205,16 +297,23 @@ module HotCocoa
         "view=#{view.inspect}>"
     end
 
+    ##
+    # Tell the object using the configuration that it needs to relayout.
     def update_layout_views!
       @view.superview.relayout! if in_layout_view?
       @defaults_view.relayout!  if @defaults_view
     end
 
+
     private
 
+    ##
+    # Whether the configuration is being used by a view contained
+    # in a layout (packing) view or not.
     def in_layout_view?
       @view && @view.superview.kind_of?(LayoutView)
     end
+
   end
 
   ##
