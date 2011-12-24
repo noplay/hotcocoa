@@ -1,0 +1,189 @@
+= HotCocoa - Snow Leopard Check
+A simple check to ensure that BridgeSupport is installed on Snow Leopard prior to using HotCocoa.
+= Test Environment
+Mac OS X 10.6.8
+
+MacRuby-nightly MacRuby 0.12 (ruby 1.9.2) [universal-darwin10.0, x86_64] - as of 12/17/2011
+
+No installed gems
+
+HotCocoa installed from local build on 12/21/2011 install using:
+   % git clone https://github.com/HotCocoa/hotcocoa.git
+   % cd hotcocoa
+   % macgem build hotcocoa.gemspec
+   % sudo macgem install hotcocoa
+= First Test
+Create and execute a simple hotcocoa app using
+
+   % hotcocoa Postie
+   % cd Postie
+   % rake
+     Building app bundle...
+     Running app...
+     .../hotcocoa-0.7.0/lib/hotcocoa/core_extensions/kernel.rb:40:in `block':
+                uninitialized constant Kernel::NSPropertyListXMLFormat_v1_0 (NameError)
+        from .../hotcocoa-0.7.0/lib/hotcocoa/core_extensions/kernel.rb:3:in `<main>'
+        from .../hotcocoa-0.7.0/lib/hotcocoa/mappings.rb:1:in `<main>'
+        from .../hotcocoa-0.7.0/lib/hotcocoa.rb:13:in `<main>'
+        from .../Postie.app/Contents/Resources/lib/application.rb:2:in `<main>'
+        from .../Postie.app/Contents/Resources/rb_main.rb:17:in `block'
+        from .../Postie.app/Contents/Resources/rb_main.rb:15:in `<main>'
+   %
+= Second Test
+Use macirb to require 'hotcocoa'
+
+   % macirb
+    irb(main):001:0> require 'rubygems'
+    => true
+    irb(main):002:0> require 'hotcocoa'
+    NameError: uninitialized constant Kernel::NSPropertyListXMLFormat_v1_0
+        .../gems/hotcocoa-0.7.0/lib/hotcocoa/core_extensions/kernel.rb:40:in `block'
+        .../gems/hotcocoa-0.7.0/lib/hotcocoa/core_extensions/kernel.rb:3:in `<main>'
+        .../gems/hotcocoa-0.7.0/lib/hotcocoa/mappings.rb:1:in `<main>'
+        .../gems/hotcocoa-0.7.0/lib/hotcocoa.rb:13:in `<main>'
+    irb(main):003:0>
+
+Both of these tests can leave the user somewhat confused about the source of the problem.
+= One possible remedy
+Add a simple sanity check to the gem that is called from lib/hotcocoa.rb.
+== lib/hotcocoa/snow_leopard_check.rb
+  begin
+    NSWindow
+  rescue NameError
+    framework 'Cocoa'
+  end
+
+  begin
+    CGRectZero
+  rescue NameError
+    warn 'BridgeSupport Preview required for this installation.'
+    warn 'Get the latest version from: http://www.macruby.org/files/'
+    exit(Errno::EOPNOTSUPP::Errno)
+  end
+== lib/hotcocoa.rb
+  framework 'Cocoa'
+
+  STDOUT.reopen(IO.for_fd(NSFileHandle.fileHandleWithStandardError.fileDescriptor.to_i, 'w'))
+
+  ##
+  # HotCocoa is a Cocoa mapping library for MacRuby. It simplifies the use
+  # of complex Cocoa classes using DSL techniques.
+  module HotCocoa; end
+
+  require 'hotcocoa/snow_leopaard_check' # <== NEW LINE
+  require 'hotcocoa/version'
+  .
+  .
+  .
+
+Following the installation of the hotcocoa gem containing these three changes the test results are more informative
+= First Test
+Create and execute a simple hotcocoa app using
+
+   % hotcocoa Postie
+   % echo $?
+     0
+   % cd Postie
+   % rake
+     Building app bundle...
+
+     Running app...
+     BridgeSupport Preview required for this installation.
+     Get the latest version from: http://www.macruby.org/files/
+   % echo $?
+     0
+= Second Test
+Use macirb to require 'hotcocoa'
+
+   % macirb
+     irb(main):001:0> require 'rubygems'
+     => true
+     irb(main):002:0> require 'hotcocoa'
+     BridgeSupport Preview required for this installation.
+     Get the latest version from: http://www.macruby.org/files/
+   %
+   % echo $?
+     102
+= An Alternate Approach
+Another approach is to use the RubyGems method for C extension packaging to trigger a failure at gem install time.
+This would envolve the addition and population of the *hotcocoa/ext* tree structure and additions to the *hotcocoa.gemspec*.
+= Test Environment
+The test environment for this approach is as before with one exception.  The hotcocoa gem is not yet installed.
+
+Mac OS X 10.6.8
+
+MacRuby-nightly MacRuby 0.12 (ruby 1.9.2) [universal-darwin10.0, x86_64] - as of 12/17/2011
+
+No installed gems
+== hotcocoa/hotcocoa.gemspec changes
+  % diff hotcocoa.gemspec.Old hotcocoa.gemspec.New
+   14a15
+   >   s.extensions   = ['ext/hotcocoa/extconf.rb']
+   20c21,22
+   <     Dir.glob('template/**/*')
+   ---
+   >     Dir.glob('template/**/*') +
+   >     Dir.glob('ext/**/*.{c,h,rb}')
+== hotcocoa/ext directory changes
+  % mkdir hotcocoa/ext
+  % mkdir hotcocoa/ext/hotcocoa
+== New File -- hotcocoa/ext/hotcocoa/extconf.rb
+  require 'mkmf'
+
+  system('test -d /System/Library/BridgeSupport')
+  bridge_support_required = $?.to_i
+
+  if bridge_support_required
+    $stderr.puts ""
+    $stderr.puts "###################################################################"
+    $stderr.puts "#                                                                 #"
+    $stderr.puts "#     BridgeSupport installation required.                        #"
+    $stderr.puts "#     Get the latest version at: http://www.MacRuby.org/files     #"
+    $stderr.puts "#                                                                 #"
+    $stderr.puts "###################################################################"
+    $stderr.puts ""
+  end
+
+  create_makefile('hotcocoa/hotcocoa')
+== New File -- hotcocoa/ext/hotcocoa/noop_bridge_support_check.c
+  #include </System/Library/BridgeSupport/include/_BS_bool.h>
+= Test Three
+Build and install the hotcocoa gem using:
+
+   % git clone git://github.com/bultacorick/hotcocoa.git
+   % cd hotcocoa
+   % macgem build hotcocoa.gemspec
+   % sudo macgem install hotcocoa
+   Building native extensions.  This could take a while...
+   ERROR:  Error installing hotcocoa:
+        ERROR: Failed to build gem native extension.
+
+   /Library/Frameworks/MacRuby.framework/Versions/0.12/usr/bin/macruby extconf.rb
+
+   ###################################################################
+   #                                                                 #
+   #     BridgeSupport installation required.                        #
+   #     Get the latest version at: http://www.MacRuby.org/files     #
+   #                                                                 #
+   ###################################################################
+
+   creating Makefile
+
+   make
+   /usr/bin/gcc-4.2 -I. ...  -c noop_bridge_support_check.c
+   noop_bridge_support_check.c:1:60: error: /System/Library/BridgeSupport/include/_BS_bool.h
+      : No such file or directory
+   make: *** [noop_bridge_support_check.o] Error 1
+
+   Gem files will remain installed in /Library/Frameworks/ ... /hotcocoa-0.7.0 for inspection.
+   Results logged to /Library/Frameworks/ ... /hotcocoa-0.7.0/ext/hotcocoa/gem_make.out
+
+Now add BridgeSupport Preview 3 package from http://www.MacRuby.org/files/ and rerun the test.
+= Test Three - Abbreviated
+Now you just need to install the already built gem using:
+   % sudo macgem install hotcocoa
+   Building native extensions.  This could take a while...
+   Successfully installed hotcocoa-0.7.0
+   1 gem installed
+
+At this point the hotcocoa gem is installed and ready for use.  This can be easily confirmed by rerunning tests one and two.
