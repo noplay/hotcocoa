@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description  = 'HotCocoa is a Cocoa mapping library for MacRuby.  It simplifies the use of complex Cocoa classes using DSL techniques.'
   s.authors      = ['Richard Kilmer',     'Mark Rada']
   s.email        = ['rich@infoether.com', 'mrada@marketcircle.com']
-  s.homepage     = 'http://github.com/ferrous26/hotcocoa'
+  s.homepage     = 'http://github.com/HotCocoa/hotcocoa'
   s.licenses     = ['MIT']
   s.has_rdoc     = 'yard'
   s.bindir       = 'bin'
