@@ -1,6 +1,6 @@
 require 'mkmf'
 
-system('test -d /System/Library/BridgeSupport')
+system('test -d /System/Library/BridgeSupport/include')
 bridge_support_required = $?.to_i
 
 if bridge_support_required
