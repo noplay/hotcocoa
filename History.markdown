@@ -1,6 +1,20 @@
 # Release History
 
-## 0.6.1 2011-12-4
+## 0.6.3 2012-01-03
+
+* Fixes:
+  * Update the history file for 0.6.2
+
+## 0.6.2 2012-01-03
+
+* Enhancements:
+  * Check at install time if proper BridgeSupport is available (Snow Leopard only)
+
+* Fixes:
+  * Update links in the README
+  * Remove redundant #to_s call in NSString#camelize
+
+## 0.6.1 2011-12-04
 
 * Enhancements:
   * Bridgesupport embedding now enabled by default for new projects
