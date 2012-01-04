@@ -16,7 +16,7 @@ class NSString
   ##
   # Borrowed from Active Support.
   def camel_case
-    to_s.gsub /(?:^|_)(.)/ do $1.upcase end
+    gsub /(?:^|_)(.)/ do $1.upcase end
   end
 
   ##
