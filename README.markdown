@@ -29,8 +29,8 @@ in order to run HotCocoa. Read about it on the
 
 ### Documentation
 
-Check out the [manual](http://rubydoc.info/github/ferrous26/hotcocoa/master/file/docs/Manual.markdown) and 
-the developer documentation on [rdoc.info](http://rdoc.info/github/ferrous26/hotcocoa/master/frames).
+Check out the [manual](http://rubydoc.info/github/HotCocoa/hotcocoa/master/file/docs/Manual.markdown) and
+the developer documentation on [rdoc.info](http://rdoc.info/github/HotCocoa/hotcocoa/master/frames).
 
 The mappings that are shipped with `hotcocoa` are currently not documented, due to the
 way that mappings are implemented; a YARD plug-in or new YARD features will be needed (stay tuned).
