@@ -33,6 +33,19 @@ HotCocoa::Mappings.map window: NSWindow do
     textured:        NSTexturedBackgroundWindowMask
   }
 
+  constant :level, {
+    normal:          NSNormalWindowLevel,
+    floating:        NSFloatingWindowLevel,
+    main_menu:       NSMainMenuWindowLevel,
+    submenu:         NSSubmenuWindowLevel,
+    torn_off_menu:   NSTornOffMenuWindowLevel,
+    status:          NSStatusWindowLevel,
+    modal:           NSModalPanelWindowLevel,
+    pop_up:          NSPopUpMenuWindowLevel,
+    screen_saver:    NSScreenSaverWindowLevel,
+    dock:            NSDockWindowLevel
+  }
+
   def init_with_options window, options
     unless options[:frame]
       width, height = (options.delete(:size) || [400, 400])
