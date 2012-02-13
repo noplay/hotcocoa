@@ -27,3 +27,8 @@ require 'hotcocoa/data_sources/outline_view_data_source'
 
 # Force loading of mappings for loaded frameworks
 HotCocoa::Mappings.reload
+
+# Needs to be instatiated in order to make things show up.
+# This is useful for creating elements outside of a standard
+# application.
+NSApplication.sharedApplication
