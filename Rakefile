@@ -11,9 +11,9 @@ Rake::TestTask.new do |t|
   t.verbose   = true
 end
 
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
 spec = Gem::Specification.load('hotcocoa.gemspec')
-Rake::GemPackageTask.new(spec) { }
+Gem::PackageTask.new(spec) { }
 
 desc 'Install hotcocoa'
 task :install => :gem do
