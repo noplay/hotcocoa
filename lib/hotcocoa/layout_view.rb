@@ -416,10 +416,12 @@ module HotCocoa
     # @param [NSView]
     def addSubview view
       super
-      if view.respond_to? :layout
-        relayout!
-      else
-        raise ArgumentError, "view #{view} does not support the #layout method"
+      if view
+        if view.respond_to? :layout
+          relayout!
+        else
+          raise ArgumentError, "view #{view} does not support the #layout method"
+        end
       end
     end
     alias_method :<<, :addSubview
