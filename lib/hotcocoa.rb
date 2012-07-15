@@ -1,4 +1,8 @@
 framework 'Cocoa'
+# A temporary hack for the Mountain Lion CoreGraphics issue
+if `sw_vers -productVersion`.to_f > 10.7
+  framework '/System/Library/Frameworks/CoreGraphics.framework'
+end
 
 STDOUT.reopen(IO.for_fd(NSFileHandle.fileHandleWithStandardError.fileDescriptor.to_i, 'w'))
 
