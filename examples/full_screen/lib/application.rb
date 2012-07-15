@@ -10,6 +10,12 @@ class FullScreen
       @win = window frame: [100, 100, 500, 500], title: app.name, collectionBehavior: NSWindowCollectionBehaviorFullScreenPrimary do |win|
         win << label(text: 'Hello from HotCocoa', layout: {start: false})
         win.will_close { exit }
+
+        win.will_enter_full_screen {puts "Will Enter full screen"}
+        win.did_enter_full_screen {puts "Finish entering full screen mode"}
+        win.will_exit_full_screen {puts "Will exit full screen mode"}
+        win.did_exit_full_screen {puts "Finish exiting full screen mode"}
+        
       end
     end
   end
