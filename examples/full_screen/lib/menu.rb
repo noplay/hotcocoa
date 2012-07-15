@@ -23,6 +23,7 @@ module HotCocoa
         win.item :zoom
         win.separator
         win.item :bring_all_to_front, title: 'Bring All to Front', key: 'o'
+        win.item :toggle_full_screen, title: 'Full Screen', key: 'f', modifiers: [:command, :control]
       end
       main.submenu :help do |help|
         help.item :help, title: "#{NSApp.name} Help"

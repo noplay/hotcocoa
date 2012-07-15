@@ -7,7 +7,7 @@ class FullScreen
   def start
     application name: 'FullScreen' do |app|
       app.delegate = self
-      window frame: [100, 100, 500, 500], title: app.name, collectionBehavior: NSWindowCollectionBehaviorFullScreenPrimary do |win|
+      @win = window frame: [100, 100, 500, 500], title: app.name, collectionBehavior: NSWindowCollectionBehaviorFullScreenPrimary do |win|
         win << label(text: 'Hello from HotCocoa', layout: {start: false})
         win.will_close { exit }
       end
@@ -36,6 +36,10 @@ class FullScreen
 
   # window/bring_all_to_front
   def on_bring_all_to_front(menu)
+  end
+
+  def on_toggle_full_screen(menu)
+    @win.toggleFullScreen(nil)
   end
 end
 
